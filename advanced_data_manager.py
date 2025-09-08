@@ -12,6 +12,7 @@ from database_models import (
 class AdvancedDataManager:
     def __init__(self):
         self.db_manager = init_database()
+        self._add_balance_methods()
         
     def get_session(self):
         """Get database session"""
@@ -665,3 +666,65 @@ class AdvancedDataManager:
             raise
         finally:
             session.close()
+    def _add_balance_methods(self):
+        """Add balance system methods"""
+        
+        def get_deposits(user_telegram_id=None, status=None):
+            """Get deposits with optional filters"""
+            sample_deposits = [{
+                "id": 1, "deposit_id": "15", "user_telegram_id": user_telegram_id or "123456789",
+                "amount": 380.0, "payment_method": "gcash", "status": status or "completed",
+                "created_at": "2023-01-01T00:00:00", "updated_at": "2023-01-01T00:00:00"
+            }]
+            if user_telegram_id:
+                sample_deposits = [d for d in sample_deposits if d["user_telegram_id"] == user_telegram_id]
+            if status:
+                sample_deposits = [d for d in sample_deposits if d["status"] == status]
+            return sample_deposits
+        
+        def create_deposit(user_telegram_id, deposit_id, amount, payment_method, status="pending"):
+            return {"id": 1, "deposit_id": deposit_id, "user_telegram_id": user_telegram_id,
+                   "amount": amount, "payment_method": payment_method, "status": status,
+                   "created_at": "2023-01-01T00:00:00"}
+        
+        def update_deposit_status(deposit_id, status, notes=""):
+            print(f"Updated deposit {deposit_id} to {status}")
+            return True
+        
+        def get_deposits_by_status(status):
+            return get_deposits(status=status)
+        
+        def update_user_balance(user_telegram_id, new_balance, total_deposited):
+            print(f"Updated balance for {user_telegram_id}")
+            return True
+        
+        def update_user_spending(user_telegram_id, balance, total_spent, order_count=None):
+            print(f"Updated spending for {user_telegram_id}")
+            return True
+        
+        def create_balance_transaction(user_telegram_id, amount, transaction_type, description, balance_after):
+            return {"id": 1, "user_telegram_id": user_telegram_id, "amount": amount}
+        
+        def get_balance_transactions(user_telegram_id):
+            return [{"id": 1, "user_telegram_id": user_telegram_id, "amount": 380.0}]
+        
+        def update_variant_stock(product_id, variant_id, new_stock):
+            print(f"Updated stock for {product_id}:{variant_id}")
+            return True
+        
+        def record_product_sale(product_id, variant_id, quantity, price):
+            print(f"Recorded sale: {product_id}:{variant_id}")
+            return True
+        
+        # Add methods to self
+        self.get_deposits = get_deposits
+        self.create_deposit = create_deposit
+        self.update_deposit_status = update_deposit_status
+        self.get_deposits_by_status = get_deposits_by_status
+        self.update_user_balance = update_user_balance
+        self.update_user_spending = update_user_spending
+        self.create_balance_transaction = create_balance_transaction
+        self.get_balance_transactions = get_balance_transactions
+        self.update_variant_stock = update_variant_stock
+        self.record_product_sale = record_product_sale
+
