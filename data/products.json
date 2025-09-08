@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Wireless Headphones",
+    "description": "High-quality wireless headphones with noise cancellation",
+    "price": 99.99,
+    "category": "Electronics",
+    "image_url": "",
+    "stock": 10,
+    "created_at": "2025-09-08T00:00:00.000000"
+  },
+  {
+    "id": 2,
+    "name": "Coffee Mug",
+    "description": "Ceramic coffee mug with beautiful design",
+    "price": 15.99,
+    "category": "Home & Kitchen",
+    "image_url": "",
+    "stock": 25,
+    "created_at": "2025-09-08T00:00:00.000000"
+  },
+  {
+    "id": 3,
+    "name": "Smartphone Case",
+    "description": "Protective case for your smartphone",
+    "price": 24.99,
+    "category": "Electronics",
+    "image_url": "",
+    "stock": 15,
+    "created_at": "2025-09-08T00:00:00.000000"
+  }
+]
