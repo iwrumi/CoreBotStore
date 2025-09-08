@@ -360,6 +360,7 @@ dependencies = [
     { name = "gunicorn" },
     { name = "psycopg2-binary" },
     { name = "python-telegram-bot" },
+    { name = "sqlalchemy" },
     { name = "telegram" },
     { name = "werkzeug" },
 ]
@@ -373,6 +374,7 @@ requires-dist = [
     { name = "gunicorn", specifier = ">=23.0.0" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
     { name = "python-telegram-bot", specifier = ">=22.3" },
+    { name = "sqlalchemy", specifier = ">=2.0.43" },
     { name = "telegram", specifier = ">=0.0.1" },
     { name = "werkzeug", specifier = ">=3.1.3" },
 ]
