@@ -24,8 +24,16 @@ bot_token = os.environ.get("BOT_TOKEN")
 if not bot_token:
     logger.error("BOT_TOKEN environment variable not set!")
     bot = None
+    bot_status = "Not configured"
 else:
-    bot = TelegramStoreBot(bot_token, data_manager)
+    try:
+        bot = TelegramStoreBot(bot_token, data_manager)
+        bot_status = "Running"
+        logger.info("Bot initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize bot: {e}")
+        bot = None
+        bot_status = "Error"
 
 @app.route('/')
 def index():
@@ -33,7 +41,7 @@ def index():
     return render_template('admin.html', 
                          products=data_manager.get_products(),
                          orders=data_manager.get_orders(),
-                         bot_status="Running" if bot else "Not configured")
+                         bot_status=bot_status)
 
 @app.route('/admin')
 def admin():
@@ -41,7 +49,7 @@ def admin():
     return render_template('admin.html', 
                          products=data_manager.get_products(),
                          orders=data_manager.get_orders(),
-                         bot_status="Running" if bot else "Not configured")
+                         bot_status=bot_status)
 
 @app.route('/orders')
 def orders():
@@ -128,23 +136,7 @@ def webhook():
         logger.error(f"Webhook error: {e}")
         return "Error", 500
 
-def start_bot():
-    """Start the bot in a separate thread"""
-    if bot:
-        try:
-            # Set webhook URL (you'll need to update this with your actual Replit URL)
-            webhook_url = os.environ.get("WEBHOOK_URL", "")
-            if webhook_url:
-                bot.set_webhook(webhook_url + "/webhook")
-                logger.info(f"Webhook set to: {webhook_url}/webhook")
-            else:
-                # Fallback to polling if no webhook URL is set
-                bot.start_polling()
-                logger.info("Bot started with polling")
-        except Exception as e:
-            logger.error(f"Failed to start bot: {e}")
-
-# Start bot in a separate thread
+# Note: Bot will work via webhook when deployed to Replit
+# For local development, you would need to run the bot separately
 if bot:
-    bot_thread = threading.Thread(target=start_bot, daemon=True)
-    bot_thread.start()
+    logger.info("Bot is ready to receive webhooks")
