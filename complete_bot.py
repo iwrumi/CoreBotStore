@@ -14,7 +14,7 @@ from balance_system import BalanceSystem
 from product_catalog_system import ProductCatalogSystem
 from welcome_system import WelcomeMessageSystem
 from support_system import CustomerSupportSystem
-from advanced_data_manager import AdvancedDataManager
+from simple_data_manager import SimpleDataManager
 
 # Import conversation handlers
 from balance_commands import get_balance_conversation_handler, get_balance_callback_handlers
