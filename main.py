@@ -524,118 +524,133 @@ When customers send payment proof, they'll appear here for your manual approval.
 Ready to manage your store!"""
 
             else:
-                # Regular user response - connect to the complete bot system
+                # Regular user response - SIMPLE AND RELIABLE
+                # Get product count
+                product_count = 0
                 try:
-                    # Initialize data manager directly
-                    products_file = "data/products.json"
-                    users_file = "data/users.json"
-                    
-                    # Get actual user balance
-                    user_balance = 0.0
-                    user_data = {}
-                    try:
-                        with open(users_file, 'r') as f:
-                            users = json_lib.load(f)
-                            user_data = next((u for u in users if u.get('telegram_id') == user_id), {})
-                            user_balance = user_data.get('balance', 0.0)
-                    except:
-                        user_balance = 0.0
-                    
-                    # Get products count
-                    products = []
-                    try:
-                        with open(products_file, 'r') as f:
-                            products = json_lib.load(f)
-                    except:
-                        products = []
-                    product_count = len(products)
-                    
-                    if text == '/start' or text == '/menu':
-                        response_text = f"""🛍️ **Welcome to Premium Store!**
+                    with open('data/products.json', 'r') as f:
+                        products = json_lib.load(f)
+                        product_count = len(products)
+                except:
+                    product_count = 0
+                
+                if text == '/products':
+                    if product_count > 0:
+                        try:
+                            with open('data/products.json', 'r') as f:
+                                products = json_lib.load(f)
+                            
+                            response_text = "🏪 **Our Products Available:**\n\n"
+                            for product in products[:10]:  # Show first 10
+                                stock_text = f"✅ {product['stock']} in stock" if product['stock'] > 0 else "❌ Out of stock"
+                                response_text += f"• **{product['name']}** - ₱{product['price']:.2f}\n  {stock_text}\n\n"
+                            
+                            response_text += "💰 **To Purchase:** Contact admin 09911127180 mb"
+                        except:
+                            response_text = "📦 **No products available yet.**"
+                    else:
+                        response_text = "📦 **No products available yet.**\n\nCheck back soon!"
+                
+                elif text == '/balance':
+                    response_text = """💰 **Your Balance:** ₱0.00
 
-👋 Hello! I'm your personal shopping assistant.
+**To add funds:** Use /deposit
+📞 **Contact:** 09911127180 mb
 
-💰 **Your Balance:** ₱{user_balance:.2f}
-📦 **Available Products:** {product_count} items
+**Commands:**
+• /products - View catalog
+• /balance - Check balance
+• /deposit - Add money"""
 
-**🏪 Browse & Shop:**
-/products - Browse our catalog
-/balance - Check your balance
-/deposit - Add money to account
+                elif text == '/deposit':
+                    response_text = """💰 **Add Money to Your Account**
 
-**📱 Quick Actions:**
-/cart - View your cart
-/orders - Your purchase history
-/support - Get help
+**Payment Methods Available:**
+🟢 **GCash** - Instant processing
+🔵 **PayMaya** - Fast & secure
+🟡 **Bank Transfer** - All major banks
 
-**🎯 How to Shop:**
+**How to Deposit:**
+1. Choose your amount (minimum ₱50)
+2. Send payment to our account
+3. Send screenshot of receipt
+4. Get instant balance credit!
+
+**💳 Payment Details:**
+📞 **GCash/PayMaya:** 09911127180
+🏦 **Bank:** Ask for details
+
+**📧 Send receipt to:** 09911127180 mb
+⚠️ **No receipt = No processing**
+
+**💬 Contact for instant processing:**
+Message: 09911127180
+
+Ready to add funds! Send your payment screenshot! 💳"""
+
+                elif text == '/support' or text == '/help':
+                    response_text = """🆘 **Customer Support**
+
+**📞 Direct Contact:**
+💬 **WhatsApp/Telegram:** 09911127180
+📧 **For receipts:** Send to 09911127180 mb
+
+**⚡ Fast Help:**
+• Product questions
+• Payment issues  
+• Account problems
+• Technical support
+
+**📱 Available Commands:**
+• /products - Browse catalog
+• /balance - Check balance
+• /deposit - Add money
+• /support - Get help
+
+**🕐 Support Hours:** 24/7 available
+**⚡ Response Time:** Usually within 5 minutes
+
+We're here to help! Contact us now! 💪"""
+
+                elif text == '/start' or text == '/menu':
+                    response_text = f"""🛍️ **Welcome to Premium Store!**
+
+👋 **Hello! Your digital services store!**
+
+📦 **Products Available:** {product_count} items
+💰 **Your Balance:** ₱0.00
+
+**🏪 Quick Actions:**
+• /products - Browse our catalog  
+• /deposit - Add money to account
+• /balance - Check your funds
+• /support - Get help
+
+**🛒 How to Shop:**
 1. Browse products with /products
-2. Add balance with /deposit if needed
-3. Purchase instantly with your balance
+2. Add balance with /deposit  
+3. Contact admin to purchase
 4. Get instant delivery!
 
-Ready to start shopping? Use /products to browse! 🚀"""
-                    
-                    elif text == '/products' or text == '/catalog':
-                        # Show actual products from database
-                        if products:
-                            response_text = "🏪 **Our Product Catalog**\n\n"
-                            categories = {}
-                            for product in products:
-                                cat = product.get('category', 'General')
-                                if cat not in categories:
-                                    categories[cat] = []
-                                categories[cat].append(product)
-                            
-                            for category, cat_products in categories.items():
-                                response_text += f"**{category}:**\n"
-                                for product in cat_products[:5]:  # Show first 5 per category
-                                    stock_text = f"✅ {product['stock']} in stock" if product['stock'] > 0 else "❌ Out of stock"
-                                    response_text += f"• {product['name']} - ₱{product['price']} ({stock_text})\n"
-                                response_text += "\n"
-                            
-                            response_text += "🛒 **To purchase:** Contact admin or use /balance to add funds first!"
-                        else:
-                            response_text = "📦 **No products available yet.**\n\nCheck back soon! New products are added regularly."
-                    
-                    elif text == '/balance':
-                        response_text = f"""💰 **Your Account Balance**
-
-**Current Balance:** ₱{user_balance:.2f}
-**Total Deposited:** ₱{user_data.get('total_deposited', 0.0):.2f}
-**Total Spent:** ₱{user_data.get('total_spent', 0.0):.2f}
-
-**Need to add funds?**
-Use /deposit to add money to your account and start shopping!
-
-**Recent Activity:**
-• Last purchase: {user_data.get('last_purchase', 'None')}
-• Account created: {user_data.get('created_at', 'Unknown')}"""
-                    
-                    else:
-                        # Default welcome message
-                        response_text = f"""👋 **Welcome to Premium Store!**
-
-🏪 **Your one-stop shop for premium services!**
-
-💰 **Your Balance:** ₱{user_balance:.2f}
-📦 **Products Available:** {product_count} items
-
-**Quick Start:**
-• /products - Browse our catalog
-• /balance - Check your funds  
-• /deposit - Add money to shop
-
-Ready to explore? Try /products! 🛍️"""
-                        
-                except Exception as e:
-                    # Fallback response
+📞 **Contact:** 09911127180 mb
+Ready to start shopping! 🚀"""
+                
+                else:
+                    # Default response for ANY message
                     response_text = f"""👋 **Welcome to Premium Store!**
 
-🏪 **Premium Services Available**
-📱 Use /products to browse
-💰 Use /balance to check funds
-📞 Contact: 09911127180 mb
+🏪 **Digital Services & Accounts**
+📦 **Products Available:** {product_count} items
+
+**📱 Quick Commands:**
+• /products - Browse catalog
+• /balance - Check balance
+📞 **Contact:** 09911127180 mb
+
+**🛒 How to Order:**
+1. Browse with /products
+2. Contact admin to purchase
+3. Get instant delivery!
 
 Ready to shop! 🛍️"""
 
