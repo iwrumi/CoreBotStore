@@ -469,21 +469,24 @@ Ready to help! Contact us now! 💪"""
                 logger.info(f"Admin command received: {text}")
                 logger.info(f"Pipe count: {text.count('|')}")
                 
-                if text.count('|') >= 2 and text.startswith('/addproduct'):
-                    # Parse product data - flexible format
-                    logger.info("Processing product addition...")
+                if text.startswith('/add '):
+                    # SUPER SIMPLE product addition - just "/add ProductName Price Stock"
+                    logger.info("Processing simple product addition...")
                     try:
-                        parts = text.replace('/addproduct ', '').split('|')
+                        parts = text.replace('/add ', '').split()
                         
-                        # Required fields
-                        name = parts[0].strip()
-                        price = float(parts[1].strip())
-                        stock = int(parts[2].strip())
+                        if len(parts) >= 3:
+                            # Get name (everything except last 2 parts)
+                            name = ' '.join(parts[:-2])
+                            price = float(parts[-2])
+                            stock = int(parts[-1])
+                        else:
+                            raise ValueError("Need at least name, price, and stock")
                         
-                        # Optional fields with defaults
-                        category = parts[3].strip() if len(parts) > 3 and parts[3].strip() else 'general'
-                        description = parts[4].strip() if len(parts) > 4 and parts[4].strip() else f"{name} - Premium Service"
-                        emoji = parts[5].strip() if len(parts) > 5 and parts[5].strip() else '⭐'
+                        # Auto-fill everything else
+                        category = 'digital'
+                        description = f"{name} - Premium Digital Service"
+                        emoji = '⭐'
                         
                         # Load existing products
                         products = []
@@ -515,55 +518,88 @@ Ready to help! Contact us now! 💪"""
                         with open('data/products.json', 'w') as f:
                             json_lib.dump(products, f, indent=2)
                         
-                        response_text = f"""✅ **Product Added Successfully!**
+                        response_text = f"""✅ Product Added!
 
-📦 **Product:** {name}
-💰 **Price:** ₱{price}
-📊 **Stock:** {stock}
-🏷️ **Category:** {category}
-{emoji} **Ready for customers!**
+📦 {name}
+💰 ₱{price}
+📊 {stock} available
 
-Your product is now available in the store. Customers can browse and purchase it immediately!
-
-➕ Add another: `/addproduct ProductName|Price|Stock`
-📦 Add accounts: `/addstock {product_id}`
-📊 View all: `/products`"""
+➕ Add another: /add ProductName Price Stock
+📊 View all: /products"""
 
                     except Exception as e:
-                        response_text = f"""❌ **Error Adding Product**
+                        response_text = f"""❌ Error Adding Product
 
-**Simple Format:**
-`/addproduct ProductName|Price|Stock`
+Super Simple Format:
+/add ProductName Price Stock
 
-**Examples:**
-• `/addproduct Netflix Premium|149|50`
-• `/addproduct Spotify|120|25`
-• `/addproduct Steam Wallet|500|15`
+Examples:
+• /add Netflix Premium 149 50
+• /add Spotify 120 25
+• /add Steam Wallet 500 15
 
-**Optional extras:**
-`/addproduct Name|Price|Stock|Category|Description|Emoji`
-
-Try the simple format! Error: {str(e)}"""
+Error: {str(e)}"""
                     
-                elif text.startswith('/addproduct'):
-                    response_text = """➕ **Add New Product**
+                elif text.startswith('/addbalance '):
+                    # Add balance to user: /addbalance UserID Amount
+                    try:
+                        parts = text.replace('/addbalance ', '').split()
+                        if len(parts) >= 2:
+                            target_user_id = parts[0]
+                            amount = float(parts[1])
+                            
+                            # Load users
+                            users = {}
+                            try:
+                                with open('data/users.json', 'r') as f:
+                                    users = json_lib.load(f)
+                            except:
+                                pass
+                            
+                            # Add balance
+                            if target_user_id not in users:
+                                users[target_user_id] = {"balance": 0, "total_deposited": 0, "total_spent": 0}
+                            
+                            users[target_user_id]["balance"] = users[target_user_id].get("balance", 0) + amount
+                            users[target_user_id]["total_deposited"] = users[target_user_id].get("total_deposited", 0) + amount
+                            
+                            # Save users
+                            with open('data/users.json', 'w') as f:
+                                json_lib.dump(users, f, indent=2)
+                            
+                            # Notify user
+                            user_message = f"💰 Balance Added!\n\n✅ +₱{amount} added to your account\n💳 New Balance: ₱{users[target_user_id]['balance']}\n\nYou can now shop! 🎉"
+                            
+                            user_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                            user_data = json_lib.dumps({
+                                "chat_id": target_user_id,
+                                "text": user_message
+                            }).encode('utf-8')
+                            
+                            user_req = urllib.request.Request(user_url, data=user_data, headers={'Content-Type': 'application/json'})
+                            try:
+                                urllib.request.urlopen(user_req)
+                            except:
+                                pass
+                            
+                            response_text = f"✅ Balance Added!\n\n💰 Added ₱{amount} to user {target_user_id}\n💳 New Balance: ₱{users[target_user_id]['balance']}\n\nUser has been notified! 🎉"
+                        else:
+                            response_text = "❌ Format: /addbalance UserID Amount\n\nExample: /addbalance 123456789 100"
+                    except Exception as e:
+                        response_text = f"❌ Error adding balance: {str(e)}\n\nFormat: /addbalance UserID Amount"
+                
+                elif text.startswith('/add'):
+                    response_text = """➕ Add New Product
 
-**Super Simple Format:**
-```
-/addproduct Netflix Premium|149|50
-```
+Super Simple Format:
+/add ProductName Price Stock
 
-**That's it!** Just: Name | Price | Stock
+Examples:
+• /add Netflix Premium 149 50
+• /add Spotify 120 25
+• /add Steam Wallet 500 15
 
-**Examples:**
-• `/addproduct Netflix Premium|149|50`
-• `/addproduct Spotify|120|25` 
-• `/addproduct Steam Wallet|500|15`
-
-**Optional extras (if you want):**
-`/addproduct Name|Price|Stock|Category|Description|Emoji`
-
-Ready to add your product! 🚀"""
+That's it! No complicated symbols needed."""
 
                 elif text.count('|') >= 2 and text.startswith('/addproduct'):
                     # Parse product data - flexible format
@@ -610,19 +646,14 @@ Ready to add your product! 🚀"""
                         with open('data/products.json', 'w') as f:
                             json_lib.dump(products, f, indent=2)
                         
-                        response_text = f"""✅ **Product Added Successfully!**
+                        response_text = f"""✅ Product Added!
 
-📦 **Product:** {name}
-💰 **Price:** ₱{price}
-📊 **Stock:** {stock}
-🏷️ **Category:** {category}
-{emoji} **Ready for customers!**
+📦 {name}
+💰 ₱{price}
+📊 {stock} available
 
-Your product is now available in the store. Customers can browse and purchase it immediately!
-
-➕ Add another: `/addproduct ProductName|Price|Stock`
-📦 Add accounts: `/addstock {product_id}`
-📊 View all: `/products`"""
+➕ Add another: /add ProductName Price Stock
+📊 View all: /products"""
 
                     except Exception as e:
                         response_text = f"""❌ **Error Adding Product**
