@@ -38,5 +38,31 @@
       "status": "available",
       "added_at": "2025-09-09T07:25:00.000000"
     }
+  ],
+  "2": [
+    {
+      "id": 1,
+      "type": "account",
+      "details": {
+        "email": "pahsof@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T08:26:00.000000"
+    },
+    {
+      "id": 2,
+      "type": "account",
+      "details": {
+        "email": "meehaf@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T08:26:00.000000"
+    }
   ]
 }

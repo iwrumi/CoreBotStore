@@ -1057,12 +1057,12 @@ Send accounts now!"""
                                 
                                 for line in accounts:
                                     line = line.strip()
-                                    if line.startswith('pass:') or line.startswith('password:'):
+                                    if line.lower().startswith('pass:') or line.lower().startswith('password:'):
                                         # Extract common password
                                         common_password = line.split(':', 1)[1].strip()
-                                    elif '@' in line and ':' not in line and '|' not in line:
+                                    elif '@' in line and ':' not in line and '|' not in line and not line.lower().startswith('pass'):
                                         # Just email
-                                        emails_only.append(line)
+                                        emails_only.append(line.strip())
                                 
                                 # If we found emails and a common password, use them
                                 if emails_only and common_password:

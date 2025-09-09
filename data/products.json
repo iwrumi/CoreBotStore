@@ -15,7 +15,7 @@
     "description": "🎵 Spotify Premium - Music & Podcasts\n\n✨ Features:\n• Ad-free music streaming\n• Offline downloads\n• High quality audio\n• Unlimited skips\n• Access to exclusive content\n\n🕐 Instant delivery after payment\n📱 Works on all devices",
     "price": 25.0,
     "category": "music",
-    "stock": 0,
+    "stock": 2,
     "image_url": "",
     "created_at": "2025-09-09T08:15:00.000000"
   },
