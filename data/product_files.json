@@ -121,8 +121,10 @@
         "subscription": "CapCut Pro - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T10:09:28.997858"
+      "status": "sold",
+      "added_at": "2025-09-09T10:09:28.997858",
+      "sold_to": "7611200353",
+      "sold_at": "{\"timestamp\": \"now\"}"
     },
     {
       "id": 10,
@@ -926,6 +928,58 @@
       "added_at": "2025-09-09T14:51:11.215117",
       "sold_to": "7768712211",
       "sold_at": "{\"timestamp\": \"now\"}"
+    },
+    {
+      "id": 2,
+      "type": "account",
+      "details": {
+        "email": "chatgpt.solo1@kyoverse.me",
+        "password": "SoloChatGPT123!",
+        "subscription": "ChatGPT Plus Solo - 1 Month",
+        "instructions": "Login with these credentials. This is a PERSONAL account (1 user only). Do not change password for 24 hours. Vouch @tiramisucakekyo within 24 hours to activate warranty."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T15:50:00.000000"
+    }
+  ],
+  "15": [
+    {
+      "id": 1,
+      "type": "account",
+      "details": {
+        "email": "chatgpt.shared1@kyoverse.me",
+        "password": "SharedChatGPT123!",
+        "subscription": "ChatGPT Plus Shared - 1 Month",
+        "instructions": "Login with these credentials. This is a SHARED account for 2-4 users. Do not change password for 24 hours. Vouch @tiramisucakekyo within 24 hours to activate warranty."
+      },
+      "status": "sold",
+      "added_at": "2025-09-09T15:50:00.000000",
+      "sold_to": "7975860674",
+      "sold_at": "{\"timestamp\": \"now\"}"
+    },
+    {
+      "id": 2,
+      "type": "account",
+      "details": {
+        "email": "chatgpt.shared2@kyoverse.me",
+        "password": "SharedChatGPT456!",
+        "subscription": "ChatGPT Plus Shared - 1 Month",
+        "instructions": "Login with these credentials. This is a SHARED account for 2-4 users. Do not change password for 24 hours. Vouch @tiramisucakekyo within 24 hours to activate warranty."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T15:50:00.000000"
+    },
+    {
+      "id": 3,
+      "type": "account",
+      "details": {
+        "email": "chatgpt.shared3@kyoverse.me",
+        "password": "SharedChatGPT789!",
+        "subscription": "ChatGPT Plus Shared - 1 Month",
+        "instructions": "Login with these credentials. This is a SHARED account for 2-4 users. Do not change password for 24 hours. Vouch @tiramisucakekyo within 24 hours to activate warranty."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T15:50:00.000000"
     }
   ]
 }

@@ -46,12 +46,12 @@
   },
   "7975860674": {
     "balance": 0.0,
-    "total_deposited": 40.0,
-    "total_spent": 40.0
+    "total_deposited": 80.0,
+    "total_spent": 80.0
   },
   "7611200353": {
-    "balance": 20.0,
+    "balance": 0.0,
     "total_deposited": 20.0,
-    "total_spent": 0
+    "total_spent": 20
   }
 }

@@ -585,7 +585,7 @@ DM him with the vouch!
                                         admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
                                         urllib.request.urlopen(admin_req)
                             except Exception as e:
-                                # Send error to admin
+                                # Send error to admin AND customer
                                 error_msg = f"❌ File delivery error for {product['name']}: {str(e)}"
                                 admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
                                 admin_data = json_lib.dumps({
@@ -594,6 +594,16 @@ DM him with the vouch!
                                 }).encode('utf-8')
                                 admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
                                 urllib.request.urlopen(admin_req)
+                                
+                                # Notify customer about delivery issue
+                                customer_msg = f"⚠️ Delivery Issue\n\nYour purchase of {product['name']} was successful, but there was an issue delivering your account details.\n\nOur admin has been notified and will send your details manually within 24 hours.\n\nContact: @tiramisucakekyo for immediate assistance."
+                                customer_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                customer_data = json_lib.dumps({
+                                    "chat_id": user_id,
+                                    "text": customer_msg
+                                }).encode('utf-8')
+                                customer_req = urllib.request.Request(customer_url, data=customer_data, headers={'Content-Type': 'application/json'})
+                                urllib.request.urlopen(customer_req)
                             
                 except Exception as e:
                     response_text = f"❌ Purchase failed: {str(e)}"
