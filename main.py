@@ -156,14 +156,14 @@ def webhook():
             
             # Handle message_admin callback
             if callback_data == "message_admin":
-                response_text = "📩 **Contact Admin**\n\n**How to reach admin:**\n\n💬 **Telegram:** 09911127180\n📞 **Call/Text:** 09911127180\n\n**For faster approval:**\n✅ Send your receipt photo to this bot\n✅ Include amount in message\n✅ Wait for admin approval\n\n**Approval usually within 5 minutes!**"
+                response_text = "📩 Contact Admin\n\nHow to reach admin:\n\n💬 Telegram: 09911127180\n📞 Call/Text: 09911127180\n\nFor faster approval:\n✅ Send your receipt photo to this bot\n✅ Include amount in message\n✅ Wait for admin approval\n\nApproval usually within 5 minutes!"
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "💳 Send Receipt to Bot", "callback_data": "send_receipt_info"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
             
             elif callback_data == "send_receipt_info":
-                response_text = "📸 **Send Receipt Instructions**\n\n**Steps:**\n1. Take clear photo of your GCash receipt\n2. Send the photo to this bot\n3. Include amount in message (e.g., '₱100')\n4. Wait for admin approval\n\n**Example message with photo:**\n'₱150 deposit - please approve'\n\n**Ready to send your receipt? Just upload the photo now! 📸**"
+                response_text = "📸 Send Receipt Instructions\n\nSteps:\n1. Take clear photo of your GCash receipt\n2. Send the photo to this bot\n3. Include amount in message (e.g., '₱100')\n4. Wait for admin approval\n\nExample message with photo:\n'₱150 deposit - please approve'\n\nReady to send your receipt? Just upload the photo now! 📸"
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "🔙 Back to Deposit", "callback_data": "deposit_funds"}],
                     [{"text": "🔙 Main Menu", "callback_data": "main_menu"}]
