@@ -751,7 +751,7 @@ Max quantity: {product['stock']}"""
             }).encode('utf-8')
             
             # DEBUG: Log the request details
-            logger.info(f"DEBUG: Sending editMessageText for user {user_id}, callback: {callback_data}")
+            logger.info(f"MAIN.PY HANDLER: Processing callback {callback_data} for user {user_id}")
             logger.info(f"DEBUG: chat_id={chat_id}, message_id={message_id}")
             logger.info(f"DEBUG: text='{response_text}'")
             logger.info(f"DEBUG: keyboard={inline_keyboard}")

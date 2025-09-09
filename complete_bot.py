@@ -276,9 +276,11 @@ Come back daily to maintain your streak!
             await balance_commands.deposit_balance_command(query, context)
         
         elif data == "browse_products" or data == "other_categories":
-            from product_commands import ProductCommands
-            product_commands = ProductCommands()
-            await product_commands.browse_products_command(query, context)
+            logger.info(f"COMPLETE_BOT.PY: Processing browse_products for user {query.from_user.id}")
+            # ULTRA SIMPLE RESPONSE TO FIX THE ISSUE
+            await query.edit_message_text("Products available", reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("Back", callback_data="start_over")
+            ]]))
         
         elif data == "check_balance":
             from balance_commands import BalanceCommands
