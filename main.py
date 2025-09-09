@@ -177,6 +177,8 @@ def webhook():
                     [{"text": "📚 Education", "callback_data": "category_education"}],
                     [{"text": "🎨 Design", "callback_data": "category_design"}],
                     [{"text": "🤖 AI Tools", "callback_data": "category_ai"}],
+                    [{"text": "📢 LFB Services", "callback_data": "category_lfb"}],
+                    [{"text": "🔥 Combo Services", "callback_data": "category_combo"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
                 logger.info(f"WEBHOOK: Prepared response for browse_products")
