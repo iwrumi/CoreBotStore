@@ -1236,6 +1236,34 @@ When customers send payment proof, they'll appear here for your manual approval.
                     else:
                         response_text = "❌ **Usage:** `/msg USER_ID your message here`\n\n**Example:** `/msg 123456789 Your receipt has been processed!`"
 
+                elif text.startswith('/help'):
+                    response_text = f"""🔧 Admin Help
+
+👤 Admin ID: {user_id}
+
+📦 Product Commands:
+/add ProductName Price Stock - Add products
+/products - View all products  
+/addfile 1 - Add accounts to products
+
+📸 Receipt Commands:
+/receipts - View pending receipts
+/approve ID - Approve deposit
+/reject ID - Reject deposit  
+
+💰 User Commands:
+/addbalance UserID Amount - Add balance
+/msg UserID message - Message user
+
+📊 System Commands:
+/admin - Admin panel
+/stats - Statistics
+
+💡 Quick Tips:
+- Send email:password to add accounts
+- Receipt photos come with ✅/❌ buttons
+- System is silent like primostorebot"""
+
                 elif text.startswith('/admin'):
                     response_text = f"Admin Panel\n\nAdmin ID: {user_id}\nStatus: Active\n\nCommands:\n/add ProductName Price Stock\n/products - View products\n/addfile ProductID - Add files to products\n/receipts - View receipts\n/stats - Statistics\n\nSystem ready!"
 
@@ -1406,6 +1434,30 @@ Type /start to see the interactive menu.
 • /balance - Check balance
 • /deposit - Add funds"""
                 
+                elif text == '/help':
+                    response_text = f"""💡 Customer Help
+
+👋 Welcome to Premium Store!
+
+🛍️ Shopping Commands:
+/start - Main menu with buttons
+/products - Browse products
+/balance - Check your balance
+/deposit - Add funds to account
+
+💳 Payment Methods:
+📱 GCash: 09911127180
+💰 Send receipt photo for approval
+
+📞 Support:
+Contact: 09911127180 mb
+
+💡 How to Shop:
+1. Add funds via GCash
+2. Send receipt photo (silent approval)
+3. Browse products with /start
+4. Buy with quantity selection!"""
+
                 elif text == '/balance':
                     response_text = f"""💰 **Account Balance**
 
