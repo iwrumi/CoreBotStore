@@ -123,6 +123,7 @@ def webhook():
         if update_data and 'message' in update_data:
             import urllib.request
             import json as json_lib
+            from datetime import datetime
             
             message = update_data['message']
             chat_id = str(message['chat']['id'])
@@ -169,37 +170,33 @@ def webhook():
                         emoji = parts[5].strip() if len(parts) > 5 and parts[5].strip() else '⭐'
                         
                         # Load existing products
-                        products = {}
+                        products = []
                         try:
-                            with open('config/sample_products.json', 'r') as f:
+                            with open('data/products.json', 'r') as f:
                                 products = json_lib.load(f)
                         except:
                             pass
                         
-                        # Create product ID
-                        product_id = name.lower().replace(' ', '_').replace('-', '_')
+                        # Generate new ID
+                        max_id = max([p['id'] for p in products], default=0) if products else 0
+                        new_id = max_id + 1
                         
-                        # Add new product
-                        products[product_id] = {
-                            "id": product_id,
+                        # Add new product in the format the old system expects
+                        new_product = {
+                            "id": new_id,
                             "name": name,
-                            "category_id": category,
                             "description": description,
-                            "variants": [
-                                {
-                                    "id": 1,
-                                    "name": "Standard",
-                                    "price": price,
-                                    "stock": stock,
-                                    "features": ["Premium Access"]
-                                }
-                            ],
-                            "emoji": emoji,
-                            "auto_delivery": True
+                            "price": price,
+                            "category": category,
+                            "stock": stock,
+                            "image_url": "",
+                            "created_at": datetime.now().isoformat()
                         }
                         
-                        # Save products
-                        with open('config/sample_products.json', 'w') as f:
+                        products.append(new_product)
+                        
+                        # Save products to the file that data_manager reads
+                        with open('data/products.json', 'w') as f:
                             json_lib.dump(products, f, indent=2)
                         
                         response_text = f"""✅ **Product Added Successfully!**
@@ -268,37 +265,33 @@ Ready to add your product! 🚀"""
                         emoji = parts[5].strip() if len(parts) > 5 and parts[5].strip() else '⭐'
                         
                         # Load existing products
-                        products = {}
+                        products = []
                         try:
-                            with open('config/sample_products.json', 'r') as f:
+                            with open('data/products.json', 'r') as f:
                                 products = json_lib.load(f)
                         except:
                             pass
                         
-                        # Create product ID
-                        product_id = name.lower().replace(' ', '_').replace('-', '_')
+                        # Generate new ID
+                        max_id = max([p['id'] for p in products], default=0) if products else 0
+                        new_id = max_id + 1
                         
-                        # Add new product
-                        products[product_id] = {
-                            "id": product_id,
+                        # Add new product in the format the old system expects
+                        new_product = {
+                            "id": new_id,
                             "name": name,
-                            "category_id": category,
                             "description": description,
-                            "variants": [
-                                {
-                                    "id": 1,
-                                    "name": "Standard",
-                                    "price": price,
-                                    "stock": stock,
-                                    "features": ["Premium Access"]
-                                }
-                            ],
-                            "emoji": emoji,
-                            "auto_delivery": True
+                            "price": price,
+                            "category": category,
+                            "stock": stock,
+                            "image_url": "",
+                            "created_at": datetime.now().isoformat()
                         }
                         
-                        # Save products
-                        with open('config/sample_products.json', 'w') as f:
+                        products.append(new_product)
+                        
+                        # Save products to the file that data_manager reads
+                        with open('data/products.json', 'w') as f:
                             json_lib.dump(products, f, indent=2)
                         
                         response_text = f"""✅ **Product Added Successfully!**
