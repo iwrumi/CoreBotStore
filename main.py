@@ -1607,6 +1607,13 @@ Send more accounts to automatically increase stock!"""
 Ready to manage your store!"""
 
             else:
+                # Load users data for all regular user interactions
+                try:
+                    with open('data/users.json', 'r') as f:
+                        users = json_lib.load(f)
+                except:
+                    users = {}
+                
                 # Handle photo messages (receipts) from regular users
                 if 'photo' in message:
                     # Customer sent a receipt photo
@@ -1707,19 +1714,93 @@ Ready to manage your store!"""
 
                 # Handle custom keyboard button presses (from primostorebot-style interface)
                 if text == "💰 Deposit Balance":
-                    # Redirect to deposit functionality
-                    text = "deposit_funds"  # Set to callback data to use existing handler
+                    response_text = """💳 **Deposit Funds**
+
+**📋 Steps to Deposit:**
+1. Send to GCash: 09911127180
+2. Screenshot your receipt  
+3. Send receipt photo here
+4. Wait for admin approval
+5. Get balance credit instantly after approval
+
+⚠️ **Important:** Send receipt as photo to this bot
+📞 **Contact:** 09911127180 mb"""
+                    
                 elif text == "🛒 Browse Products":
-                    # Redirect to browse products
-                    text = "browse_products"  # Set to callback data to use existing handler  
+                    # Show product categories
+                    try:
+                        with open('data/products.json', 'r') as f:
+                            products = json_lib.load(f)
+                        
+                        if products:
+                            response_text = "🏪 **Product Categories**\n\nSelect a category to browse:"
+                            
+                            # Create category buttons
+                            categories = {}
+                            for product in products:
+                                cat = product.get('category', 'General')
+                                if cat not in categories:
+                                    categories[cat] = 0
+                                categories[cat] += 1
+                            
+                            # Generate inline keyboard for categories
+                            inline_keyboard = {"inline_keyboard": []}
+                            for category, count in categories.items():
+                                if category == 'video':
+                                    inline_keyboard["inline_keyboard"].append([{"text": f"🎬 Video Editing ({count})", "callback_data": f"category_{category}"}])
+                                elif category == 'music':
+                                    inline_keyboard["inline_keyboard"].append([{"text": f"🎵 Music & Audio ({count})", "callback_data": f"category_{category}"}])
+                                elif category == 'streaming':
+                                    inline_keyboard["inline_keyboard"].append([{"text": f"📺 Streaming ({count})", "callback_data": f"category_{category}"}])
+                                elif category == 'education':
+                                    inline_keyboard["inline_keyboard"].append([{"text": f"📚 Education ({count})", "callback_data": f"category_{category}"}])
+                                else:
+                                    inline_keyboard["inline_keyboard"].append([{"text": f"📦 {category.title()} ({count})", "callback_data": f"category_{category}"}])
+                            
+                            inline_keyboard["inline_keyboard"].append([{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}])
+                        else:
+                            response_text = "📦 **No Products Available**\n\nProducts will appear here when admin adds them."
+                            inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
+                    except:
+                        response_text = "❌ Error loading products"
+                        inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
+                        
                 elif text == "💳 Check Balance":
-                    # Redirect to check balance
-                    text = "check_balance"  # Set to callback data to use existing handler
+                    # Load user balance
+                    user_data = users.get(str(user_id), {})
+                    balance = user_data.get('balance', 0)
+                    total_deposited = user_data.get('total_deposited', 0)
+                    total_spent = user_data.get('total_spent', 0)
+                    
+                    response_text = f"""💰 **Account Balance**
+
+**Current Balance:** ₱{balance:.2f}
+**Total Deposited:** ₱{total_deposited:.2f}
+**Total Spent:** ₱{total_spent:.2f}
+
+**Account Status:** Active ✅"""
+                    
                 elif text == "👑 Customer Service":
-                    # Redirect to support
-                    text = "support"  # Set to callback data to use existing handler
+                    response_text = """🆘 **Customer Support**
+
+**📞 Contact Information:**
+💬 **Telegram/WhatsApp:** 09911127180
+📧 **For Receipts:** Send to 09911127180 mb
+👤 **Support:** @tiramisucakekyo
+
+**⚡ We Help With:**
+• Payment issues
+• Product questions
+• Account problems  
+• Technical support
+• Order problems
+
+**🕐 Available:** 24/7
+**⚡ Response:** Usually within 5 minutes
+
+Ready to help! Contact us now! 💪"""
+                    
                 elif text == "❓ How to order":
-                    # Show help message
                     response_text = """❓ **How to Order**
 
 **📋 Simple Steps:**
@@ -1736,19 +1817,14 @@ Ready to manage your store!"""
 • Get approved and start shopping!
 
 Ready to order! 🛍️"""
-
+                    
                 # Handle /start command with inline keyboard ONLY if no photo was sent
                 elif (text == '/start' or text == '/menu' or (not text.startswith('/') and not message.get('photo'))):
                     # Don't send welcome if photo was already processed
                     if 'photo' in message:
                         return jsonify({'status': 'ok'})
                     
-                    # Load users data first
-                    try:
-                        with open('data/users.json', 'r') as f:
-                            users = json_lib.load(f)
-                    except:
-                        users = {}
+                    # Users data already loaded above
                         
                     # EXACT primostorebot interface
                     current_time = datetime.now().strftime("%d/%m/%Y - %I:%M:%S %p")
