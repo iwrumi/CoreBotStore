@@ -1417,7 +1417,8 @@ pass: password123
 **Available Products:**
 • capcut - CapCut Pro video editor
 • spotify - Spotify Premium music
-• disney - Disney+ streaming
+• disney_shared - Disney+ Shared (4-6 users)
+• disney_solo - Disney+ Solo (1 user only)
 • quizlet - Quizlet Plus study tools
 • chatgpt - ChatGPT Plus AI assistant  
 • studocu - StudoCu Premium documents
@@ -1425,6 +1426,8 @@ pass: password123
 • canva - Canva Pro design tools
 • picsart - PicsArt Gold photo editor
 • surfshark - Surfshark VPN security
+• youtube_1m - YouTube Premium (1 month)
+• youtube_3m - YouTube Premium (3 months)
 
 **Examples:**
 ```
@@ -1464,13 +1467,15 @@ pass: mypass123
                                 except:
                                     product_files = {}
                                 
-                                # Complete product mapping for all 10 products
+                                # Complete product mapping for all products
                                 product_map = {
-                                    'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
+                                    'capcut': "1", 'spotify': "2", 'disney_shared': "3", 'quizlet': "4", 
                                     'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
                                     'picsart': "9", 'surfshark': "10", 'youtube_1m': "11", 'youtube_3m': "12",
+                                    'disney_solo': "13",
                                     # Alternative names and spellings
-                                    'disney+': "3", 'disneyplus': "3",
+                                    'disney': "3", 'disney+': "3", 'disneyplus': "3", 'disney-shared': "3", 'disneyshared': "3",
+                                    'disney+solo': "13", 'disney-solo': "13", 'disneyplus-solo': "13", 'disneyplussolo': "13", 'disneysolo': "13",
                                     'gpt': "5", 'chat-gpt': "5", 'chatgpt-plus': "5",
                                     'syudocu': "6", 'studycu': "6", 'studecu': "6", 'studocu-premium': "6",
                                     'perplexity-ai': "7", 'perplexity-pro': "7",
@@ -1485,23 +1490,46 @@ pass: mypass123
                                 if product_id not in product_files:
                                     product_files[product_id] = []
                                 
-                                # Add accounts
+                                # Check for duplicates and add accounts
                                 added = 0
+                                duplicates = []
+                                
                                 for email in emails:
-                                    account = {
-                                        "id": len(product_files[product_id]) + 1,
-                                        "type": "account",
-                                        "details": {
-                                            "email": email,
-                                            "password": password,
-                                            "subscription": f"{product_name.title()} Premium - 1 Month",
-                                            "instructions": "Login with these credentials. Do not change password for 24 hours."
-                                        },
-                                        "status": "available",
-                                        "added_at": datetime.now().isoformat()
-                                    }
-                                    product_files[product_id].append(account)
-                                    added += 1
+                                    # Check if email already exists in any product
+                                    email_exists = False
+                                    existing_product = ""
+                                    
+                                    for pid, accounts in product_files.items():
+                                        for account in accounts:
+                                            if account.get('details', {}).get('email', '').lower() == email.lower():
+                                                email_exists = True
+                                                # Get product name
+                                                for pname, p_id in product_map.items():
+                                                    if p_id == pid:
+                                                        existing_product = pname.title()
+                                                        break
+                                                break
+                                        if email_exists:
+                                            break
+                                    
+                                    if email_exists:
+                                        duplicates.append(f"{email} (already in {existing_product})")
+                                    else:
+                                        # Add the account if not duplicate
+                                        account = {
+                                            "id": len(product_files[product_id]) + 1,
+                                            "type": "account",
+                                            "details": {
+                                                "email": email,
+                                                "password": password,
+                                                "subscription": f"{product_name.title()} Premium - 1 Month",
+                                                "instructions": "Login with these credentials. Do not change password for 24 hours."
+                                            },
+                                            "status": "available",
+                                            "added_at": datetime.now().isoformat()
+                                        }
+                                        product_files[product_id].append(account)
+                                        added += 1
                                 
                                 # Save product files
                                 with open('data/product_files.json', 'w') as f:
@@ -1523,13 +1551,35 @@ pass: mypass123
                                 except Exception as e:
                                     logger.error(f"Error updating stock: {e}")
                                 
-                                response_text = f"""✅ **SUCCESS!** Added {added} {product_name} accounts!
+                                # Create response message based on results
+                                if added > 0 and not duplicates:
+                                    response_text = f"""✅ **SUCCESS!** Added {added} {product_name} accounts!
 
 🔑 **Password:** {password}
 📦 **Product:** {product_name.title()}
 📊 **Total Stock:** {len(product_files[product_id])} accounts
 
 Ready for customers! 🛍️"""
+                                elif added > 0 and duplicates:
+                                    response_text = f"""⚠️ **PARTIAL SUCCESS!** Added {added} {product_name} accounts!
+
+🔑 **Password:** {password}
+📦 **Product:** {product_name.title()}
+📊 **Total Stock:** {len(product_files[product_id])} accounts
+
+❌ **Duplicates Skipped:**
+{chr(10).join([f"• {dup}" for dup in duplicates])}
+
+✅ {added} new accounts added successfully! 🛍️"""
+                                elif duplicates and added == 0:
+                                    response_text = f"""❌ **NO ACCOUNTS ADDED!** All emails are duplicates.
+
+🚫 **Duplicate Emails Found:**
+{chr(10).join([f"• {dup}" for dup in duplicates])}
+
+💡 **Tip:** Use unique email addresses that haven't been added before."""
+                                else:
+                                    response_text = "❌ **No valid emails found!** Make sure to include email addresses."
                             else:
                                 response_text = "❌ No valid emails found! Make sure to include email addresses."
                         except Exception as e:
@@ -2249,21 +2299,42 @@ DM him with the vouch!
                             if product_id not in product_files:
                                 product_files[product_id] = []
                             
-                            # Add new account
-                            new_account = {
-                                "id": len(product_files[product_id]) + 1,
-                                "type": "account",
-                                "details": {
-                                    "email": email,
-                                    "password": password,
-                                    "subscription": "CapCut Pro - 1 Month",
-                                    "instructions": "Login with these credentials. Do not change password for 24 hours."
-                                },
-                                "status": "available",
-                                "added_at": datetime.now().isoformat()
-                            }
+                            # Check for duplicate email before adding
+                            email_exists = False
+                            existing_product = ""
                             
-                            product_files[product_id].append(new_account)
+                            for pid, accounts in product_files.items():
+                                for account in accounts:
+                                    if account.get('details', {}).get('email', '').lower() == email.lower():
+                                        email_exists = True
+                                        existing_product = f"Product ID {pid}"
+                                        break
+                                if email_exists:
+                                    break
+                            
+                            if email_exists:
+                                response_text = f"""❌ **DUPLICATE EMAIL DETECTED!**
+
+🚫 **Email:** {email}
+📦 **Already exists in:** {existing_product}
+
+💡 **Tip:** Use a unique email address that hasn't been added before."""
+                            else:
+                                # Add new account
+                                new_account = {
+                                    "id": len(product_files[product_id]) + 1,
+                                    "type": "account",
+                                    "details": {
+                                        "email": email,
+                                        "password": password,
+                                        "subscription": "CapCut Pro - 1 Month",
+                                        "instructions": "Login with these credentials. Do not change password for 24 hours."
+                                    },
+                                    "status": "available",
+                                    "added_at": datetime.now().isoformat()
+                                }
+                                
+                                product_files[product_id].append(new_account)
                             
                             # Save updated files
                             with open('data/product_files.json', 'w') as f:

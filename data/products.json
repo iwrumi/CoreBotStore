@@ -21,11 +21,11 @@
   },
   {
     "id": 3,
-    "name": "disney",
-    "description": "\ud83c\udff0 Disney+ Shared - Movies & Shows\n\n\u2728 Features:\n\u2022 Marvel, Star Wars, Pixar content\n\u2022 4K Ultra HD streaming\n\u2022 Download for offline viewing\n\u2022 Multiple user profiles\n\u2022 Exclusive Disney originals\n\u2022 Shared family account\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcfa Works on all devices",
+    "name": "disney_shared",
+    "description": "\ud83c\udff0 Disney+ Shared - Movies & Shows\n\n\u2728 Features:\n\u2022 Marvel, Star Wars, Pixar content\n\u2022 4K Ultra HD streaming\n\u2022 Download for offline viewing\n\u2022 Multiple user profiles\n\u2022 Exclusive Disney originals\n\u2022 Shared family account (4-6 users)\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcfa Works on all devices",
     "price": 35.0,
     "category": "streaming",
-    "stock": 0,
+    "stock": 1,
     "image_url": "",
     "created_at": "2025-09-09T08:15:00.000000"
   },
@@ -118,5 +118,15 @@
     "stock": 2,
     "image_url": "",
     "created_at": "2025-09-09T12:04:00.000000"
+  },
+  {
+    "id": 13,
+    "name": "disney_solo",
+    "description": "\ud83c\udff0 Disney+ Solo - Movies & Shows\n\n\u2728 Features:\n\u2022 Marvel, Star Wars, Pixar content\n\u2022 4K Ultra HD streaming\n\u2022 Download for offline viewing\n\u2022 Personal account (1 user only)\n\u2022 Exclusive Disney originals\n\u2022 Private viewing experience\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcfa Works on all devices",
+    "price": 55.0,
+    "category": "streaming",
+    "stock": 0,
+    "image_url": "",
+    "created_at": "2025-09-09T12:25:00.000000"
   }
 ]
