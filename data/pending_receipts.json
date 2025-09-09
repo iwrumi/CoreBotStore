@@ -152,5 +152,38 @@
     "username": "kewpiecream",
     "first_name": "kewpie | bulk buyer !!",
     "receipt_id": 14
+  },
+  {
+    "user_id": "8034378887",
+    "chat_id": "8034378887",
+    "photo_file_id": "AgACAgEAAxkBAAIDQ2jARN7_dTgBNNY5LagjoiDnzJgJAAIkrzEbXCYJRrMeSJ30B8G2AQADAgADeQADNgQ",
+    "caption": "",
+    "timestamp": "2025-09-09T15:16:46.427000",
+    "status": "approved",
+    "username": "uhshton",
+    "first_name": "Ashton",
+    "receipt_id": 15
+  },
+  {
+    "user_id": "7975860674",
+    "chat_id": "7975860674",
+    "photo_file_id": "AgACAgUAAxkBAAIDV2jASjerTwteueIwLwIKpTbk1405AAIDyzEbOW4AAVZOkxk9HLxLHAEAAwIAA3kAAzYE",
+    "caption": "",
+    "timestamp": "2025-09-09T15:39:36.203747",
+    "status": "approved",
+    "username": "hanniyah",
+    "first_name": "Hanniii | Onhand NF RVISA \ud83d\ude1a",
+    "receipt_id": 16
+  },
+  {
+    "user_id": "7611200353",
+    "chat_id": "7611200353",
+    "photo_file_id": "AgACAgUAAxkBAAIDbWjAS1llHUjnmLNqf2dEmPbHS9nAAALlxzEbevEAAVaBzKnDapW6NwEAAwIAA3kAAzYE",
+    "caption": "",
+    "timestamp": "2025-09-09T15:44:25.948396",
+    "status": "approved",
+    "username": "qias1979",
+    "first_name": "qias",
+    "receipt_id": 17
   }
 ]

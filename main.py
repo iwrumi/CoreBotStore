@@ -267,14 +267,14 @@ def webhook():
                 except:
                     product_count = 0
 
-                response_text = f"""🛍️ **Welcome to Premium Store!**
+                response_text = f"""🛍️ Welcome to Premium Store!
 
-💎 **Your Digital Services Store**
+💎 Your Digital Services Store
 
-💰 **Balance:** ₱{user_balance:.2f}
-📦 **Products:** {product_count} Available
+💰 Balance: ₱{user_balance:.2f}
+📦 Products: {product_count} Available
 
-🛒 **Use the menu below to navigate:**"""
+🛒 Use the menu below to navigate:"""
                 
                 inline_keyboard = {
                     "inline_keyboard": [
@@ -402,7 +402,7 @@ def webhook():
                             {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
                         ]]}
                     elif product['stock'] < quantity:
-                        response_text = f"❌ **Insufficient Stock**\n\nOnly {product['stock']} items available.\nYou tried to buy {quantity} items."
+                        response_text = f"❌ Insufficient Stock\n\nOnly {product['stock']} items available.\nYou tried to buy {quantity} items."
                         inline_keyboard = {"inline_keyboard": [[
                             {"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}
                         ]]}
@@ -410,7 +410,7 @@ def webhook():
                         total_cost = product['price'] * quantity
                         
                         # Show confirmation instead of immediate purchase
-                        response_text = f"🛒 **Purchase Confirmation**\n\n📦 **Product:** {product['name'].title()}\n🔢 **Quantity:** {quantity}\n💰 **Price per item:** ₱{product['price']}\n💸 **Total Cost:** ₱{total_cost}\n\n💳 **Your Balance:** ₱{user_balance}\n💰 **After Purchase:** ₱{user_balance - total_cost}\n\n❓ **Are you sure you want to buy this?**"
+                        response_text = f"🛒 Purchase Confirmation\n\n📦 Product: {product['name'].title()}\n🔢 Quantity: {quantity}\n💰 Price per item: ₱{product['price']}\n💸 Total Cost: ₱{total_cost}\n\n💳 Your Balance: ₱{user_balance}\n💰 After Purchase: ₱{user_balance - total_cost}\n\n❓ Are you sure you want to buy this?"
                         
                         if user_balance < total_cost:
                             response_text = "No funds."
@@ -451,7 +451,7 @@ def webhook():
                             {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
                         ]]}
                     elif product['stock'] < quantity:
-                        response_text = f"❌ **Insufficient Stock**\n\nOnly {product['stock']} items available.\nYou tried to buy {quantity} items."
+                        response_text = f"❌ Insufficient Stock\n\nOnly {product['stock']} items available.\nYou tried to buy {quantity} items."
                         inline_keyboard = {"inline_keyboard": [[
                             {"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}
                         ]]}
@@ -484,14 +484,14 @@ def webhook():
                             with open('data/products.json', 'w') as f:
                                 json_lib.dump(products, f, indent=2)
                             
-                            response_text = f"""✅ **Purchase Successful!**
+                            response_text = f"""✅ Purchase Successful!
 
-🛍️ **Product:** {product['name']}
-📦 **Quantity:** {quantity}x
-💰 **Total Paid:** ₱{total_cost}
-💳 **Remaining Balance:** ₱{users[user_id]['balance']}
+🛍️ Product: {product['name']}
+📦 Quantity: {quantity}x
+💰 Total Paid: ₱{total_cost}
+💳 Remaining Balance: ₱{users[user_id]['balance']}
 
-📋 **Your purchase details will be sent shortly!**
+📋 Your purchase details will be sent shortly!
 
 Thank you for shopping with us! 🎉"""
                             
@@ -2502,7 +2502,7 @@ Ready to manage your store!"""
                         # Sort users by total spent (descending)
                         sorted_users = sorted(users_data.items(), key=lambda x: x[1].get('total_spent', 0), reverse=True)
                         
-                        response_text = "🏆 **Top Spenders Leaderboard**\n\n"
+                        response_text = "🏆 Top Spenders Leaderboard\n\n"
                         
                         for i, (user_id_key, user_info) in enumerate(sorted_users[:10], 1):
                             total_spent = user_info.get('total_spent', 0)
@@ -2745,7 +2745,7 @@ Contact: 09911127180 mb
 3. Send receipt photo to bot
 4. Wait for confirmation
 
-⚠️ **No receipt = No processing**"""
+⚠️ No receipt = No processing"""
 
                 elif text == '/stock':
                     # Show current stock levels
@@ -2753,7 +2753,7 @@ Contact: 09911127180 mb
                         with open('data/products.json', 'r') as f:
                             products = json_lib.load(f)
                         
-                        response_text = "📦 **Current Stock Levels**\n\n"
+                        response_text = "📦 Current Stock Levels\n\n"
                         
                         in_stock = []
                         low_stock = []
@@ -2772,11 +2772,11 @@ Contact: 09911127180 mb
                                 in_stock.append(f"✅ {name} - ₱{price} ({stock} available)")
                         
                         if in_stock:
-                            response_text += "**✅ IN STOCK:**\n" + "\n".join(in_stock[:8]) + "\n\n"
+                            response_text += "✅ IN STOCK:\n" + "\n".join(in_stock[:8]) + "\n\n"
                         if low_stock:
-                            response_text += "**⚠️ LOW STOCK:**\n" + "\n".join(low_stock[:5]) + "\n\n"
+                            response_text += "⚠️ LOW STOCK:\n" + "\n".join(low_stock[:5]) + "\n\n"
                         if out_of_stock:
-                            response_text += "**❌ OUT OF STOCK:**\n" + "\n".join(out_of_stock[:5]) + "\n\n"
+                            response_text += "❌ OUT OF STOCK:\n" + "\n".join(out_of_stock[:5]) + "\n\n"
                         
                         response_text += "📱 Use /start to shop!"
                         
@@ -2800,7 +2800,7 @@ Contact: 09911127180 mb
                         
                         user_list.sort(key=lambda x: x[1], reverse=True)
                         
-                        response_text = "🏆 **Top Spenders Leaderboard**\n\n"
+                        response_text = "🏆 Top Spenders Leaderboard\n\n"
                         
                         if user_list:
                             for i, (name, spent, uid) in enumerate(user_list[:10], 1):
@@ -2815,9 +2815,9 @@ Contact: 09911127180 mb
                                 
                                 # Clean format without markdown
                                 if uid == str(user_id):
-                                    response_text += f"{emoji} **{name}**\n💸 Total Spent: ₱{spent}\n\n"
+                                    response_text += f"{emoji} {name}\n💸 Total Spent: ₱{spent}\n\n"
                                 else:
-                                    response_text += f"{emoji} **{name}**\n💸 Total Spent: ₱{spent}\n\n"
+                                    response_text += f"{emoji} {name}\n💸 Total Spent: ₱{spent}\n\n"
                         else:
                             response_text += "No customers yet!\n\n"
                         
@@ -2828,11 +2828,11 @@ Contact: 09911127180 mb
                 
                 else:
                     # Redirect to main menu
-                    response_text = """👋 **Welcome to Premium Store!**
+                    response_text = """👋 Welcome to Premium Store!
 
-📱 **Use /start for interactive menu**
+📱 Use /start for interactive menu
 
-**Quick Commands:**
+Quick Commands:
 • /start - Main menu
 • /products - Browse
 • /balance - Check funds

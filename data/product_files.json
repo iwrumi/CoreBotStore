@@ -267,8 +267,10 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:30:33.423896"
+      "status": "sold",
+      "added_at": "2025-09-09T14:30:33.423896",
+      "sold_to": "8034378887",
+      "sold_at": "{\"timestamp\": \"now\"}"
     },
     {
       "id": 2,
