@@ -941,12 +941,11 @@ Ready to manage your store!"""
                     admin_id = "7240133914"  # Your admin ID
                     admin_message = f"📸 **New Receipt #{receipt_id}**\n\n👤 **User:** @{receipt_data['username']} ({receipt_data['first_name']})\n💬 **Caption:** {caption}\n🆔 **User ID:** {user_id}\n\n✅ Approve: /approve {receipt_id}\n❌ Reject: /reject {receipt_id}\n💬 Message: /msg {user_id} your_message"
                     
-                    # Send notification to admin
-                    admin_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
+                    # Send notification to admin (text message first, then forward photo)
+                    admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
                     admin_data = json_lib.dumps({
                         "chat_id": admin_id,
-                        "photo": photo['file_id'],
-                        "caption": admin_message,
+                        "text": admin_message,
                         "parse_mode": "Markdown"
                     }).encode('utf-8')
                     
@@ -954,26 +953,23 @@ Ready to manage your store!"""
                     try:
                         urllib.request.urlopen(admin_req)
                         logger.info(f"Sent receipt notification to admin")
+                        
+                        # Forward the photo separately
+                        forward_url = f"https://api.telegram.org/bot{bot_token}/forwardMessage"
+                        forward_data = json_lib.dumps({
+                            "chat_id": admin_id,
+                            "from_chat_id": chat_id,
+                            "message_id": message['message_id']
+                        }).encode('utf-8')
+                        
+                        forward_req = urllib.request.Request(forward_url, data=forward_data, headers={'Content-Type': 'application/json'})
+                        urllib.request.urlopen(forward_req)
+                        logger.info(f"Forwarded receipt photo to admin")
+                        
                     except Exception as e:
                         logger.error(f"Failed to notify admin: {e}")
                     
-                    response_text = f"""📸 **Receipt Received!**
-
-✅ **Receipt #{receipt_id} submitted successfully**
-
-👨‍💼 **Admin has been notified**
-⏱️ **Processing time:** Usually 1-5 minutes
-🔔 **You'll get notified** when approved
-
-**What happens next:**
-1. Admin reviews your receipt
-2. Amount gets approved/rejected  
-3. Balance credited instantly after approval
-4. You receive confirmation message
-
-**Need help?** Contact: 09911127180
-
-Thank you for your patience! 💙"""
+                    response_text = "Please wait for admin approval"
 
                 # Professional Store Bot Interface with Inline Keyboards
                 # Get user data
