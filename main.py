@@ -1037,7 +1037,17 @@ Send accounts now!"""
                                 except:
                                     product_files = {}
                                 
-                                product_id = "1"  # Default to capcut
+                                # Map product names to IDs
+                                product_map = {
+                                    'capcut': "1",
+                                    'cap cut': "1", 
+                                    'cap': "1",
+                                    'spotify': "2",
+                                    'disney': "3",
+                                    'disney+': "3",
+                                    'quizlet': "4"
+                                }
+                                product_id = product_map.get(product_name, "1")  # Default to capcut
                                 if product_id not in product_files:
                                     product_files[product_id] = []
                                 
@@ -1059,6 +1069,14 @@ Send accounts now!"""
                                         email = parts[0].strip()
                                         password = ('|' if '|' in account_line else ':').join(parts[1:]).strip()
                                         
+                                        # Get product details for subscription name
+                                        subscription_names = {
+                                            "1": "CapCut Pro - 1 Month",
+                                            "2": "Spotify Premium - 1 Month", 
+                                            "3": "Disney+ Premium - 1 Month",
+                                            "4": "Quizlet Plus - 1 Month"
+                                        }
+                                        
                                         # Add account
                                         new_account = {
                                             "id": len(product_files[product_id]) + 1,
@@ -1066,7 +1084,7 @@ Send accounts now!"""
                                             "details": {
                                                 "email": email,
                                                 "password": password,
-                                                "subscription": "CapCut Pro - 1 Month",
+                                                "subscription": subscription_names.get(product_id, "Premium Account - 1 Month"),
                                                 "instructions": "Login with these credentials. Do not change password for 24 hours."
                                             },
                                             "status": "available",
@@ -1091,7 +1109,7 @@ Send accounts now!"""
                                         products = json_lib.load(f)
                                     
                                     for product in products:
-                                        if product['id'] == 1:  # capcut
+                                        if product['id'] == int(product_id):
                                             product['stock'] = total_available
                                             break
                                     
@@ -1101,7 +1119,7 @@ Send accounts now!"""
                                 except:
                                     pass
                                 
-                                response_text = f"""✅ Accounts Added to CapCut!
+                                response_text = f"""✅ Accounts Added to {product_name.title()}!
 
 ➕ Added: {added_count} accounts
 ❌ Failed: {failed_count} accounts
