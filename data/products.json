@@ -15,7 +15,7 @@
     "description": "\ud83c\udfb5 Spotify Premium - Music & Podcasts\n\n\u2728 Features:\n\u2022 Ad-free music streaming\n\u2022 Offline downloads\n\u2022 High quality audio\n\u2022 Unlimited skips\n\u2022 Access to exclusive content\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on all devices",
     "price": 25.0,
     "category": "music",
-    "stock": 4,
+    "stock": 3,
     "image_url": "",
     "created_at": "2025-09-09T08:15:00.000000"
   },
@@ -98,5 +98,25 @@
     "stock": 0,
     "image_url": "",
     "created_at": "2025-09-09T10:40:00.000000"
+  },
+  {
+    "id": 11,
+    "name": "youtube_1m",
+    "description": "📺 YouTube Premium - 1 Month\n\n✨ Features:\n• Ad-free videos\n• Background play\n• YouTube Music included\n• Offline downloads\n• Picture-in-picture mode\n\n🕐 Instant delivery after payment\n📱 Works on all devices",
+    "price": 25.0,
+    "category": "streaming",
+    "stock": 0,
+    "image_url": "",
+    "created_at": "2025-09-09T12:04:00.000000"
+  },
+  {
+    "id": 12,
+    "name": "youtube_3m",
+    "description": "📺 YouTube Premium - 3 Months\n\n✨ Features:\n• Ad-free videos\n• Background play\n• YouTube Music included\n• Offline downloads\n• Picture-in-picture mode\n\n🕐 Instant delivery after payment\n📱 Works on all devices\n💰 Better value for longer subscription",
+    "price": 65.0,
+    "category": "streaming",
+    "stock": 0,
+    "image_url": "",
+    "created_at": "2025-09-09T12:04:00.000000"
   }
 ]

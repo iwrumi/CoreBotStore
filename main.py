@@ -1084,16 +1084,18 @@ Error: {str(e)}"""
                             product_map = {
                                 'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
                                 'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
-                                'picsart': "9", 'surfshark': "10",
+                                'picsart': "9", 'surfshark': "10", 'youtube_1m': "11", 'youtube_3m': "12",
                                 'disney+': "3", 'disneyplus': "3", 'gpt': "5", 'chat-gpt': "5",
                                 'syudocu': "6", 'studycu': "6", 'studecu': "6",
                                 'perplexity-ai': "7", 'canva-pro': "8", 'picsart-gold': "9",
-                                'surf-shark': "10", 'surfshark-vpn': "10"
+                                'surf-shark': "10", 'surfshark-vpn': "10",
+                                'youtube1m': "11", 'yt1m': "11", 'yt1': "11", 'youtube1': "11",
+                                'youtube3m': "12", 'yt3m': "12", 'yt3': "12", 'youtube3': "12"
                             }
                             product_id = product_map.get(product_name, None)
                             
                             if not product_id:
-                                response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, spotify, disney, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark"
+                                response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, spotify, disney, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark, youtube_1m, youtube_3m"
                             else:
                                 # Load product files
                                 try:
@@ -1399,7 +1401,7 @@ pass: mypass123
                                 product_map = {
                                     'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
                                     'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
-                                    'picsart': "9", 'surfshark': "10",
+                                    'picsart': "9", 'surfshark': "10", 'youtube_1m': "11", 'youtube_3m': "12",
                                     # Alternative names and spellings
                                     'disney+': "3", 'disneyplus': "3",
                                     'gpt': "5", 'chat-gpt': "5", 'chatgpt-plus': "5",
@@ -1407,7 +1409,9 @@ pass: mypass123
                                     'perplexity-ai': "7", 'perplexity-pro': "7",
                                     'canva-pro': "8", 'canva-premium': "8",
                                     'picsart-gold': "9", 'pics-art': "9",
-                                    'surf-shark': "10", 'surfshark-vpn': "10"
+                                    'surf-shark': "10", 'surfshark-vpn': "10",
+                                'youtube1m': "11", 'yt1m': "11", 'yt1': "11", 'youtube1': "11",
+                                'youtube3m': "12", 'yt3m': "12", 'yt3': "12", 'youtube3': "12"
                                 }
                                 product_id = product_map.get(product_name, "1")
                                 
@@ -1661,7 +1665,7 @@ pass: password123
                                     product_map = {
                                         'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
                                         'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
-                                        'picsart': "9", 'surfshark': "10",
+                                        'picsart': "9", 'surfshark': "10", 'youtube_1m': "11", 'youtube_3m': "12",
                                         # Alternative names and spellings
                                         'disney+': "3", 'disneyplus': "3",
                                         'gpt': "5", 'chat-gpt': "5", 'chatgpt-plus': "5",
@@ -1669,7 +1673,9 @@ pass: password123
                                         'perplexity-ai': "7", 'perplexity-pro': "7",
                                         'canva-pro': "8", 'canva-premium': "8",
                                         'picsart-gold': "9", 'pics-art': "9",
-                                        'surf-shark': "10", 'surfshark-vpn': "10"
+                                        'surf-shark': "10", 'surfshark-vpn': "10",
+                                'youtube1m': "11", 'yt1m': "11", 'yt1': "11", 'youtube1': "11",
+                                'youtube3m': "12", 'yt3m': "12", 'yt3': "12", 'youtube3': "12"
                                     }
                                     product_id = product_map.get(product_name, "1")
                                     
