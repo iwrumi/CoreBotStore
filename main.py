@@ -1710,6 +1710,13 @@ Ready to manage your store!"""
                     # Don't send welcome if photo was already processed
                     if 'photo' in message:
                         return jsonify({'status': 'ok'})
+                    
+                    # Load users data first
+                    try:
+                        with open('data/users.json', 'r') as f:
+                            users = json_lib.load(f)
+                    except:
+                        users = {}
                         
                     # EXACT primostorebot interface
                     current_time = datetime.now().strftime("%d/%m/%Y - %I:%M:%S %p")
