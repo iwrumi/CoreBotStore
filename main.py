@@ -1152,7 +1152,7 @@ Error: {str(e)}"""
                                 'capcut': "1", 'spotify': "2", 'disney_shared': "3", 'quizlet': "4", 
                                 'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
                                 'picsart': "9", 'surfshark': "10", 'youtube_1m': "11", 'youtube_3m': "12",
-                                'disney_solo': "13",
+                                'disney_solo': "13", 'capcut_7d': "14",
                                 # Alternative names
                                 'disney': "3", 'disney+': "3", 'disneyplus': "3", 'disney-shared': "3", 'disneyshared': "3",
                                 'disney+solo': "13", 'disney-solo': "13", 'disneyplus-solo': "13", 'disneyplussolo': "13", 'disneysolo': "13",
@@ -1165,7 +1165,7 @@ Error: {str(e)}"""
                             product_id = product_map.get(product_name, None)
                             
                             if not product_id:
-                                response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, spotify, disney_shared, disney_solo, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark, youtube_1m, youtube_3m"
+                                response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, capcut_7d, spotify, disney_shared, disney_solo, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark, youtube_1m, youtube_3m"
                             else:
                                 # Load product files
                                 try:
@@ -1350,7 +1350,7 @@ Error: {str(e)}"""
                             'capcut': "1", 'spotify': "2", 'disney_shared': "3", 'quizlet': "4", 
                             'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
                             'picsart': "9", 'surfshark': "10", 'youtube_1m': "11", 'youtube_3m': "12",
-                            'disney_solo': "13",
+                            'disney_solo': "13", 'capcut_7d': "14",
                             # Alternative names
                             'disney': "3", 'disney+': "3", 'disneyplus': "3", 'disney-shared': "3", 'disneyshared': "3",
                             'disney+solo': "13", 'disney-solo': "13", 'disneyplus-solo': "13", 'disneyplussolo': "13", 'disneysolo': "13",
@@ -1363,7 +1363,7 @@ Error: {str(e)}"""
                         product_id = product_map.get(product_name, None)
                         
                         if not product_id:
-                            response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, spotify, disney_shared, disney_solo, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark, youtube_1m, youtube_3m"
+                            response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, capcut_7d, spotify, disney_shared, disney_solo, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark, youtube_1m, youtube_3m"
                         else:
                             # Load product files
                             try:
@@ -1424,6 +1424,7 @@ pass: password123
 
 **Available Products:**
 • capcut - CapCut Pro video editor
+• capcut_7d - CapCut Pro (7 days)
 • spotify - Spotify Premium music
 • disney_shared - Disney+ Shared (4-6 users)
 • disney_solo - Disney+ Solo (1 user only)
@@ -1480,7 +1481,7 @@ pass: mypass123
                                     'capcut': "1", 'spotify': "2", 'disney_shared': "3", 'quizlet': "4", 
                                     'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
                                     'picsart': "9", 'surfshark': "10", 'youtube_1m': "11", 'youtube_3m': "12",
-                                    'disney_solo': "13",
+                                    'disney_solo': "13", 'capcut_7d': "14",
                                     # Alternative names and spellings
                                     'disney': "3", 'disney+': "3", 'disneyplus': "3", 'disney-shared': "3", 'disneyshared': "3",
                                     'disney+solo': "13", 'disney-solo': "13", 'disneyplus-solo': "13", 'disneyplussolo': "13", 'disneysolo': "13",
@@ -1800,7 +1801,8 @@ pass: password123
                                         'picsart-gold': "9", 'pics-art': "9",
                                         'surf-shark': "10", 'surfshark-vpn': "10",
                                 'youtube1m': "11", 'yt1m': "11", 'yt1': "11", 'youtube1': "11",
-                                'youtube3m': "12", 'yt3m': "12", 'yt3': "12", 'youtube3': "12"
+                                'youtube3m': "12", 'yt3m': "12", 'yt3': "12", 'youtube3': "12",
+                                'capcut-7d': "14", 'capcut7d': "14", 'capcut_7': "14", 'capcut7': "14"
                                     }
                                     product_id = product_map.get(product_name, "1")
                                     

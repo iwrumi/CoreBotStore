@@ -115,7 +115,7 @@
     "description": "\ud83d\udcfa YouTube Premium - 3 Months\n\n\u2728 Features:\n\u2022 Ad-free videos\n\u2022 Background play\n\u2022 YouTube Music included\n\u2022 Offline downloads\n\u2022 Picture-in-picture mode\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on all devices\n\ud83d\udcb0 Better value for longer subscription",
     "price": 85.0,
     "category": "streaming",
-    "stock": 2,
+    "stock": 0,
     "image_url": "",
     "created_at": "2025-09-09T12:04:00.000000"
   },
@@ -128,5 +128,15 @@
     "stock": 0,
     "image_url": "",
     "created_at": "2025-09-09T12:25:00.000000"
+  },
+  {
+    "id": 14,
+    "name": "capcut_7d",
+    "description": "\ud83c\udfac CapCut Pro - 7 Days Trial\n\n\u2728 Features:\n\u2022 Professional video editing tools\n\u2022 HD export without watermark\n\u2022 Advanced filters and effects\n\u2022 Audio mixing capabilities\n\u2022 Cloud storage included\n\u2022 7-day access period\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on iOS & Android\n\ud83d\udcb0 Budget-friendly trial option",
+    "price": 8.0,
+    "category": "video",
+    "stock": 0,
+    "image_url": "",
+    "created_at": "2025-09-09T12:35:00.000000"
   }
 ]
