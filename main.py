@@ -214,12 +214,49 @@ def webhook():
                 ]}
             
             elif callback_data == "deposit_funds":
-                response_text = messages.get("deposit_message", "💳 **Deposit Funds**\n\n**💰 Payment Methods:**\n\n🟢 **GCash:** 09911127180\n🔵 **PayMaya:** 09911127180\n\n**📋 Steps to Deposit:**\n1. Choose amount (Min: ₱50)\n2. Send payment to number above\n3. Screenshot your receipt\n4. Send receipt to: 09911127180 mb\n5. Wait for balance credit (Usually 1-5 mins)\n\n⚠️ **Important:** No receipt = No processing\n📞 **Contact:** 09911127180 mb")
+                # Send GCash QR code exactly like primostorebot
+                gcash_qr_message = """📋 **Steps to Deposit:**
+3. Screenshot your receipt  
+4. Send receipt photo to this bot
+5. Wait for admin approval
+6. Get balance credit instantly after approval
+
+⚠️ **Important:** Send receipt as photo to this bot
+📞 **Contact:** 09911127180 mb"""
+
+                # Use your GCash QR code image URL here
+                qr_code_url = "https://telegra.ph/file/a1b2c3d4e5f6.jpg"  # Replace with actual URL
+                
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "📩 Message Admin for Approval", "callback_data": "message_admin"}],
                     [{"text": "💰 Check Balance", "callback_data": "check_balance"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
+                
+                # Try to send photo with QR code
+                photo_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
+                photo_data = json_lib.dumps({
+                    "chat_id": chat_id,
+                    "photo": qr_code_url,
+                    "caption": gcash_qr_message,
+                    "parse_mode": "Markdown",
+                    "reply_markup": inline_keyboard
+                }).encode('utf-8')
+                
+                photo_req = urllib.request.Request(photo_url, data=photo_data, headers={'Content-Type': 'application/json'})
+                try:
+                    with urllib.request.urlopen(photo_req) as response:
+                        logger.info(f"Sent GCash QR code to chat {chat_id}")
+                    return jsonify({'status': 'ok'})
+                except Exception as e:
+                    logger.error(f"Failed to send QR code: {e}")
+                    # Fallback to text message
+                    response_text = gcash_qr_message
+                    inline_keyboard = {"inline_keyboard": [
+                        [{"text": "📩 Message Admin for Approval", "callback_data": "message_admin"}],
+                        [{"text": "💰 Check Balance", "callback_data": "check_balance"}],
+                        [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
+                    ]}
             
             elif callback_data == "view_cart":
                 response_text = messages.get("cart_empty", "🛒 **Shopping Cart**\n\nYour cart is empty.\n\n**To add items:**\n1. Browse Products\n2. Select items \n3. Add to cart\n4. Checkout when ready")
