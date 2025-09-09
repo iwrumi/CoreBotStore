@@ -418,7 +418,92 @@
     }
   ],
   "7": [],
-  "8": [],
+  "8": [
+    {
+      "id": 1,
+      "type": "account",
+      "details": {
+        "email": "mishka@kyoverse.me",
+        "password": "defaultpass123",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:22:46.437578"
+    },
+    {
+      "id": 2,
+      "type": "account",
+      "details": {
+        "email": "jaszmine@kyoverse.me",
+        "password": "defaultpass123",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:22:46.437586"
+    },
+    {
+      "id": 3,
+      "type": "account",
+      "details": {
+        "email": "jeia@kyoverse.me",
+        "password": "defaultpass123",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:22:46.437590"
+    },
+    {
+      "id": 4,
+      "type": "account",
+      "details": {
+        "email": "jieanna@kyoverse.me",
+        "password": "defaultpass123",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:22:46.437593"
+    },
+    {
+      "id": 5,
+      "type": "account",
+      "details": {
+        "email": "niki@kyoverse.ms",
+        "password": "defaultpass123",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:22:46.437595"
+    },
+    {
+      "id": 6,
+      "type": "account",
+      "details": {
+        "email": "gzua@cakkyo.uno",
+        "password": "defaultpass123",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:22:46.437599"
+    },
+    {
+      "id": 7,
+      "type": "account",
+      "details": {
+        "email": "pea@cakkyo.uno",
+        "password": "defaultpass123",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:22:46.437601"
+    }
+  ],
   "9": [],
   "10": []
 }
