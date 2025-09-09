@@ -15,7 +15,7 @@
     "description": "\ud83c\udfb5 Spotify Premium - Music & Podcasts\n\n\u2728 Features:\n\u2022 Ad-free music streaming\n\u2022 Offline downloads\n\u2022 High quality audio\n\u2022 Unlimited skips\n\u2022 Access to exclusive content\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on all devices",
     "price": 25.0,
     "category": "music",
-    "stock": 2,
+    "stock": 1,
     "image_url": "",
     "created_at": "2025-09-09T08:15:00.000000"
   },
@@ -38,25 +38,5 @@
     "stock": 0,
     "image_url": "",
     "created_at": "2025-09-09T08:15:00.000000"
-  },
-  {
-    "id": 5,
-    "name": "spotify",
-    "description": "spotify - Premium Digital Service",
-    "price": 11.0,
-    "category": "digital",
-    "stock": 25,
-    "image_url": "",
-    "created_at": "2025-09-09T08:50:13.705077"
-  },
-  {
-    "id": 6,
-    "name": "spotify",
-    "description": "spotify - Premium Digital Service",
-    "price": 25.0,
-    "category": "digital",
-    "stock": 11,
-    "image_url": "",
-    "created_at": "2025-09-09T08:50:22.868587"
   }
 ]

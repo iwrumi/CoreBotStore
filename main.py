@@ -277,6 +277,7 @@ def webhook():
 **📞 Contact Information:**
 💬 **Telegram/WhatsApp:** 09911127180
 📧 **For Receipts:** Send to 09911127180 mb
+👤 **Support:** @tiramisucakekyo
 
 **⚡ We Help With:**
 • Payment issues
@@ -1366,8 +1367,28 @@ When customers send payment proof, they'll appear here for your manual approval.
 - Receipt photos come with ✅/❌ buttons
 - System is silent like primostorebot"""
 
+                elif text.startswith('/users'):
+                    try:
+                        with open('data/users.json', 'r') as f:
+                            users_data = json_lib.load(f)
+                    except:
+                        users_data = {}
+                    
+                    if not users_data:
+                        response_text = "👥 **All Users**\n\nNo users found"
+                    else:
+                        response_text = f"👥 **All Users** ({len(users_data)} total)\n\n"
+                        for user_id_key, user_info in users_data.items():
+                            username = user_info.get('username', 'Unknown')
+                            balance = user_info.get('balance', 0)
+                            joined = user_info.get('joined_at', 'Unknown')[:10] if user_info.get('joined_at') else 'Unknown'
+                            
+                            response_text += f"👤 **{username}** (ID: {user_id_key})\n"
+                            response_text += f"💰 Balance: ₱{balance}\n"
+                            response_text += f"📅 Joined: {joined}\n\n"
+
                 elif text.startswith('/admin'):
-                    response_text = f"Admin Panel\n\nAdmin ID: {user_id}\nStatus: Active\n\nCommands:\n/add ProductName Price Stock\n/products - View products\n/addacc capcut - Add accounts to products\n/receipts - View receipts\n/stats - Statistics\n\nSystem ready!"
+                    response_text = f"Admin Panel\n\nAdmin ID: {user_id}\nStatus: Active\n\nCommands:\n/add ProductName Price Stock\n/products - View products\n/addacc capcut - Add accounts to products\n/receipts - View receipts\n/users - View all users\n/stats - Statistics\n\nSystem ready!"
 
                 elif text.isdigit() and not text.startswith('/'):
                     # Handle custom quantity input from customer 
