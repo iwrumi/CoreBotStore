@@ -1215,7 +1215,11 @@ Send accounts now!"""
 ❌ Failed: {failed_count} accounts
 📊 Total Stock: {total_available}
 
-All accounts ready for customers! 🚀"""
+All accounts ready for customers! 🚀
+
+Debug info:
+Emails found: {len(emails_only)}
+Password found: {len(common_password) if common_password else 0} chars"""
                                 
                             except Exception as e:
                                 response_text = f"❌ Error processing accounts: {str(e)}"
