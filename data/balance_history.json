@@ -26,5 +26,23 @@
       "timestamp": "2025-09-09 12:41:46",
       "admin_id": "7240133914"
     }
+  ],
+  "6084390700": [
+    {
+      "action": "added",
+      "amount": 2.0,
+      "old_balance": 0,
+      "new_balance": 2.0,
+      "timestamp": "2025-09-09 14:30:20",
+      "admin_id": "7240133914"
+    },
+    {
+      "action": "added",
+      "amount": 18.0,
+      "old_balance": 2.0,
+      "new_balance": 20.0,
+      "timestamp": "2025-09-09 14:30:29",
+      "admin_id": "7240133914"
+    }
   ]
 }
