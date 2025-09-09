@@ -1073,7 +1073,7 @@ Send accounts now!"""
                                         subscription_names = {
                                             "1": "CapCut Pro - 1 Month",
                                             "2": "Spotify Premium - 1 Month", 
-                                            "3": "Disney+ Premium - 1 Month",
+                                            "3": "Disney+ Shared Account",
                                             "4": "Quizlet Plus - 1 Month"
                                         }
                                         

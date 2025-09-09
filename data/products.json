@@ -4,7 +4,7 @@
     "name": "capcut",
     "description": "🎬 CapCut Pro - Premium Video Editor\n\n✨ Features:\n• Professional video editing tools\n• HD export without watermark\n• Advanced filters and effects\n• Audio mixing capabilities\n• Cloud storage included\n\n🕐 Instant delivery after payment\n📱 Works on iOS & Android",
     "price": 20.0,
-    "category": "digital",
+    "category": "video",
     "stock": 4,
     "image_url": "",
     "created_at": "2025-09-09T07:12:03.680395"
@@ -13,8 +13,8 @@
     "id": 2,
     "name": "spotify",
     "description": "🎵 Spotify Premium - Music & Podcasts\n\n✨ Features:\n• Ad-free music streaming\n• Offline downloads\n• High quality audio\n• Unlimited skips\n• Access to exclusive content\n\n🕐 Instant delivery after payment\n📱 Works on all devices",
-    "price": 15.0,
-    "category": "digital",
+    "price": 25.0,
+    "category": "music",
     "stock": 0,
     "image_url": "",
     "created_at": "2025-09-09T08:15:00.000000"
@@ -22,9 +22,9 @@
   {
     "id": 3,
     "name": "disney",
-    "description": "🏰 Disney+ Premium - Movies & Shows\n\n✨ Features:\n• Marvel, Star Wars, Pixar content\n• 4K Ultra HD streaming\n• Download for offline viewing\n• Multiple user profiles\n• Exclusive Disney originals\n\n🕐 Instant delivery after payment\n📺 Works on all devices",
-    "price": 25.0,
-    "category": "digital",
+    "description": "🏰 Disney+ Shared - Movies & Shows\n\n✨ Features:\n• Marvel, Star Wars, Pixar content\n• 4K Ultra HD streaming\n• Download for offline viewing\n• Multiple user profiles\n• Exclusive Disney originals\n• Shared family account\n\n🕐 Instant delivery after payment\n📺 Works on all devices",
+    "price": 35.0,
+    "category": "streaming",
     "stock": 0,
     "image_url": "",
     "created_at": "2025-09-09T08:15:00.000000"
@@ -34,7 +34,7 @@
     "name": "quizlet",
     "description": "📚 Quizlet Plus - Study Tools\n\n✨ Features:\n• Create unlimited study sets\n• Advanced study modes\n• Progress tracking\n• Offline access\n• No ads\n\n🕐 Instant delivery after payment\n💻 Works on all devices",
     "price": 12.0,
-    "category": "digital",
+    "category": "education",
     "stock": 0,
     "image_url": "",
     "created_at": "2025-09-09T08:15:00.000000"
