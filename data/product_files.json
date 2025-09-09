@@ -247,6 +247,102 @@
       },
       "status": "available",
       "added_at": "2025-09-09T08:26:00.000000"
+    },
+    {
+      "id": 3,
+      "type": "account",
+      "details": {
+        "email": "vuhmaf@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:37:05.784495"
+    },
+    {
+      "id": 4,
+      "type": "account",
+      "details": {
+        "email": "zomlot@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:37:05.784503"
+    },
+    {
+      "id": 5,
+      "type": "account",
+      "details": {
+        "email": "jaidun@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:37:05.784505"
+    },
+    {
+      "id": 6,
+      "type": "account",
+      "details": {
+        "email": "mekfet@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:37:05.784507"
+    },
+    {
+      "id": 7,
+      "type": "account",
+      "details": {
+        "email": "wimkat@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:37:05.784508"
+    },
+    {
+      "id": 8,
+      "type": "account",
+      "details": {
+        "email": "toewow@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:37:05.784510"
+    },
+    {
+      "id": 9,
+      "type": "account",
+      "details": {
+        "email": "cumbie@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:37:05.784511"
+    },
+    {
+      "id": 10,
+      "type": "account",
+      "details": {
+        "email": "sivpun@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:37:05.784515"
     }
   ]
 }
