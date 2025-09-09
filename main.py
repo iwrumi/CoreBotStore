@@ -177,8 +177,7 @@ def webhook():
                     [{"text": "📚 Education", "callback_data": "category_education"}],
                     [{"text": "🎨 Design", "callback_data": "category_design"}],
                     [{"text": "🤖 AI Tools", "callback_data": "category_ai"}],
-                    [{"text": "📢 LFB Services", "callback_data": "category_lfb"}],
-                    [{"text": "🔥 Combo Services", "callback_data": "category_combo"}],
+                    [{"text": "🤖 Automated Plugging", "callback_data": "category_plugging"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
                 logger.info(f"WEBHOOK: Prepared response for browse_products")
@@ -487,7 +486,7 @@ def webhook():
                                 json_lib.dump(products, f, indent=2)
                             
                             # Check if this is a plugging service
-                            is_plugging_service = product['category'] in ['lfb', 'combo']
+                            is_plugging_service = product['category'] == 'plugging'
                             
                             if is_plugging_service:
                                 # Special handling for plugging services
@@ -2522,8 +2521,7 @@ Ready to manage your store!"""
                         [{"text": "📚 Education", "callback_data": "category_education"}],
                         [{"text": "🎨 Design", "callback_data": "category_design"}],
                         [{"text": "🤖 AI Tools", "callback_data": "category_ai"}],
-                        [{"text": "📢 LFB Services", "callback_data": "category_lfb"}],
-                        [{"text": "🔥 Combo Services", "callback_data": "category_combo"}],
+                        [{"text": "🤖 Automated Plugging", "callback_data": "category_plugging"}],
                         [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                     ]}
                         
