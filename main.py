@@ -546,6 +546,10 @@ Thank you for shopping with us! 🎉"""
 🔢 Quantity: {quantity}
 💸 Total: ₱{product['price'] * quantity}
 
+🔐 Account Details:
+📧 Email: {file_data['details']['email']}
+🔑 Password: {file_data['details']['password']}
+
 💳 Account delivered automatically!"""
                                                 
                                                 admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
