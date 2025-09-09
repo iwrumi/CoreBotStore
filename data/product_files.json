@@ -428,8 +428,9 @@
         "subscription": "Canva Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T11:22:46.437578"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T11:22:46.437578",
+      "cleared_at": "2025-09-09T11:25:31.290326"
     },
     {
       "id": 2,
@@ -440,8 +441,9 @@
         "subscription": "Canva Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T11:22:46.437586"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T11:22:46.437586",
+      "cleared_at": "2025-09-09T11:25:31.290333"
     },
     {
       "id": 3,
@@ -452,8 +454,9 @@
         "subscription": "Canva Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T11:22:46.437590"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T11:22:46.437590",
+      "cleared_at": "2025-09-09T11:25:31.290336"
     },
     {
       "id": 4,
@@ -464,8 +467,9 @@
         "subscription": "Canva Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T11:22:46.437593"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T11:22:46.437593",
+      "cleared_at": "2025-09-09T11:25:31.290337"
     },
     {
       "id": 5,
@@ -476,8 +480,9 @@
         "subscription": "Canva Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T11:22:46.437595"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T11:22:46.437595",
+      "cleared_at": "2025-09-09T11:25:31.290338"
     },
     {
       "id": 6,
@@ -488,8 +493,9 @@
         "subscription": "Canva Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T11:22:46.437599"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T11:22:46.437599",
+      "cleared_at": "2025-09-09T11:25:31.290339"
     },
     {
       "id": 7,
@@ -500,8 +506,93 @@
         "subscription": "Canva Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T11:22:46.437601",
+      "cleared_at": "2025-09-09T11:25:31.290340"
+    },
+    {
+      "id": 8,
+      "type": "account",
+      "details": {
+        "email": "mishka@kyoverse.me",
+        "password": "tysmforbuying01-A",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
       "status": "available",
-      "added_at": "2025-09-09T11:22:46.437601"
+      "added_at": "2025-09-09T11:25:43.199517"
+    },
+    {
+      "id": 9,
+      "type": "account",
+      "details": {
+        "email": "jaszmine@kyoverse.me",
+        "password": "tysmforbuying01-A",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:25:43.199598"
+    },
+    {
+      "id": 10,
+      "type": "account",
+      "details": {
+        "email": "jeia@kyoverse.me",
+        "password": "tysmforbuying01-A",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:25:43.199603"
+    },
+    {
+      "id": 11,
+      "type": "account",
+      "details": {
+        "email": "jieanna@kyoverse.me",
+        "password": "tysmforbuying01-A",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:25:43.199606"
+    },
+    {
+      "id": 12,
+      "type": "account",
+      "details": {
+        "email": "niki@kyoverse.ms",
+        "password": "tysmforbuying01-A",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:25:43.199608"
+    },
+    {
+      "id": 13,
+      "type": "account",
+      "details": {
+        "email": "gzua@cakkyo.uno",
+        "password": "tysmforbuying01-A",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:25:43.199611"
+    },
+    {
+      "id": 14,
+      "type": "account",
+      "details": {
+        "email": "pea@cakkyo.uno",
+        "password": "tysmforbuying01-A",
+        "subscription": "Canva Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:25:43.199614"
     }
   ],
   "9": [],
