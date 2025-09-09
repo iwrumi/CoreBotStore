@@ -229,5 +229,16 @@
     "username": "xoxoovyy",
     "first_name": "xoxo",
     "receipt_id": 21
+  },
+  {
+    "user_id": "5714160857",
+    "chat_id": "5714160857",
+    "photo_file_id": "AgACAgUAAxkBAAIEPmjAZ1WfnsJzA0FsQexKrMw949lRAAJIxTEbHKAJVq39V6YFSC1AAQADAgADeQADNgQ",
+    "caption": "",
+    "timestamp": "2025-09-09T17:43:50.194376",
+    "status": "pending",
+    "username": "emniebres",
+    "first_name": "Micaella",
+    "receipt_id": 22
   }
 ]

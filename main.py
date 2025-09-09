@@ -1515,16 +1515,28 @@ pass: mypass123
                                 added = 0
                                 duplicates = []
                                 
-                                # Check if this is a shared product (allows duplicates)
-                                is_shared_product = "shared" in product_name.lower()
+                                # Load products to get categories
+                                try:
+                                    with open('data/products.json', 'r') as f:
+                                        products = json_lib.load(f)
+                                    products_dict = {str(p['id']): p for p in products}
+                                except:
+                                    products_dict = {}
+                                
+                                # Get current product category
+                                current_category = products_dict.get(product_id, {}).get('category', '')
                                 
                                 for email in emails:
                                     should_skip = False
                                     existing_product = ""
                                     
-                                    # Only check for duplicates if NOT a shared product
-                                    if not is_shared_product:
-                                        for pid, accounts in product_files.items():
+                                    # Check for duplicates only within the same service category
+                                    for pid, accounts in product_files.items():
+                                        # Get category of this product
+                                        check_category = products_dict.get(pid, {}).get('category', '')
+                                        
+                                        # Only check duplicates within same category
+                                        if check_category == current_category:
                                             for account in accounts:
                                                 if account.get('details', {}).get('email', '').lower() == email.lower():
                                                     should_skip = True
