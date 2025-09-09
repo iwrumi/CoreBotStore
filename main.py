@@ -2455,9 +2455,38 @@ Ready to manage your store!"""
                     
                 elif text == "🛒 Browse Products":
                     logger.info(f"TEXT HANDLER: Browse Products clicked by user {user_id}")
-                    # ULTRA SIMPLE - NO EMOJIS, NO SPECIAL CHARS, NO MARKDOWN
-                    response_text = "PRODUCTS:\n\nCAPCUT - 20 pesos\nSPOTIFY - 25 pesos\nDISNEY SHARED - 35 pesos\nSTUDOCU - 20 pesos\nPERPLEXITY - 35 pesos\nCANVA - 5 pesos\n\nMessage admin to buy: 09911127180"
-                    inline_keyboard = {"inline_keyboard": []}
+                    # WORKING VERSION WITH BUTTONS BUT SIMPLE TEXT
+                    try:
+                        with open('data/products.json', 'r') as f:
+                            products = json_lib.load(f)
+                        
+                        response_text = "AVAILABLE PRODUCTS\n\nChoose a product to buy:\n\n"
+                        inline_keyboard = {"inline_keyboard": []}
+                        
+                        for product in products:
+                            if product.get('stock', 0) > 0:
+                                name = product['name']
+                                price = int(float(product['price']))
+                                stock = product['stock']
+                                
+                                response_text += f"{name.upper()}\n"
+                                response_text += f"Price: {price} pesos\n"
+                                response_text += f"Stock: {stock}\n\n"
+                                
+                                button_text = f"{name.upper()} - {price} pesos"
+                                inline_keyboard["inline_keyboard"].append([{
+                                    "text": button_text, 
+                                    "callback_data": f"product_{product['id']}"
+                                }])
+                        
+                        if not inline_keyboard["inline_keyboard"]:
+                            response_text = "No products available."
+                        else:
+                            inline_keyboard["inline_keyboard"].append([{"text": "Back to Menu", "callback_data": "main_menu"}])
+                        
+                    except Exception as e:
+                        response_text = "Cannot load products right now."
+                        inline_keyboard = {"inline_keyboard": []}
                         
                 elif text == "👑 Customer Service":
                     response_text = "🆘 Customer Support\n\n📞 Contact Information:\n💬 Telegram/WhatsApp: 09911127180\n📧 For Receipts: Send to 09911127180 mb\n👤 Support: @tiramisucakekyo\n\n⚡ We Help With:\n• Payment issues\n• Product questions\n• Account problems\n• Technical support\n• Order problems\n\n🕐 Available: 24/7\n⚡ Response: Usually within 5 minutes\n\nReady to help! Contact us now! 💪"

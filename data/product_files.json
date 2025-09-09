@@ -377,8 +377,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T09:55:43.229751"
+      "status": "removed_by_admin",
+      "added_at": "2025-09-09T09:55:43.229751",
+      "removed_at": "2025-09-09T14:18:40.832009"
     },
     {
       "id": 10,
@@ -389,8 +390,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T09:55:43.229754"
+      "status": "removed_by_admin",
+      "added_at": "2025-09-09T09:55:43.229754",
+      "removed_at": "2025-09-09T14:18:40.832016"
     },
     {
       "id": 11,
@@ -401,8 +403,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T09:55:43.229757"
+      "status": "removed_by_admin",
+      "added_at": "2025-09-09T09:55:43.229757",
+      "removed_at": "2025-09-09T14:18:40.832019"
     },
     {
       "id": 12,
