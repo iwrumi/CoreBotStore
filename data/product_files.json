@@ -1,6 +1,139 @@
 {
   "1": [],
-  "2": [],
+  "2": [
+    {
+      "id": 1,
+      "type": "account",
+      "details": {
+        "email": "pahsof@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229719"
+    },
+    {
+      "id": 2,
+      "type": "account",
+      "details": {
+        "email": "meehaf@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229729"
+    },
+    {
+      "id": 3,
+      "type": "account",
+      "details": {
+        "email": "cowrie@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229732"
+    },
+    {
+      "id": 4,
+      "type": "account",
+      "details": {
+        "email": "vuhmaf@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229735"
+    },
+    {
+      "id": 5,
+      "type": "account",
+      "details": {
+        "email": "zomlot@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229738"
+    },
+    {
+      "id": 6,
+      "type": "account",
+      "details": {
+        "email": "jaidun@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229741"
+    },
+    {
+      "id": 7,
+      "type": "account",
+      "details": {
+        "email": "mekfet@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229743"
+    },
+    {
+      "id": 8,
+      "type": "account",
+      "details": {
+        "email": "wimkat@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229747"
+    },
+    {
+      "id": 9,
+      "type": "account",
+      "details": {
+        "email": "toewow@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229751"
+    },
+    {
+      "id": 10,
+      "type": "account",
+      "details": {
+        "email": "cumbie@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229754"
+    },
+    {
+      "id": 11,
+      "type": "account",
+      "details": {
+        "email": "sivpun@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T09:55:43.229757"
+    }
+  ],
   "3": [],
   "4": []
 }
