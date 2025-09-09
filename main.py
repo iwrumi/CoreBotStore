@@ -151,25 +151,37 @@ def webhook():
                 if text.startswith('/addproduct'):
                     response_text = """➕ **Add New Product**
 
-Send product details in this format:
+**Super Simple Format:**
 ```
-/addproduct Netflix Premium|streaming|149|50|1 Month Netflix Premium Account|📺
+/addproduct Netflix Premium|149|50
 ```
 
-**Format:** `/addproduct Name|Category|Price|Stock|Description|Emoji`
+**That's it!** Just: Name | Price | Stock
 
-**Categories:** streaming, gaming, productivity, vpn
+**Examples:**
+• `/addproduct Netflix Premium|149|50`
+• `/addproduct Spotify|120|25` 
+• `/addproduct Steam Wallet|500|15`
 
-**Example:**
-`/addproduct Spotify Premium|streaming|120|25|1 Month Spotify Premium|🎵`
+**Optional extras (if you want):**
+`/addproduct Name|Price|Stock|Category|Description|Emoji`
 
-Ready to add your product!"""
+Ready to add your product! 🚀"""
 
-                elif text.count('|') >= 5 and text.startswith('/addproduct'):
-                    # Parse product data
+                elif text.count('|') >= 2 and text.startswith('/addproduct'):
+                    # Parse product data - flexible format
                     try:
                         parts = text.replace('/addproduct ', '').split('|')
-                        name, category, price, stock, description, emoji = parts[:6]
+                        
+                        # Required fields
+                        name = parts[0].strip()
+                        price = float(parts[1].strip())
+                        stock = int(parts[2].strip())
+                        
+                        # Optional fields with defaults
+                        category = parts[3].strip() if len(parts) > 3 and parts[3].strip() else 'general'
+                        description = parts[4].strip() if len(parts) > 4 and parts[4].strip() else f"{name} - Premium Service"
+                        emoji = parts[5].strip() if len(parts) > 5 and parts[5].strip() else '⭐'
                         
                         # Load existing products
                         products = {}
@@ -192,8 +204,8 @@ Ready to add your product!"""
                                 {
                                     "id": 1,
                                     "name": "Standard",
-                                    "price": float(price),
-                                    "stock": int(stock),
+                                    "price": price,
+                                    "stock": stock,
                                     "features": ["Premium Access"]
                                 }
                             ],
@@ -215,19 +227,25 @@ Ready to add your product!"""
 
 Your product is now available in the store. Customers can browse and purchase it immediately!
 
-➕ Add another product: /addproduct
-📊 View all products: /products"""
+➕ Add another: `/addproduct ProductName|Price|Stock`
+📦 Add accounts: `/addstock {product_id}`
+📊 View all: `/products`"""
 
                     except Exception as e:
                         response_text = f"""❌ **Error Adding Product**
 
-Please use the correct format:
-`/addproduct Name|Category|Price|Stock|Description|Emoji`
+**Simple Format:**
+`/addproduct ProductName|Price|Stock`
 
-**Example:**
-`/addproduct Netflix Premium|streaming|149|50|1 Month Netflix Premium|📺`
+**Examples:**
+• `/addproduct Netflix Premium|149|50`
+• `/addproduct Spotify|120|25`
+• `/addproduct Steam Wallet|500|15`
 
-Try again with the correct format!"""
+**Optional extras:**
+`/addproduct Name|Price|Stock|Category|Description|Emoji`
+
+Try the simple format!"""
 
                 elif text.startswith('/products'):
                     # Show existing products
