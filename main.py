@@ -114,17 +114,49 @@ def index():
     """)
 
 @app.route('/webhook', methods=['POST'])
-async def webhook():
+def webhook():
     """Handle Telegram webhook updates"""
-    if not bot_app:
-        return jsonify({'error': 'Bot not initialized'}), 500
-    
     try:
-        update = Update.de_json(request.get_json(force=True), bot_app.bot)
-        await bot_app.process_update(update)
+        update_data = request.get_json(force=True)
+        
+        # Simple response to acknowledge webhook
+        if update_data and 'message' in update_data:
+            message = update_data['message']
+            chat_id = message['chat']['id']
+            
+            # Send simple response directly via API
+            import urllib.request
+            import urllib.parse
+            import json as json_lib
+            
+            bot_token = os.environ.get('BOT_TOKEN')
+            
+            response_text = """👋 Hello! Welcome to Premium Store Bot!
+
+🏪 Available Commands:
+/start - Main menu
+/balance - Check your balance  
+/products - Browse products
+/deposit - Add balance
+
+💰 Current Balance: ₱0.00
+
+Choose an option to get started!"""
+            
+            # Send message using urllib
+            url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+            data = json_lib.dumps({"chat_id": chat_id, "text": response_text}).encode('utf-8')
+            
+            req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
+            try:
+                with urllib.request.urlopen(req) as response:
+                    logger.info(f"Sent message to chat {chat_id}")
+            except Exception as e:
+                logger.error(f"Failed to send message: {e}")
+        
         return jsonify({'status': 'ok'})
     except Exception as e:
-        logger.error(f"Error processing webhook: {{e}}")
+        logger.error(f"Error processing webhook: {e}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/health')
