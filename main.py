@@ -2760,6 +2760,130 @@ Contact: 09911127180 mb
 4. Wait for confirmation
 
 ⚠️ **No receipt = No processing**"""
+
+                elif text == '/stock':
+                    # Show current stock levels
+                    try:
+                        with open('data/products.json', 'r') as f:
+                            products = json_lib.load(f)
+                        
+                        response_text = "📦 **Current Stock Levels**\n\n"
+                        
+                        in_stock = []
+                        low_stock = []
+                        out_of_stock = []
+                        
+                        for product in products:
+                            stock = product.get('stock', 0)
+                            name = product['name'].title()
+                            price = product.get('price', 0)
+                            
+                            if stock == 0:
+                                out_of_stock.append(f"❌ {name} - ₱{price} (Out)")
+                            elif stock <= 5:
+                                low_stock.append(f"⚠️ {name} - ₱{price} ({stock} left)")
+                            else:
+                                in_stock.append(f"✅ {name} - ₱{price} ({stock} available)")
+                        
+                        if in_stock:
+                            response_text += "**✅ IN STOCK:**\n" + "\n".join(in_stock[:8]) + "\n\n"
+                        if low_stock:
+                            response_text += "**⚠️ LOW STOCK:**\n" + "\n".join(low_stock[:5]) + "\n\n"
+                        if out_of_stock:
+                            response_text += "**❌ OUT OF STOCK:**\n" + "\n".join(out_of_stock[:5]) + "\n\n"
+                        
+                        response_text += "📱 Use /start to shop!"
+                        
+                    except Exception as e:
+                        response_text = "❌ Unable to check stock right now. Try again later!"
+
+                elif text == '/bonus':
+                    # Daily bonus system
+                    from datetime import datetime, timedelta
+                    try:
+                        with open('data/users.json', 'r') as f:
+                            users = json_lib.load(f)
+                        
+                        user_data = users.get(str(user_id), {})
+                        last_bonus = user_data.get('last_bonus_date')
+                        today = datetime.now().strftime('%Y-%m-%d')
+                        
+                        if last_bonus == today:
+                            response_text = """🎁 **Daily Bonus**
+
+❌ **Already Claimed Today!**
+
+⏰ **Next Bonus:** Tomorrow
+💰 **Bonus Amount:** ₱2.00
+🔄 **Reset Time:** 12:00 AM
+
+📱 Come back tomorrow for your bonus!"""
+                        else:
+                            # Give bonus
+                            bonus_amount = 2.0
+                            current_balance = user_data.get('balance', 0)
+                            new_balance = current_balance + bonus_amount
+                            
+                            user_data['balance'] = new_balance
+                            user_data['last_bonus_date'] = today
+                            users[str(user_id)] = user_data
+                            
+                            with open('data/users.json', 'w') as f:
+                                json_lib.dump(users, f, indent=2)
+                            
+                            response_text = f"""🎁 **Daily Bonus Claimed!**
+
+✅ **Bonus Received:** +₱{bonus_amount}
+💰 **New Balance:** ₱{new_balance}
+⏰ **Next Bonus:** Tomorrow
+
+🎉 Thank you for being a loyal customer!
+📱 Use /start to start shopping!"""
+                        
+                    except Exception as e:
+                        response_text = "❌ Bonus system temporarily unavailable!"
+
+                elif text == '/leaderboard':
+                    # Show top users by total spent
+                    try:
+                        with open('data/users.json', 'r') as f:
+                            users = json_lib.load(f)
+                        
+                        # Sort users by total_spent
+                        user_list = []
+                        for uid, udata in users.items():
+                            total_spent = udata.get('total_spent', 0)
+                            first_name = udata.get('first_name', f"User{uid[-4:]}")
+                            if total_spent > 0:  # Only show users who have spent money
+                                user_list.append((first_name, total_spent, uid))
+                        
+                        user_list.sort(key=lambda x: x[1], reverse=True)
+                        
+                        response_text = "🏆 **Top Customers Leaderboard**\n\n"
+                        
+                        if user_list:
+                            for i, (name, spent, uid) in enumerate(user_list[:10], 1):
+                                if i == 1:
+                                    emoji = "🥇"
+                                elif i == 2:
+                                    emoji = "🥈"
+                                elif i == 3:
+                                    emoji = "🥉"
+                                else:
+                                    emoji = f"{i}."
+                                
+                                # Highlight current user
+                                if uid == str(user_id):
+                                    response_text += f"**{emoji} {name} - ₱{spent:.2f} ⭐ (YOU)**\n"
+                                else:
+                                    response_text += f"{emoji} {name} - ₱{spent:.2f}\n"
+                        else:
+                            response_text += "No customers yet!\n\n"
+                        
+                        response_text += "\n💰 Start shopping to join the leaderboard!\n📱 Use /start to browse products!"
+                        
+                    except Exception as e:
+                        response_text = "❌ Leaderboard temporarily unavailable!"
                 
                 else:
                     # Redirect to main menu
