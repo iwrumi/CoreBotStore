@@ -1149,11 +1149,14 @@ Error: {str(e)}"""
                             
                             # Product mapping
                             product_map = {
-                                'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
+                                'capcut': "1", 'spotify': "2", 'disney_shared': "3", 'quizlet': "4", 
                                 'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
                                 'picsart': "9", 'surfshark': "10", 'youtube_1m': "11", 'youtube_3m': "12",
-                                'disney+': "3", 'disneyplus': "3", 'gpt': "5", 'chat-gpt': "5",
-                                'syudocu': "6", 'studycu': "6", 'studecu': "6",
+                                'disney_solo': "13",
+                                # Alternative names
+                                'disney': "3", 'disney+': "3", 'disneyplus': "3", 'disney-shared': "3", 'disneyshared': "3",
+                                'disney+solo': "13", 'disney-solo': "13", 'disneyplus-solo': "13", 'disneyplussolo': "13", 'disneysolo': "13",
+                                'gpt': "5", 'chat-gpt': "5", 'syudocu': "6", 'studycu': "6", 'studecu': "6",
                                 'perplexity-ai': "7", 'canva-pro': "8", 'picsart-gold': "9",
                                 'surf-shark': "10", 'surfshark-vpn': "10",
                                 'youtube1m': "11", 'yt1m': "11", 'yt1': "11", 'youtube1': "11",
@@ -1162,7 +1165,7 @@ Error: {str(e)}"""
                             product_id = product_map.get(product_name, None)
                             
                             if not product_id:
-                                response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, spotify, disney, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark, youtube_1m, youtube_3m"
+                                response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, spotify, disney_shared, disney_solo, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark, youtube_1m, youtube_3m"
                             else:
                                 # Load product files
                                 try:
@@ -1344,18 +1347,23 @@ Error: {str(e)}"""
                         
                         # Product mapping
                         product_map = {
-                            'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
+                            'capcut': "1", 'spotify': "2", 'disney_shared': "3", 'quizlet': "4", 
                             'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
-                            'picsart': "9", 'surfshark': "10",
-                            'disney+': "3", 'disneyplus': "3", 'gpt': "5", 'chat-gpt': "5",
-                            'syudocu': "6", 'studycu': "6", 'studecu': "6",
+                            'picsart': "9", 'surfshark': "10", 'youtube_1m': "11", 'youtube_3m': "12",
+                            'disney_solo': "13",
+                            # Alternative names
+                            'disney': "3", 'disney+': "3", 'disneyplus': "3", 'disney-shared': "3", 'disneyshared': "3",
+                            'disney+solo': "13", 'disney-solo': "13", 'disneyplus-solo': "13", 'disneyplussolo': "13", 'disneysolo': "13",
+                            'gpt': "5", 'chat-gpt': "5", 'syudocu': "6", 'studycu': "6", 'studecu': "6",
                             'perplexity-ai': "7", 'canva-pro': "8", 'picsart-gold': "9",
-                            'surf-shark': "10", 'surfshark-vpn': "10"
+                            'surf-shark': "10", 'surfshark-vpn': "10",
+                            'youtube1m': "11", 'yt1m': "11", 'yt1': "11", 'youtube1': "11",
+                            'youtube3m': "12", 'yt3m': "12", 'yt3': "12", 'youtube3': "12"
                         }
                         product_id = product_map.get(product_name, None)
                         
                         if not product_id:
-                            response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, spotify, disney, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark"
+                            response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, spotify, disney_shared, disney_solo, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark, youtube_1m, youtube_3m"
                         else:
                             # Load product files
                             try:
