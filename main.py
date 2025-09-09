@@ -1143,7 +1143,8 @@ Error: {str(e)}"""
                                         broadcast_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
                                         broadcast_data = json_lib.dumps({
                                             "chat_id": user_id_key,
-                                            "text": f"📢 **ANNOUNCEMENT**\n\n{broadcast_message}\n\n━━━━━━━━━━━━━━━━\n🤖 From: @kyostorebot Admin"
+                                            "text": f"📢 **ANNOUNCEMENT**\n\n**{broadcast_message}**\n\n━━━━━━━━━━━━━━━━\nMessage from admin: @tiramisucakekyo",
+                                            "parse_mode": "Markdown"
                                         }).encode('utf-8')
                                         
                                         broadcast_req = urllib.request.Request(broadcast_url, data=broadcast_data, headers={'Content-Type': 'application/json'})
