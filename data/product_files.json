@@ -333,8 +333,10 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T09:55:43.229741"
+      "status": "sold",
+      "added_at": "2025-09-09T09:55:43.229741",
+      "sold_to": "7799637688",
+      "sold_at": "{\"timestamp\": \"now\"}"
     },
     {
       "id": 7,
@@ -345,8 +347,10 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T09:55:43.229743"
+      "status": "sold",
+      "added_at": "2025-09-09T09:55:43.229743",
+      "sold_to": "7799637688",
+      "sold_at": "{\"timestamp\": \"now\"}"
     },
     {
       "id": 8,
