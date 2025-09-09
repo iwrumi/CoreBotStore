@@ -1185,35 +1185,32 @@ When customers send payment proof, they'll appear here for your manual approval.
                         response_text = "❌ **Usage:** `/msg USER_ID your message here`\n\n**Example:** `/msg 123456789 Your receipt has been processed!`"
 
                 elif text.startswith('/admin'):
-                    response_text = f"""🔑 **Admin Panel**
+                    response_text = f"""🔑 Admin Panel
 
-👤 **Admin:** {user_id}
-📊 **Status:** Active
+👤 Admin: {user_id}
+📊 Status: Active
 
-**📦 Product & Stock Management:**
-• /addproduct - Add new product types
-• /addstock - Add actual accounts/codes
+📦 Product Management:
+• /add ProductName Price Stock - Add products
 • /products - View all products
+• /addstock - Add accounts/codes
 
-**📸 Receipt Management:**
-• /receipts - View pending receipt approvals
-• /approve ID - Approve receipt/deposit
-• /reject ID - Reject receipt/deposit
-• /msg USER_ID message - Send message to user
+📸 Receipt Management:
+• /receipts - View pending receipts
+• /approve ID - Approve deposit
+• /reject ID - Reject deposit
+• /msg USER_ID message - Message user
 
-**💰 Payment Management:**
-• /deposits - View old deposit system
-• Manual receipt approval through photos
-
-**📊 Analytics:**
-• /stats - View bot statistics
+📊 Analytics:
+• /stats - View statistics
 • /users - Manage users
 
-**📢 Communication:**
-• /broadcast - Send message to all users
-• /msg - Direct message any user
+💰 Payment System:
+• Customers send receipt photos
+• You approve with buttons
+• Balance credited instantly
 
-**⚡ New System:** Customers send receipts to bot → You approve instantly!"""
+⚡ System working perfectly!"""
 
                 else:
                     response_text = f"""👋 **Welcome Back, Admin!**
