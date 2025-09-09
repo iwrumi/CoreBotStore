@@ -1,0 +1,10 @@
+{
+  "admin_users": [
+    "7240133914"
+  ],
+  "store_name": "Premium Store",
+  "welcome_message": "\ud83d\udc4b Welcome to Premium Store!\n\nYour one-stop shop for premium accounts and services.",
+  "support_username": "@YourSupportBot",
+  "min_deposit": 20.0,
+  "max_deposit": 10000.0
+}

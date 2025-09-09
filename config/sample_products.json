@@ -1,0 +1,67 @@
+{
+  "netflix_1m": {
+    "id": "netflix_1m",
+    "name": "Netflix Premium",
+    "category_id": "streaming",
+    "description": "1 Month Netflix Premium Account",
+    "variants": [
+      {
+        "id": 1,
+        "name": "1 Month",
+        "price": 150.0,
+        "stock": 25,
+        "features": [
+          "4K Quality",
+          "4 Screens",
+          "Downloads"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "3 Months",
+        "price": 400.0,
+        "stock": 15,
+        "features": [
+          "4K Quality",
+          "4 Screens",
+          "Downloads",
+          "3 Month Warranty"
+        ]
+      }
+    ],
+    "emoji": "\ud83d\udcfa",
+    "auto_delivery": true
+  },
+  "spotify_1m": {
+    "id": "spotify_1m",
+    "name": "Spotify Premium",
+    "category_id": "streaming",
+    "description": "1 Month Spotify Premium",
+    "variants": [
+      {
+        "id": 1,
+        "name": "Individual",
+        "price": 120.0,
+        "stock": 30,
+        "features": [
+          "No Ads",
+          "Download Music",
+          "High Quality"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Family",
+        "price": 180.0,
+        "stock": 10,
+        "features": [
+          "6 Accounts",
+          "No Ads",
+          "Download Music"
+        ]
+      }
+    ],
+    "emoji": "\ud83c\udfb5",
+    "auto_delivery": true
+  }
+}

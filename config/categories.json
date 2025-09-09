@@ -1,0 +1,26 @@
+[
+  {
+    "id": "streaming",
+    "name": "\ud83d\udcfa Streaming Services",
+    "emoji": "\ud83d\udcfa",
+    "description": "Netflix, Spotify, Disney+, etc."
+  },
+  {
+    "id": "gaming",
+    "name": "\ud83c\udfae Gaming Accounts",
+    "emoji": "\ud83c\udfae",
+    "description": "Steam, Epic Games, console accounts"
+  },
+  {
+    "id": "productivity",
+    "name": "\ud83d\udcbc Productivity Tools",
+    "emoji": "\ud83d\udcbc",
+    "description": "Microsoft Office, Adobe, Canva Pro"
+  },
+  {
+    "id": "vpn",
+    "name": "\ud83d\udd12 VPN Services",
+    "emoji": "\ud83d\udd12",
+    "description": "Nord VPN, Express VPN, etc."
+  }
+]

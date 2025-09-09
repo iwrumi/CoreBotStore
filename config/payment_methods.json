@@ -1,0 +1,21 @@
+{
+  "gcash": {
+    "name": "GCash",
+    "number": "09123456789",
+    "qr_code_url": "https://your-domain.com/gcash-qr.png",
+    "instructions": "Send payment to GCash number above and upload screenshot"
+  },
+  "paymaya": {
+    "name": "PayMaya",
+    "number": "09987654321",
+    "qr_code_url": "https://your-domain.com/paymaya-qr.png",
+    "instructions": "Send payment to PayMaya number above and upload screenshot"
+  },
+  "bank": {
+    "name": "Bank Transfer",
+    "account_name": "Your Name",
+    "account_number": "1234567890",
+    "bank_name": "BPI",
+    "instructions": "Transfer to bank account above and upload receipt"
+  }
+}
