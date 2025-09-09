@@ -1043,7 +1043,7 @@ Error: {str(e)}"""
                         response_text = f"❌ Error removing stock: {str(e)}"
 
                 elif text.startswith('/leaderboard'):
-                    # Show top users by spending
+                    # Show top users by spending (ADMIN VERSION - shows balance)
                     try:
                         with open('data/users.json', 'r') as f:
                             users_data = json_lib.load(f)
@@ -1056,7 +1056,7 @@ Error: {str(e)}"""
                         # Sort users by total spent (descending)
                         sorted_users = sorted(users_data.items(), key=lambda x: x[1].get('total_spent', 0), reverse=True)
                         
-                        response_text = "🏆 **Top Spenders Leaderboard**\n\n"
+                        response_text = "🏆 **Top Spenders Leaderboard** (Admin View)\n\n"
                         
                         for i, (user_id_key, user_info) in enumerate(sorted_users[:10], 1):
                             total_spent = user_info.get('total_spent', 0)
@@ -1086,7 +1086,7 @@ Error: {str(e)}"""
                             response_text += f"... and {len(sorted_users) - 10} more users"
 
                 elif text.startswith('/stock'):
-                    # Show current stock levels for all products
+                    # Show current stock levels for all products (ADMIN VERSION - detailed)
                     try:
                         with open('data/products.json', 'r') as f:
                             products = json_lib.load(f)
@@ -1096,7 +1096,7 @@ Error: {str(e)}"""
                     if not products:
                         response_text = "📦 **Stock Levels**\n\nNo products found!"
                     else:
-                        response_text = "📦 **Current Stock Levels**\n\n"
+                        response_text = "📦 **Current Stock Levels** (Admin View)\n\n"
                         
                         for product in products:
                             name = product.get('name', 'Unknown')
@@ -2330,6 +2330,80 @@ Ready to help! Contact us now! 💪"""
 
 Ready to order! 🛍️"""
                     
+                # Handle user commands (available to all users)
+                elif text.startswith('/leaderboard'):
+                    # Show top users by spending (USER VERSION - no balance shown)
+                    try:
+                        with open('data/users.json', 'r') as f:
+                            users_data = json_lib.load(f)
+                    except:
+                        users_data = {}
+                    
+                    if not users_data:
+                        response_text = "📊 **Leaderboard**\n\nNo users found yet!"
+                    else:
+                        # Sort users by total spent (descending)
+                        sorted_users = sorted(users_data.items(), key=lambda x: x[1].get('total_spent', 0), reverse=True)
+                        
+                        response_text = "🏆 **Top Spenders Leaderboard**\n\n"
+                        
+                        for i, (user_id_key, user_info) in enumerate(sorted_users[:10], 1):
+                            total_spent = user_info.get('total_spent', 0)
+                            
+                            # Get user info from Telegram if possible
+                            try:
+                                user_chat = application.bot.get_chat(user_id_key)
+                                username = f"@{user_chat.username}" if user_chat.username else user_chat.first_name or "User"
+                            except:
+                                username = "Unknown User"
+                            
+                            # Add medal emojis for top 3
+                            if i == 1:
+                                medal = "🥇"
+                            elif i == 2:
+                                medal = "🥈"
+                            elif i == 3:
+                                medal = "🥉"
+                            else:
+                                medal = f"{i}."
+                            
+                            response_text += f"{medal} **{username}**\n"
+                            response_text += f"💸 Total Spent: ₱{total_spent}\n\n"
+                        
+                        if len(sorted_users) > 10:
+                            response_text += f"... and {len(sorted_users) - 10} more users"
+
+                elif text.startswith('/stock'):
+                    # Show current stock levels (USER VERSION - no sensitive info)
+                    try:
+                        with open('data/products.json', 'r') as f:
+                            products = json_lib.load(f)
+                    except:
+                        products = []
+                    
+                    if not products:
+                        response_text = "📦 **Stock Status**\n\nNo products found!"
+                    else:
+                        response_text = "📦 **Available Products**\n\n"
+                        
+                        for product in products:
+                            name = product.get('name', 'Unknown')
+                            stock = product.get('stock', 0)
+                            price = product.get('price', 0)
+                            
+                            # Stock status indicator
+                            if stock == 0:
+                                status = "❌ Out of Stock"
+                            elif stock <= 5:
+                                status = "⚠️ Low Stock"
+                            else:
+                                status = "✅ In Stock"
+                            
+                            response_text += f"**{name.title()}**\n"
+                            response_text += f"📊 Available: {stock} accounts\n"
+                            response_text += f"💰 Price: ₱{price}\n"
+                            response_text += f"Status: {status}\n\n"
+
                 # Handle /start command with inline keyboard ONLY if no photo was sent
                 elif (text == '/start' or text == '/menu' or (not text.startswith('/') and not message.get('photo'))):
                     # Don't send welcome if photo was already processed
