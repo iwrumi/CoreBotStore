@@ -1021,8 +1021,9 @@ Try the simple format!"""
                         
                         response_text = f"""📱 Adding accounts to {product_name}
 
-Send accounts in this format:
+Send accounts in these formats:
 email@example.com:password123
+email@example.com|password123
 
 Send one per message, I'll add them automatically!
 
@@ -1036,7 +1037,8 @@ Examples:
 /addacc capcut
 /addacc netflix
 
-Then send accounts as: email@example.com:password123"""
+Then send accounts as: 
+email@example.com:password123 OR email@example.com|password123"""
 
                 elif text.startswith('/addstock'):
                     if len(text.split()) == 1:
@@ -1419,12 +1421,19 @@ DM him with the vouch!
                     except Exception as e:
                         response_text = f"❌ Error processing order: {str(e)}"
 
-                elif ':' in text and '@' in text and not text.startswith('/'):
-                    # Handle account additions in email:password format
-                    parts = text.split(':')
+                elif ((':' in text or '|' in text) and '@' in text and not text.startswith('/')):
+                    # Handle account additions in email:password or email|password format
+                    if '|' in text:
+                        parts = text.split('|')
+                    else:
+                        parts = text.split(':')
+                        
                     if len(parts) >= 2:
                         email = parts[0].strip()
-                        password = ':'.join(parts[1:]).strip()
+                        if '|' in text:
+                            password = '|'.join(parts[1:]).strip()
+                        else:
+                            password = ':'.join(parts[1:]).strip()
                         
                         try:
                             # Load or create product files (default to product ID 1 - capcut)
@@ -1490,7 +1499,7 @@ Send more accounts to automatically increase stock!"""
                         except Exception as e:
                             response_text = f"❌ Error adding account: {str(e)}"
                     else:
-                        response_text = "❌ Invalid format. Use: email@example.com:password123"
+                        response_text = "❌ Invalid format. Use: email@example.com:password123 OR email@example.com|password123"
 
                 else:
                     response_text = f"""👋 **Welcome Back, Admin!**
