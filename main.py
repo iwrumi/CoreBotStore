@@ -2513,38 +2513,19 @@ Ready to manage your store!"""
                     
                 elif text == "🛒 Browse Products":
                     logger.info(f"TEXT HANDLER: Browse Products clicked by user {user_id}")
-                    # WORKING VERSION WITH BUTTONS BUT SIMPLE TEXT
-                    try:
-                        with open('data/products.json', 'r') as f:
-                            products = json_lib.load(f)
-                        
-                        response_text = "AVAILABLE PRODUCTS\n\nChoose a product to buy:\n\n"
-                        inline_keyboard = {"inline_keyboard": []}
-                        
-                        for product in products:
-                            if product.get('stock', 0) > 0:
-                                name = product['name']
-                                price = int(float(product['price']))
-                                stock = product['stock']
-                                
-                                response_text += f"{name.upper()}\n"
-                                response_text += f"Price: {price} pesos\n"
-                                response_text += f"Stock: {stock}\n\n"
-                                
-                                button_text = f"{name.upper()} - {price} pesos"
-                                inline_keyboard["inline_keyboard"].append([{
-                                    "text": button_text, 
-                                    "callback_data": f"product_{product['id']}"
-                                }])
-                        
-                        if not inline_keyboard["inline_keyboard"]:
-                            response_text = "No products available."
-                        else:
-                            inline_keyboard["inline_keyboard"].append([{"text": "Back to Menu", "callback_data": "main_menu"}])
-                        
-                    except Exception as e:
-                        response_text = "Cannot load products right now."
-                        inline_keyboard = {"inline_keyboard": []}
+                    # SHOW PRODUCT CATEGORIES
+                    response_text = "🏪 Product Categories\n\nChoose a category to browse:"
+                    inline_keyboard = {"inline_keyboard": [
+                        [{"text": "🎬 Video", "callback_data": "category_video"}],
+                        [{"text": "🎵 Music", "callback_data": "category_music"}], 
+                        [{"text": "📺 Streaming", "callback_data": "category_streaming"}],
+                        [{"text": "📚 Education", "callback_data": "category_education"}],
+                        [{"text": "🎨 Design", "callback_data": "category_design"}],
+                        [{"text": "🤖 AI Tools", "callback_data": "category_ai"}],
+                        [{"text": "📢 LFB Services", "callback_data": "category_lfb"}],
+                        [{"text": "🔥 Combo Services", "callback_data": "category_combo"}],
+                        [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
+                    ]}
                         
                 elif text == "👑 Customer Service":
                     response_text = "🆘 Customer Support\n\n📞 Contact Information:\n💬 Telegram/WhatsApp: 09911127180\n📧 For Receipts: Send to 09911127180 mb\n👤 Support: @tiramisucakekyo\n\n⚡ We Help With:\n• Payment issues\n• Product questions\n• Account problems\n• Technical support\n• Order problems\n\n🕐 Available: 24/7\n⚡ Response: Usually within 5 minutes\n\nReady to help! Contact us now! 💪"
