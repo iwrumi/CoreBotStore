@@ -7,7 +7,7 @@
   
   "balance_message": "💰 **Account Balance**\n\n**Current Balance:** ₱{balance:.2f}\n**Total Deposited:** ₱{total_deposited:.2f}\n**Total Spent:** ₱{total_spent:.2f}\n\n**Account Status:** Active ✅",
   
-  "deposit_message": "💳 **Deposit Funds**\n\n**💰 Payment Methods:**\n\n🟢 **GCash:** 09911127180\n🔵 **PayMaya:** 09911127180\n\n**📋 Steps to Deposit:**\n1. Choose amount (Min: ₱50)\n2. Send payment to number above\n3. Screenshot your receipt\n4. Send receipt to: 09911127180 mb\n5. Wait for balance credit (Usually 1-5 mins)\n\n⚠️ **Important:** No receipt = No processing\n📞 **Contact:** 09911127180 mb",
+  "deposit_message": "💳 **Deposit Funds**\n\n**💰 Payment Method:**\n\n🟢 **GCash:** 09911127180\n\n**📋 Steps to Deposit:**\n1. Choose amount (Min: ₱50)\n2. Send payment to GCash number above\n3. Screenshot your receipt\n4. Send receipt photo to this bot\n5. Wait for admin approval\n6. Get balance credit instantly after approval\n\n⚠️ **Important:** Send receipt as photo to this bot\n📞 **Contact:** 09911127180 mb",
   
   "cart_empty": "🛒 **Shopping Cart**\n\nYour cart is empty.\n\n**To add items:**\n1. Browse Products\n2. Select items \n3. Add to cart\n4. Checkout when ready",
   

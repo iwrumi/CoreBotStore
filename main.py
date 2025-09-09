@@ -154,8 +154,23 @@ def webhook():
             except:
                 pass
             
+            # Handle message_admin callback
+            if callback_data == "message_admin":
+                response_text = "📩 **Contact Admin**\n\n**How to reach admin:**\n\n💬 **Telegram:** 09911127180\n📞 **Call/Text:** 09911127180\n\n**For faster approval:**\n✅ Send your receipt photo to this bot\n✅ Include amount in message\n✅ Wait for admin approval\n\n**Approval usually within 5 minutes!**"
+                inline_keyboard = {"inline_keyboard": [
+                    [{"text": "💳 Send Receipt to Bot", "callback_data": "send_receipt_info"}],
+                    [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
+                ]}
+            
+            elif callback_data == "send_receipt_info":
+                response_text = "📸 **Send Receipt Instructions**\n\n**Steps:**\n1. Take clear photo of your GCash receipt\n2. Send the photo to this bot\n3. Include amount in message (e.g., '₱100')\n4. Wait for admin approval\n\n**Example message with photo:**\n'₱150 deposit - please approve'\n\n**Ready to send your receipt? Just upload the photo now! 📸**"
+                inline_keyboard = {"inline_keyboard": [
+                    [{"text": "🔙 Back to Deposit", "callback_data": "deposit_funds"}],
+                    [{"text": "🔙 Main Menu", "callback_data": "main_menu"}]
+                ]}
+                
             # Handle different callback actions
-            if callback_data == "browse_products":
+            elif callback_data == "browse_products":
                 # Get products and create categories
                 try:
                     with open('data/products.json', 'r') as f:
@@ -201,6 +216,7 @@ def webhook():
             elif callback_data == "deposit_funds":
                 response_text = messages.get("deposit_message", "💳 **Deposit Funds**\n\n**💰 Payment Methods:**\n\n🟢 **GCash:** 09911127180\n🔵 **PayMaya:** 09911127180\n\n**📋 Steps to Deposit:**\n1. Choose amount (Min: ₱50)\n2. Send payment to number above\n3. Screenshot your receipt\n4. Send receipt to: 09911127180 mb\n5. Wait for balance credit (Usually 1-5 mins)\n\n⚠️ **Important:** No receipt = No processing\n📞 **Contact:** 09911127180 mb")
                 inline_keyboard = {"inline_keyboard": [
+                    [{"text": "📩 Message Admin for Approval", "callback_data": "message_admin"}],
                     [{"text": "💰 Check Balance", "callback_data": "check_balance"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
@@ -662,6 +678,141 @@ When customers send payment proof, they'll appear here for your manual approval.
                     deposit_id = text.replace('/reject ', '').strip()
                     response_text = f"❌ **Deposit #{deposit_id} Rejected**\n\nUser has been notified."
 
+                elif text.startswith('/receipts'):
+                    # Show pending receipt approvals
+                    try:
+                        with open('data/pending_receipts.json', 'r') as f:
+                            receipts = json_lib.load(f)
+                        
+                        pending = [r for r in receipts if r.get('status') == 'pending']
+                        
+                        if pending:
+                            receipt_list = "📸 **Pending Receipt Approvals**\n\n"
+                            for receipt in pending[-10:]:  # Show latest 10
+                                rid = receipt.get('receipt_id', 'unknown')
+                                user = receipt.get('first_name', 'Unknown')
+                                username = receipt.get('username', 'No username')
+                                caption = receipt.get('caption', 'No caption')
+                                timestamp = receipt.get('timestamp', '')
+                                
+                                receipt_list += f"📸 **#{rid}**\n"
+                                receipt_list += f"   👤 **User:** @{username} ({user})\n"
+                                receipt_list += f"   💬 **Caption:** {caption}\n"
+                                receipt_list += f"   ⏰ **Time:** {timestamp[:10]}\n"
+                                receipt_list += f"   ✅ **Approve:** `/approve {rid}`\n"
+                                receipt_list += f"   ❌ **Reject:** `/reject {rid}`\n"
+                                receipt_list += f"   💬 **Message:** `/msg {receipt['user_id']} your_message`\n\n"
+                            
+                            response_text = receipt_list
+                        else:
+                            response_text = """📸 **No Pending Receipts**\n\nAll receipts processed!\n\n**How it works:**\n1. Customers send receipt photos to bot\n2. You get instant notification\n3. Use /approve or /reject\n4. Customer gets notified automatically"""
+                    
+                    except:
+                        response_text = "📸 **No receipts found**\n\nReceipts will appear here when customers send payment proof."
+
+                elif text.startswith('/approve '):
+                    receipt_id = text.replace('/approve ', '').strip()
+                    # Approve receipt logic
+                    try:
+                        with open('data/pending_receipts.json', 'r') as f:
+                            receipts = json_lib.load(f)
+                        
+                        # Find and update receipt
+                        for receipt in receipts:
+                            if str(receipt.get('receipt_id')) == receipt_id:
+                                receipt['status'] = 'approved'
+                                user_chat_id = receipt['chat_id']
+                                user_name = receipt.get('first_name', 'Customer')
+                                
+                                # Save updated receipts
+                                with open('data/pending_receipts.json', 'w') as f:
+                                    json_lib.dump(receipts, f, indent=2)
+                                
+                                # Notify customer
+                                customer_message = f"✅ **Receipt Approved!**\n\n💰 **Your deposit has been approved**\n🎉 **Balance will be credited shortly**\n\nThank you for your payment! 💙"
+                                
+                                customer_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                customer_data = json_lib.dumps({
+                                    "chat_id": user_chat_id,
+                                    "text": customer_message,
+                                    "parse_mode": "Markdown"
+                                }).encode('utf-8')
+                                
+                                customer_req = urllib.request.Request(customer_url, data=customer_data, headers={'Content-Type': 'application/json'})
+                                urllib.request.urlopen(customer_req)
+                                
+                                response_text = f"✅ **Receipt #{receipt_id} Approved!**\n\n👤 **Customer:** {user_name}\n✅ **Status:** Approved\n📩 **Customer notified:** Yes\n💰 **Action:** Balance credited"
+                                break
+                        else:
+                            response_text = f"❌ **Receipt #{receipt_id} not found**"
+                    
+                    except Exception as e:
+                        response_text = f"❌ **Error approving receipt:** {str(e)}"
+
+                elif text.startswith('/reject '):
+                    receipt_id = text.replace('/reject ', '').strip()
+                    try:
+                        with open('data/pending_receipts.json', 'r') as f:
+                            receipts = json_lib.load(f)
+                        
+                        # Find and update receipt
+                        for receipt in receipts:
+                            if str(receipt.get('receipt_id')) == receipt_id:
+                                receipt['status'] = 'rejected'
+                                user_chat_id = receipt['chat_id']
+                                user_name = receipt.get('first_name', 'Customer')
+                                
+                                # Save updated receipts
+                                with open('data/pending_receipts.json', 'w') as f:
+                                    json_lib.dump(receipts, f, indent=2)
+                                
+                                # Notify customer
+                                customer_message = f"❌ **Receipt Rejected**\n\n📸 **Your receipt was not approved**\n💬 **Reason:** Please contact admin for clarification\n📞 **Contact:** 09911127180\n\n**Please try again with a clearer receipt or contact us for help.**"
+                                
+                                customer_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                customer_data = json_lib.dumps({
+                                    "chat_id": user_chat_id,
+                                    "text": customer_message,
+                                    "parse_mode": "Markdown"
+                                }).encode('utf-8')
+                                
+                                customer_req = urllib.request.Request(customer_url, data=customer_data, headers={'Content-Type': 'application/json'})
+                                urllib.request.urlopen(customer_req)
+                                
+                                response_text = f"❌ **Receipt #{receipt_id} Rejected**\n\n👤 **Customer:** {user_name}\n❌ **Status:** Rejected\n📩 **Customer notified:** Yes"
+                                break
+                        else:
+                            response_text = f"❌ **Receipt #{receipt_id} not found**"
+                    
+                    except Exception as e:
+                        response_text = f"❌ **Error rejecting receipt:** {str(e)}"
+
+                elif text.startswith('/msg '):
+                    # Message a user: /msg 123456789 your message here
+                    parts = text.replace('/msg ', '').split(' ', 1)
+                    if len(parts) >= 2:
+                        target_user_id = parts[0].strip()
+                        message_text = parts[1].strip()
+                        
+                        try:
+                            # Send message to user
+                            message_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                            message_data = json_lib.dumps({
+                                "chat_id": target_user_id,
+                                "text": f"💬 **Message from Admin:**\n\n{message_text}\n\n📞 **Contact:** 09911127180",
+                                "parse_mode": "Markdown"
+                            }).encode('utf-8')
+                            
+                            message_req = urllib.request.Request(message_url, data=message_data, headers={'Content-Type': 'application/json'})
+                            urllib.request.urlopen(message_req)
+                            
+                            response_text = f"✅ **Message Sent!**\n\n👤 **To User:** {target_user_id}\n💬 **Message:** {message_text}\n📩 **Status:** Delivered"
+                        
+                        except Exception as e:
+                            response_text = f"❌ **Failed to send message:** {str(e)}"
+                    else:
+                        response_text = "❌ **Usage:** `/msg USER_ID your message here`\n\n**Example:** `/msg 123456789 Your receipt has been processed!`"
+
                 elif text.startswith('/admin'):
                     response_text = f"""🔑 **Admin Panel**
 
@@ -673,10 +824,15 @@ When customers send payment proof, they'll appear here for your manual approval.
 • /addstock - Add actual accounts/codes
 • /products - View all products
 
+**📸 Receipt Management:**
+• /receipts - View pending receipt approvals
+• /approve ID - Approve receipt/deposit
+• /reject ID - Reject receipt/deposit
+• /msg USER_ID message - Send message to user
+
 **💰 Payment Management:**
-• /deposits - Approve/reject deposits (Manual)
-• /approve ID - Approve deposit
-• /reject ID - Reject deposit
+• /deposits - View old deposit system
+• Manual receipt approval through photos
 
 **📊 Analytics:**
 • /stats - View bot statistics
@@ -684,8 +840,9 @@ When customers send payment proof, they'll appear here for your manual approval.
 
 **📢 Communication:**
 • /broadcast - Send message to all users
+• /msg - Direct message any user
 
-**⚡ Payment System:** Manual approval - you control all deposits!"""
+**⚡ New System:** Customers send receipts to bot → You approve instantly!"""
 
                 else:
                     response_text = f"""👋 **Welcome Back, Admin!**
@@ -708,6 +865,79 @@ When customers send payment proof, they'll appear here for your manual approval.
 Ready to manage your store!"""
 
             else:
+                # Handle photo messages (receipts) from regular users
+                if 'photo' in message:
+                    # Customer sent a receipt photo
+                    photo = message['photo'][-1]  # Get highest resolution
+                    caption = message.get('caption', '').strip()
+                    
+                    # Save receipt for admin approval
+                    receipt_data = {
+                        "user_id": user_id,
+                        "chat_id": chat_id,
+                        "photo_file_id": photo['file_id'],
+                        "caption": caption,
+                        "timestamp": datetime.now().isoformat(),
+                        "status": "pending",
+                        "username": message['from'].get('username', 'No username'),
+                        "first_name": message['from'].get('first_name', 'Unknown')
+                    }
+                    
+                    # Load existing receipts
+                    receipts = []
+                    try:
+                        with open('data/pending_receipts.json', 'r') as f:
+                            receipts = json_lib.load(f)
+                    except:
+                        receipts = []
+                    
+                    # Add new receipt
+                    receipt_id = len(receipts) + 1
+                    receipt_data["receipt_id"] = receipt_id
+                    receipts.append(receipt_data)
+                    
+                    # Save receipts
+                    with open('data/pending_receipts.json', 'w') as f:
+                        json_lib.dump(receipts, f, indent=2)
+                    
+                    # Notify admin
+                    admin_id = "7240133914"  # Your admin ID
+                    admin_message = f"📸 **New Receipt #{receipt_id}**\n\n👤 **User:** @{receipt_data['username']} ({receipt_data['first_name']})\n💬 **Caption:** {caption}\n🆔 **User ID:** {user_id}\n\n✅ Approve: /approve {receipt_id}\n❌ Reject: /reject {receipt_id}\n💬 Message: /msg {user_id} your_message"
+                    
+                    # Send notification to admin
+                    admin_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
+                    admin_data = json_lib.dumps({
+                        "chat_id": admin_id,
+                        "photo": photo['file_id'],
+                        "caption": admin_message,
+                        "parse_mode": "Markdown"
+                    }).encode('utf-8')
+                    
+                    admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
+                    try:
+                        urllib.request.urlopen(admin_req)
+                        logger.info(f"Sent receipt notification to admin")
+                    except Exception as e:
+                        logger.error(f"Failed to notify admin: {e}")
+                    
+                    response_text = f"""📸 **Receipt Received!**
+
+✅ **Receipt #{receipt_id} submitted successfully**
+
+👨‍💼 **Admin has been notified**
+⏱️ **Processing time:** Usually 1-5 minutes
+🔔 **You'll get notified** when approved
+
+**What happens next:**
+1. Admin reviews your receipt
+2. Amount gets approved/rejected  
+3. Balance credited instantly after approval
+4. You receive confirmation message
+
+**Need help?** Contact: 09911127180
+
+Thank you for your patience! 💙"""
+
                 # Professional Store Bot Interface with Inline Keyboards
                 # Get user data
                 user_balance = 0.0
