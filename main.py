@@ -2455,34 +2455,9 @@ Ready to manage your store!"""
                     
                 elif text == "🛒 Browse Products":
                     logger.info(f"TEXT HANDLER: Browse Products clicked by user {user_id}")
-                    # TEXT ONLY VERSION TO TEST
-                    try:
-                        with open('data/products.json', 'r') as f:
-                            products = json_lib.load(f)
-                        
-                        response_text = "AVAILABLE PRODUCTS:\n\n"
-                        available_count = 0
-                        
-                        for product in products:
-                            if product.get('stock', 0) > 0:
-                                name = product['name']
-                                price = product['price']
-                                stock = product['stock']
-                                available_count += 1
-                                
-                                response_text += f"{available_count}. {name.upper()}\n"
-                                response_text += f"   Price: {price} pesos\n"
-                                response_text += f"   Stock: {stock} items\n\n"
-                        
-                        if available_count == 0:
-                            response_text = "NO PRODUCTS IN STOCK"
-                        
-                        # NO INLINE KEYBOARD FOR NOW - JUST TEXT
-                        inline_keyboard = {"inline_keyboard": []}
-                        
-                    except Exception as e:
-                        response_text = "ERROR LOADING PRODUCTS"
-                        inline_keyboard = {"inline_keyboard": []}
+                    # ABSOLUTE MINIMAL TEST
+                    response_text = "Products list here"
+                    inline_keyboard = {"inline_keyboard": []}
                         
                 elif text == "👑 Customer Service":
                     response_text = "🆘 Customer Support\n\n📞 Contact Information:\n💬 Telegram/WhatsApp: 09911127180\n📧 For Receipts: Send to 09911127180 mb\n👤 Support: @tiramisucakekyo\n\n⚡ We Help With:\n• Payment issues\n• Product questions\n• Account problems\n• Technical support\n• Order problems\n\n🕐 Available: 24/7\n⚡ Response: Usually within 5 minutes\n\nReady to help! Contact us now! 💪"
@@ -2792,10 +2767,12 @@ Ready to shop! 🛍️"""
             
             req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
             try:
+                logger.info(f"SENDING TO TELEGRAM: {data.decode('utf-8')}")
                 with urllib.request.urlopen(req) as response:
                     logger.info(f"Sent {'admin' if is_admin else 'user'} message to chat {chat_id}")
             except Exception as e:
                 logger.error(f"Failed to send message: {e}")
+                logger.error(f"DATA THAT FAILED: {data.decode('utf-8')}")
         
         return jsonify({'status': 'ok'})
     except Exception as e:
@@ -2811,6 +2788,36 @@ def health():
         'version': '2.0',
         'initialized': premium_bot is not None
     })
+
+@app.route('/test-browse', methods=['POST'])
+def test_browse():
+    """Simple test endpoint to debug Browse Products"""
+    logger.info("=== TEST BROWSE ENDPOINT HIT ===")
+    
+    # Get bot token
+    bot_token = os.environ.get('BOT_TOKEN')
+    chat_id = 123456789  # Test chat ID
+    
+    # Simple message
+    import urllib.request
+    import json as json_lib
+    
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    data = json_lib.dumps({
+        "chat_id": chat_id, 
+        "text": "SIMPLE TEST MESSAGE"
+    }).encode('utf-8')
+    
+    req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
+    try:
+        logger.info(f"SENDING SIMPLE TEST: {data.decode('utf-8')}")
+        with urllib.request.urlopen(req) as response:
+            result = response.read().decode('utf-8')
+            logger.info(f"TELEGRAM SUCCESS: {result}")
+            return jsonify({'status': 'sent', 'telegram_response': result})
+    except Exception as e:
+        logger.error(f"SIMPLE TEST FAILED: {e}")
+        return jsonify({'status': 'failed', 'error': str(e)})
 
 # Set webhook on startup
 if premium_bot:
