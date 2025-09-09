@@ -1005,40 +1005,114 @@ Try the simple format!"""
 💸 View Deposits: /deposits"""
 
                 elif text.startswith('/addacc'):
-                    # Simple account addition like @primostorebot
-                    parts = text.split()
-                    if len(parts) >= 2:
-                        product_name = ' '.join(parts[1:]).lower()
-                        
-                        # Map product names to IDs
-                        product_map = {
-                            'capcut': 1,
-                            'cap cut': 1,
-                            'cap': 1
-                        }
-                        
-                        product_id = product_map.get(product_name, 1)  # Default to capcut
-                        
-                        response_text = f"""📱 Adding accounts to {product_name}
+                    # Handle /addacc like @primostorebot - process accounts in same message
+                    lines = text.strip().split('\n')
+                    
+                    if len(lines) == 1:
+                        # Just the command, prepare for accounts
+                        parts = text.split()
+                        if len(parts) >= 2:
+                            product_name = ' '.join(parts[1:]).lower()
+                            response_text = f"""📱 Ready to add accounts to {product_name}!
 
-Send accounts in these formats:
-email@example.com:password123
-email@example.com|password123
-
-Send one per message, I'll add them automatically!
-
-Ready to receive accounts for {product_name}! 🚀"""
+Send accounts now!"""
+                        else:
+                            response_text = "Usage: /addacc capcut"
                     else:
-                        response_text = """📱 Add Accounts
+                        # Command with accounts in same message
+                        first_line = lines[0].split()
+                        if len(first_line) >= 2:
+                            product_name = ' '.join(first_line[1:]).lower()
+                            accounts = lines[1:]  # All lines after the command
+                            
+                            # Process each account
+                            added_count = 0
+                            failed_count = 0
+                            
+                            try:
+                                # Load or create product files
+                                try:
+                                    with open('data/product_files.json', 'r') as f:
+                                        product_files = json_lib.load(f)
+                                except:
+                                    product_files = {}
+                                
+                                product_id = "1"  # Default to capcut
+                                if product_id not in product_files:
+                                    product_files[product_id] = []
+                                
+                                for account_line in accounts:
+                                    account_line = account_line.strip()
+                                    if not account_line:
+                                        continue
+                                        
+                                    # Handle both : and | formats
+                                    if '|' in account_line:
+                                        parts = account_line.split('|')
+                                    elif ':' in account_line:
+                                        parts = account_line.split(':')
+                                    else:
+                                        failed_count += 1
+                                        continue
+                                    
+                                    if len(parts) >= 2 and '@' in parts[0]:
+                                        email = parts[0].strip()
+                                        password = ('|' if '|' in account_line else ':').join(parts[1:]).strip()
+                                        
+                                        # Add account
+                                        new_account = {
+                                            "id": len(product_files[product_id]) + 1,
+                                            "type": "account",
+                                            "details": {
+                                                "email": email,
+                                                "password": password,
+                                                "subscription": "CapCut Pro - 1 Month",
+                                                "instructions": "Login with these credentials. Do not change password for 24 hours."
+                                            },
+                                            "status": "available",
+                                            "added_at": datetime.now().isoformat()
+                                        }
+                                        
+                                        product_files[product_id].append(new_account)
+                                        added_count += 1
+                                    else:
+                                        failed_count += 1
+                                
+                                # Save updated files
+                                with open('data/product_files.json', 'w') as f:
+                                    json_lib.dump(product_files, f, indent=2)
+                                
+                                # Update product stock
+                                available_accounts = [acc for acc in product_files[product_id] if acc['status'] == 'available']
+                                total_available = len(available_accounts)
+                                
+                                try:
+                                    with open('data/products.json', 'r') as f:
+                                        products = json_lib.load(f)
+                                    
+                                    for product in products:
+                                        if product['id'] == 1:  # capcut
+                                            product['stock'] = total_available
+                                            break
+                                    
+                                    with open('data/products.json', 'w') as f:
+                                        json_lib.dump(products, f, indent=2)
+                                        
+                                except:
+                                    pass
+                                
+                                response_text = f"""✅ Accounts Added to CapCut!
 
-Usage: /addacc productname
+➕ Added: {added_count} accounts
+❌ Failed: {failed_count} accounts
+📊 Total Stock: {total_available}
 
-Examples:
-/addacc capcut
-/addacc netflix
-
-Then send accounts as: 
-email@example.com:password123 OR email@example.com|password123"""
+All accounts ready for customers! 🚀"""
+                                
+                            except Exception as e:
+                                response_text = f"❌ Error processing accounts: {str(e)}"
+                        else:
+                            response_text = "Usage: /addacc capcut"
 
                 elif text.startswith('/addstock'):
                     if len(text.split()) == 1:
