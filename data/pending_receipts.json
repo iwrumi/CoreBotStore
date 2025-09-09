@@ -31,5 +31,16 @@
     "username": "uhshton",
     "first_name": "Ashton",
     "receipt_id": 3
+  },
+  {
+    "user_id": "8034378887",
+    "chat_id": "8034378887",
+    "photo_file_id": "AgACAgEAAxkBAAMJaL_mY52FOeYKqrpYtP0_pjP1ZX8AAvSvMRtZTAABRkhHfVrzUGYcAQADAgADeQADNgQ",
+    "caption": "",
+    "timestamp": "2025-09-09T08:33:39.952118",
+    "status": "approved",
+    "username": "uhshton",
+    "first_name": "Ashton",
+    "receipt_id": 4
   }
 ]

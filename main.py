@@ -1744,7 +1744,21 @@ Ready to manage your store!"""
                     except Exception as e:
                         logger.error(f"Failed to notify admin: {e}")
                     
-                    # SILENT LIKE @PRIMOSTOREBOT - NO MESSAGE TO CUSTOMER
+                    # Send confirmation message to customer
+                    try:
+                        confirmation_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                        confirmation_data = json_lib.dumps({
+                            'chat_id': user_id,
+                            'text': "✅ Receipt received! Your funds will be added within 5 minutes. If not, contact @tiramisucakekyo",
+                            'parse_mode': 'HTML'
+                        }).encode('utf-8')
+                        
+                        confirmation_req = urllib.request.Request(confirmation_url, data=confirmation_data, headers={'Content-Type': 'application/json'})
+                        urllib.request.urlopen(confirmation_req)
+                        logger.info(f"Sent receipt confirmation to user {user_id}")
+                        
+                    except Exception as e:
+                        logger.error(f"Failed to send confirmation: {e}")
                     return jsonify({'status': 'ok'})
 
                 # Professional Store Bot Interface with Inline Keyboards
