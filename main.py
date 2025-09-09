@@ -330,6 +330,86 @@ Ready to help! Contact us now! 💪"""
                     ]
                 }
             
+            elif callback_data.startswith("approve_receipt_"):
+                receipt_id = callback_data.replace("approve_receipt_", "")
+                # Approve receipt logic
+                try:
+                    with open('data/pending_receipts.json', 'r') as f:
+                        receipts = json_lib.load(f)
+                    
+                    # Find and update receipt
+                    for receipt in receipts:
+                        if str(receipt.get('receipt_id')) == receipt_id:
+                            receipt['status'] = 'approved'
+                            user_chat_id = receipt['chat_id']
+                            user_name = receipt.get('first_name', 'Customer')
+                            
+                            # Save updated receipts
+                            with open('data/pending_receipts.json', 'w') as f:
+                                json_lib.dump(receipts, f, indent=2)
+                            
+                            # Notify customer
+                            customer_message = f"✅ Receipt Approved!\n\n💰 Your deposit has been approved\n🎉 Balance will be credited shortly\n\nThank you for your payment! 💙"
+                            
+                            customer_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                            customer_data = json_lib.dumps({
+                                "chat_id": user_chat_id,
+                                "text": customer_message
+                            }).encode('utf-8')
+                            
+                            customer_req = urllib.request.Request(customer_url, data=customer_data, headers={'Content-Type': 'application/json'})
+                            urllib.request.urlopen(customer_req)
+                            
+                            response_text = f"✅ Receipt #{receipt_id} Approved!\n\nCustomer {user_name} has been notified."
+                            break
+                    else:
+                        response_text = f"❌ Receipt #{receipt_id} not found"
+                        
+                except Exception as e:
+                    response_text = f"❌ Error approving receipt: {str(e)}"
+                
+                inline_keyboard = {"inline_keyboard": []}
+                
+            elif callback_data.startswith("reject_receipt_"):
+                receipt_id = callback_data.replace("reject_receipt_", "")
+                # Reject receipt logic
+                try:
+                    with open('data/pending_receipts.json', 'r') as f:
+                        receipts = json_lib.load(f)
+                    
+                    # Find and update receipt
+                    for receipt in receipts:
+                        if str(receipt.get('receipt_id')) == receipt_id:
+                            receipt['status'] = 'rejected'
+                            user_chat_id = receipt['chat_id']
+                            user_name = receipt.get('first_name', 'Customer')
+                            
+                            # Save updated receipts
+                            with open('data/pending_receipts.json', 'w') as f:
+                                json_lib.dump(receipts, f, indent=2)
+                            
+                            # Notify customer
+                            customer_message = f"❌ Receipt Rejected\n\nYour receipt was not approved. Please contact support if you believe this is an error.\n\n📞 Contact: 09911127180"
+                            
+                            customer_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                            customer_data = json_lib.dumps({
+                                "chat_id": user_chat_id,
+                                "text": customer_message
+                            }).encode('utf-8')
+                            
+                            customer_req = urllib.request.Request(customer_url, data=customer_data, headers={'Content-Type': 'application/json'})
+                            urllib.request.urlopen(customer_req)
+                            
+                            response_text = f"❌ Receipt #{receipt_id} Rejected\n\nCustomer {user_name} has been notified."
+                            break
+                    else:
+                        response_text = f"❌ Receipt #{receipt_id} not found"
+                        
+                except Exception as e:
+                    response_text = f"❌ Error rejecting receipt: {str(e)}"
+                
+                inline_keyboard = {"inline_keyboard": []}
+                
             else:
                 response_text = "❌ Unknown action"
                 inline_keyboard = {"inline_keyboard": [[
@@ -938,31 +1018,35 @@ Ready to manage your store!"""
                     
                     # Notify admin
                     admin_id = "7240133914"  # Your admin ID
-                    admin_message = f"📸 New Receipt #{receipt_id}\n\n👤 User: @{receipt_data['username']} ({receipt_data['first_name']})\n💬 Caption: {caption}\n🆔 User ID: {user_id}\n\n✅ Approve: /approve {receipt_id}\n❌ Reject: /reject {receipt_id}\n💬 Message: /msg {user_id} your_message"
+                    admin_message = f"📸 New Receipt #{receipt_id}\n\n👤 User: @{receipt_data['username']} ({receipt_data['first_name']})\n💬 Caption: {caption}\n🆔 User ID: {user_id}\n\nClick buttons below to approve or reject:"
                     
-                    # Send notification to admin (text message first, then forward photo)
-                    admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                    # Send photo notification to admin with approve/reject buttons
+                    admin_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
+                    
+                    # Create approve/reject buttons
+                    admin_keyboard = {
+                        "inline_keyboard": [
+                            [
+                                {"text": "✅ Approve", "callback_data": f"approve_receipt_{receipt_id}"},
+                                {"text": "❌ Reject", "callback_data": f"reject_receipt_{receipt_id}"}
+                            ],
+                            [
+                                {"text": "💬 Message User", "callback_data": f"msg_user_{user_id}"}
+                            ]
+                        ]
+                    }
+                    
                     admin_data = json_lib.dumps({
                         "chat_id": admin_id,
-                        "text": admin_message
+                        "photo": photo['file_id'],
+                        "caption": admin_message,
+                        "reply_markup": admin_keyboard
                     }).encode('utf-8')
                     
                     admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
                     try:
                         urllib.request.urlopen(admin_req)
-                        logger.info(f"Sent receipt notification to admin")
-                        
-                        # Forward the photo separately
-                        forward_url = f"https://api.telegram.org/bot{bot_token}/forwardMessage"
-                        forward_data = json_lib.dumps({
-                            "chat_id": admin_id,
-                            "from_chat_id": chat_id,
-                            "message_id": message['message_id']
-                        }).encode('utf-8')
-                        
-                        forward_req = urllib.request.Request(forward_url, data=forward_data, headers={'Content-Type': 'application/json'})
-                        urllib.request.urlopen(forward_req)
-                        logger.info(f"Forwarded receipt photo to admin")
+                        logger.info(f"Sent receipt photo with buttons to admin")
                         
                     except Exception as e:
                         logger.error(f"Failed to notify admin: {e}")
