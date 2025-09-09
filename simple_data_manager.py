@@ -71,7 +71,12 @@ class SimpleDataManager:
         filepath = os.path.join(self.data_dir, filename)
         try:
             with open(filepath, 'r') as f:
-                return json.load(f)
+                data = json.load(f)
+                # Ensure we return a dict, not a list
+                if isinstance(data, dict):
+                    return data
+                else:
+                    return {}
         except (FileNotFoundError, json.JSONDecodeError):
             return {}
     
