@@ -4,11 +4,11 @@ Handles products, categories, variants, and inventory management
 """
 from datetime import datetime
 from typing import Dict, List, Optional
-from advanced_data_manager import AdvancedDataManager
+from simple_data_manager import SimpleDataManager
 
 class ProductCatalogSystem:
     def __init__(self):
-        self.data_manager = AdvancedDataManager()
+        self.data_manager = SimpleDataManager()
         self.default_categories = self._load_default_categories()
         self.sample_products = self._load_sample_products()
     
@@ -415,7 +415,7 @@ class StockManagement:
     """Handle stock management operations"""
     
     def __init__(self):
-        self.data_manager = AdvancedDataManager()
+        self.data_manager = SimpleDataManager()
     
     def update_stock(self, product_id: str, variant_id: int, new_stock: int, admin_user: str) -> Dict:
         """Update stock level for a product variant"""

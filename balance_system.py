@@ -5,11 +5,11 @@ Handles user deposits, balance management, and spending tracking
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
-from advanced_data_manager import AdvancedDataManager
+from simple_data_manager import SimpleDataManager
 
 class BalanceSystem:
     def __init__(self):
-        self.data_manager = AdvancedDataManager()
+        self.data_manager = SimpleDataManager()
     
     def get_user_balance(self, user_telegram_id: str) -> Dict:
         """Get user's current balance and spending history"""

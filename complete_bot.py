@@ -37,7 +37,7 @@ class PremiumStoreBot:
         self.catalog_system = ProductCatalogSystem()
         self.welcome_system = WelcomeMessageSystem()
         self.support_system = CustomerSupportSystem()
-        self.data_manager = AdvancedDataManager()
+        self.data_manager = SimpleDataManager()
         
         self.setup_handlers()
         self.setup_persistent_menu()
