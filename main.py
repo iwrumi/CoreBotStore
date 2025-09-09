@@ -404,11 +404,10 @@ Ready to help! Contact us now! 💪"""
                                 row = qty_buttons[i:i+2]
                                 inline_keyboard["inline_keyboard"].append(row)
                             
-                            # Add custom quantity option if stock > 5
-                            if stock > 5:
-                                inline_keyboard["inline_keyboard"].append([
-                                    {"text": f"💯 More (Max {stock})", "callback_data": f"custom_qty_{product_id}"}
-                                ])
+                            # Always add custom quantity option
+                            inline_keyboard["inline_keyboard"].append([
+                                {"text": f"➕ Custom (Max {stock})", "callback_data": f"custom_qty_{product_id}"}
+                            ])
                         
                         inline_keyboard["inline_keyboard"].append([
                             {"text": "🔙 Back to Category", "callback_data": f"category_{product['category']}"}
@@ -573,6 +572,40 @@ DM him with the vouch!
                     response_text = f"❌ Purchase failed: {str(e)}"
                     inline_keyboard = {"inline_keyboard": [[
                         {"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}
+                    ]]}
+            
+            elif callback_data.startswith("custom_qty_"):
+                # Handle custom quantity selection
+                product_id = int(callback_data.replace("custom_qty_", ""))
+                try:
+                    with open('data/products.json', 'r') as f:
+                        products = json_lib.load(f)
+                    
+                    product = next((p for p in products if p['id'] == product_id), None)
+                    if product:
+                        response_text = f"""📦 {product['name']} - Custom Quantity
+
+💰 Price: ₱{product['price']} each
+📊 Available: {product['stock']} items
+
+Please send the quantity you want to order.
+
+Example: Type "5" to order 5 items
+
+Max quantity: {product['stock']}"""
+                        
+                        inline_keyboard = {"inline_keyboard": [
+                            [{"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}]
+                        ]}
+                    else:
+                        response_text = "❌ Product not found"
+                        inline_keyboard = {"inline_keyboard": [[
+                            {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
+                        ]]}
+                except:
+                    response_text = "❌ Error loading product"
+                    inline_keyboard = {"inline_keyboard": [[
+                        {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
                     ]]}
             
             elif callback_data.startswith("approve_receipt_"):
@@ -1270,6 +1303,175 @@ When customers send payment proof, they'll appear here for your manual approval.
 
                 elif text.startswith('/admin'):
                     response_text = f"Admin Panel\n\nAdmin ID: {user_id}\nStatus: Active\n\nCommands:\n/add ProductName Price Stock\n/products - View products\n/addfile ProductID - Add files to products\n/receipts - View receipts\n/stats - Statistics\n\nSystem ready!"
+
+                elif text.isdigit() and not text.startswith('/'):
+                    # Handle custom quantity input from customer 
+                    quantity = int(text)
+                    
+                    # Simple approach - assume capcut (product ID 1) for custom quantity
+                    product_id = 1
+                    
+                    try:
+                        # Load product and user data
+                        with open('data/products.json', 'r') as f:
+                            products = json_lib.load(f)
+                        with open('data/users.json', 'r') as f:
+                            users = json_lib.load(f)
+                        
+                        product = next((p for p in products if p['id'] == product_id), None)
+                        user_balance = users.get(user_id, {}).get('balance', 0)
+                        
+                        if not product:
+                            response_text = "❌ Product not found. Use /start to browse products."
+                        elif quantity <= 0:
+                            response_text = "❌ Quantity must be greater than 0"
+                        elif product['stock'] < quantity:
+                            response_text = f"❌ Not enough stock!\n\n📦 Available: {product['stock']}\n🔢 Requested: {quantity}\n\nPlease choose a smaller quantity."
+                        else:
+                            total_cost = product['price'] * quantity
+                            
+                            if user_balance < total_cost:
+                                response_text = f"""❌ Insufficient Balance
+
+💰 Your Balance: ₱{user_balance}
+💸 Required: ₱{total_cost}
+📦 Product: {product['name']} × {quantity}
+💔 Short: ₱{total_cost - user_balance}
+
+Please deposit more funds to complete this purchase."""
+                            else:
+                                # Process the custom quantity purchase immediately
+                                # Update user balance
+                                if user_id not in users:
+                                    users[user_id] = {"balance": 0, "total_spent": 0}
+                                users[user_id]["balance"] = user_balance - total_cost
+                                users[user_id]["total_spent"] = users[user_id].get("total_spent", 0) + total_cost
+                                
+                                # Update product stock
+                                for p in products:
+                                    if p['id'] == product_id:
+                                        p['stock'] -= quantity
+                                        break
+                                
+                                # Save updates
+                                with open('data/users.json', 'w') as f:
+                                    json_lib.dump(users, f, indent=2)
+                                with open('data/products.json', 'w') as f:
+                                    json_lib.dump(products, f, indent=2)
+                                
+                                response_text = f"""✅ Purchase Successful!
+
+🛍️ Product: {product['name']}
+📦 Quantity: {quantity}x
+💰 Total Paid: ₱{total_cost}
+💳 Remaining Balance: ₱{users[user_id]['balance']}
+
+📋 Your accounts will be sent shortly!
+
+Thank you for shopping with us! 🎉"""
+                                
+                                # Send accounts instantly (reusing existing logic)
+                                try:
+                                    with open('data/product_files.json', 'r') as f:
+                                        product_files = json_lib.load(f)
+                                    
+                                    if str(product_id) in product_files:
+                                        available_files = [f for f in product_files[str(product_id)] if f['status'] == 'available']
+                                        
+                                        if available_files and len(available_files) >= quantity:
+                                            # Send accounts for custom quantity
+                                            for i in range(quantity):
+                                                file_data = available_files[i]
+                                                file_data['status'] = 'sold'
+                                                file_data['sold_to'] = user_id
+                                                file_data['sold_at'] = datetime.now().isoformat()
+                                                
+                                                account_message = f"""📦 Your {product['name']} Account #{i+1}
+
+🔐 Login Credentials:
+📧 Email: {file_data['details']['email']}
+🔑 Password: {file_data['details']['password']}
+💎 Subscription: {file_data['details'].get('subscription', 'Premium Access')}
+
+📋 Instructions:
+{file_data['details'].get('instructions', 'Login with these credentials')}
+
+🛡️ WARRANTY ACTIVATION:
+Vouch @tiramisucakekyo within 24 hours to activate warranty.
+DM him with the vouch!
+
+⚠️ Important: Keep these credentials safe!"""
+                                                
+                                                # Send account details to customer
+                                                account_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                                account_data = json_lib.dumps({
+                                                    "chat_id": user_id,
+                                                    "text": account_message
+                                                }).encode('utf-8')
+                                                account_req = urllib.request.Request(account_url, data=account_data, headers={'Content-Type': 'application/json'})
+                                                urllib.request.urlopen(account_req)
+                                            
+                                            # Save updated product files
+                                            with open('data/product_files.json', 'w') as f:
+                                                json_lib.dump(product_files, f, indent=2)
+                                except:
+                                    pass
+                                
+                    except Exception as e:
+                        response_text = f"❌ Error processing order: {str(e)}"
+
+                elif ':' in text and '@' in text and not text.startswith('/'):
+                    # Handle account additions in email:password format
+                    parts = text.split(':')
+                    if len(parts) >= 2:
+                        email = parts[0].strip()
+                        password = ':'.join(parts[1:]).strip()
+                        
+                        try:
+                            # Load or create product files (default to product ID 1 - capcut)
+                            try:
+                                with open('data/product_files.json', 'r') as f:
+                                    product_files = json_lib.load(f)
+                            except:
+                                product_files = {}
+                            
+                            product_id = "1"  # Default to capcut
+                            if product_id not in product_files:
+                                product_files[product_id] = []
+                            
+                            # Add new account
+                            new_account = {
+                                "id": len(product_files[product_id]) + 1,
+                                "type": "account",
+                                "details": {
+                                    "email": email,
+                                    "password": password,
+                                    "subscription": "CapCut Pro - 1 Month",
+                                    "instructions": "Login with these credentials. Do not change password for 24 hours."
+                                },
+                                "status": "available",
+                                "added_at": datetime.now().isoformat()
+                            }
+                            
+                            product_files[product_id].append(new_account)
+                            
+                            # Save updated files
+                            with open('data/product_files.json', 'w') as f:
+                                json_lib.dump(product_files, f, indent=2)
+                            
+                            total_accounts = len(product_files[product_id])
+                            response_text = f"""✅ Account Added to CapCut!
+
+📧 Email: {email}
+🔑 Password: {password}
+📊 Total Accounts: {total_accounts}
+
+Send another account or use /addfile 1 for other products."""
+                            
+                        except Exception as e:
+                            response_text = f"❌ Error adding account: {str(e)}"
+                    else:
+                        response_text = "❌ Invalid format. Use: email@example.com:password123"
 
                 else:
                     response_text = f"""👋 **Welcome Back, Admin!**
