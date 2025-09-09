@@ -1005,248 +1005,102 @@ Try the simple format!"""
 💸 View Deposits: /deposits"""
 
                 elif text.startswith('/addacc'):
-                    # Handle /addacc like @primostorebot - process accounts in same message
+                    # SIMPLE BULLETPROOF VERSION
                     lines = text.strip().split('\n')
                     
                     if len(lines) == 1:
-                        # Just the command, prepare for accounts
-                        parts = text.split()
-                        if len(parts) >= 2:
-                            product_name = ' '.join(parts[1:]).lower()
-                            response_text = f"""📱 Ready to add accounts to {product_name}!
-
-Send accounts now!"""
-                        else:
-                            response_text = "Usage: /addacc capcut"
+                        response_text = "Usage: /addacc capcut\n\nThen send accounts like:\nemail1@domain.com:password\nemail2@domain.com:password"
                     else:
-                        # Command with accounts in same message
                         first_line = lines[0].split()
                         if len(first_line) >= 2:
                             product_name = ' '.join(first_line[1:]).lower()
-                            accounts = lines[1:]  # All lines after the command
+                            accounts = lines[1:]
                             
-                            # Process each account
+                            # SIMPLE PROCESSING
                             added_count = 0
-                            failed_count = 0
                             
                             try:
-                                # Load or create product files
-                                try:
-                                    with open('data/product_files.json', 'r') as f:
-                                        product_files = json_lib.load(f)
-                                except:
-                                    product_files = {}
-                                
-                                # Map product names to IDs
-                                product_map = {
-                                    'capcut': "1",
-                                    'cap cut': "1", 
-                                    'cap': "1",
-                                    'spotify': "2",
-                                    'disney': "3",
-                                    'disney+': "3",
-                                    'quizlet': "4"
-                                }
-                                product_id = product_map.get(product_name, "1")  # Default to capcut
-                                if product_id not in product_files:
-                                    product_files[product_id] = []
-                                
-                                # SMART PASSWORD DETECTION
-                                common_password = None
-                                emails_only = []
-                                
-                                # Debug: log what we're processing
-                                logger.info(f"Processing {len(accounts)} lines for product {product_name}")
-                                
-                                for line in accounts:
-                                    line = line.strip()
-                                    if not line:
-                                        continue
-                                    
-                                    # SUPER SMART AUTO-DETECT
-                                    # Handle concatenated lines like "email@domain.comPass : password"
-                                    if '@' in line and ('pass' in line.lower() or 'password' in line.lower()):
-                                        # Split by "pass" or "Pass"
-                                        parts = []
-                                        if 'Pass' in line:
-                                            parts = line.split('Pass', 1)
-                                        elif 'pass' in line:
-                                            parts = line.split('pass', 1)
-                                            
-                                        if len(parts) == 2:
-                                            email_part = parts[0].strip()
-                                            password_part = parts[1].strip()
-                                            
-                                            # Clean password part (remove : and spaces)
-                                            if password_part.startswith(':'):
-                                                password_part = password_part[1:].strip()
-                                            if password_part.startswith(' :'):
-                                                password_part = password_part[2:].strip()
-                                                
-                                            if '@' in email_part and password_part:
-                                                emails_only.append(email_part)
-                                                if not common_password:
-                                                    common_password = password_part
-                                            continue
-                                    
-                                    # Method 1: Explicit password line - handle various formats
-                                    line_lower = line.lower().strip()
-                                    if (line_lower.startswith('pass:') or line_lower.startswith('password:') or 
-                                        line_lower.startswith('pass :') or line_lower.startswith('password :')):
-                                        # Extract password after colon
-                                        if ':' in line:
-                                            common_password = line.split(':', 1)[1].strip()
-                                    
-                                    # Method 2: Email detection - clean emails only
-                                    elif '@' in line and ':' not in line and '|' not in line and 'pass' not in line.lower():
-                                        emails_only.append(line.strip())
-                                    
-                                    # Method 3: Smart password detection - standalone line that looks like password
-                                    elif '@' not in line and ':' not in line and '|' not in line and len(line) >= 5:
-                                        # This might be a standalone password
-                                        if not common_password and 'pass' not in line.lower():
-                                            common_password = line.strip()
-                                
-                                # If we found emails and a common password, use them
-                                if emails_only and common_password:
-                                    for email in emails_only:
-                                        email = email.strip()
-                                        if '@' in email:
-                                            # Get product details for subscription name
-                                            subscription_names = {
-                                                "1": "CapCut Pro - 1 Month",
-                                                "2": "Spotify Premium - 1 Month", 
-                                                "3": "Disney+ Shared Account",
-                                                "4": "Quizlet Plus - 1 Month"
-                                            }
-                                            
-                                            # Add account
-                                            new_account = {
-                                                "id": len(product_files[product_id]) + 1,
-                                                "type": "account",
-                                                "details": {
-                                                    "email": email,
-                                                    "password": common_password,
-                                                    "subscription": subscription_names.get(product_id, "Premium Account - 1 Month"),
-                                                    "instructions": "Login with these credentials. Do not change password for 24 hours."
-                                                },
-                                                "status": "available",
-                                                "added_at": datetime.now().isoformat()
-                                            }
-                                            
-                                            product_files[product_id].append(new_account)
-                                            added_count += 1
-                                        else:
-                                            failed_count += 1
-                                else:
-                                    # Handle normal email:password or email|password format
-                                    for account_line in accounts:
-                                        account_line = account_line.strip()
-                                        if not account_line:
-                                            continue
-                                        
-                                        # Skip password lines
-                                        if account_line.startswith('pass:') or account_line.startswith('password:'):
-                                            continue
-                                            
-                                        # Handle both : and | formats
-                                        if '|' in account_line:
-                                            parts = account_line.split('|')
-                                        elif ':' in account_line:
-                                            parts = account_line.split(':')
-                                        else:
-                                            failed_count += 1
-                                            continue
-                                        
-                                        if len(parts) >= 2 and '@' in parts[0]:
-                                            email = parts[0].strip()
-                                            password = ('|' if '|' in account_line else ':').join(parts[1:]).strip()
-                                        
-                                            # Get product details for subscription name
-                                            subscription_names = {
-                                                "1": "CapCut Pro - 1 Month",
-                                                "2": "Spotify Premium - 1 Month", 
-                                                "3": "Disney+ Shared Account",
-                                                "4": "Quizlet Plus - 1 Month"
-                                            }
-                                            
-                                            # Add account
-                                            new_account = {
-                                                "id": len(product_files[product_id]) + 1,
-                                                "type": "account",
-                                                "details": {
-                                                    "email": email,
-                                                    "password": password,
-                                                    "subscription": subscription_names.get(product_id, "Premium Account - 1 Month"),
-                                                    "instructions": "Login with these credentials. Do not change password for 24 hours."
-                                                },
-                                                "status": "available",
-                                                "added_at": datetime.now().isoformat()
-                                            }
-                                            
-                                            product_files[product_id].append(new_account)
-                                            added_count += 1
-                                        else:
-                                            failed_count += 1
-                                
-                                # Save updated files
-                                with open('data/product_files.json', 'w') as f:
-                                    json_lib.dump(product_files, f, indent=2)
-                                
-                                # Update product stock
-                                available_accounts = [acc for acc in product_files[product_id] if acc['status'] == 'available']
-                                total_available = len(available_accounts)
-                                
-                                try:
-                                    with open('data/products.json', 'r') as f:
-                                        products = json_lib.load(f)
-                                    
-                                    for product in products:
-                                        if product['id'] == int(product_id):
-                                            product['stock'] = total_available
-                                            break
-                                    
-                                    with open('data/products.json', 'w') as f:
-                                        json_lib.dump(products, f, indent=2)
-                                        
-                                except:
-                                    pass
-                                
-                                response_text = f"""✅ Accounts Added to {product_name.title()}!
+                                # Load files
+                                with open('data/product_files.json', 'r') as f:
+                                    product_files = json_lib.load(f)
+                            except:
+                                product_files = {}
+                            
+                            # Map products
+                            product_map = {'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4"}
+                            product_id = product_map.get(product_name, "1")
+                            if product_id not in product_files:
+                                product_files[product_id] = []
+                            
+                            # Find emails and password
+                            emails = []
+                            password = "masuk12345"  # Default password
+                            
+                            for line in accounts:
+                                line = line.strip()
+                                if '@' in line:
+                                    if ':' in line:
+                                        # email:password format
+                                        parts = line.split(':', 1)
+                                        emails.append(parts[0].strip())
+                                        password = parts[1].strip()
+                                    elif '|' in line:
+                                        # email|password format  
+                                        parts = line.split('|', 1)
+                                        emails.append(parts[0].strip())
+                                        password = parts[1].strip()
+                                    else:
+                                        # Just email
+                                        emails.append(line)
+                                elif 'pass' in line.lower() and ':' in line:
+                                    # Extract password from "pass: password"
+                                    password = line.split(':', 1)[1].strip()
+                            
+                            # Add accounts
+                            for email in emails:
+                                if '@' in email:
+                                    new_account = {
+                                        "id": len(product_files[product_id]) + 1,
+                                        "type": "account",
+                                        "details": {
+                                            "email": email,
+                                            "password": password,
+                                            "subscription": f"{product_name.title()} Premium - 1 Month",
+                                            "instructions": "Login with these credentials. Do not change password for 24 hours."
+                                        },
+                                        "status": "available",
+                                        "added_at": datetime.now().isoformat()
+                                    }
+                                    product_files[product_id].append(new_account)
+                                    added_count += 1
+                            
+                            # Save files
+                            with open('data/product_files.json', 'w') as f:
+                                json_lib.dump(product_files, f, indent=2)
+                            
+                            # Update stock
+                            available = [acc for acc in product_files[product_id] if acc['status'] == 'available']
+                            total_stock = len(available)
+                            
+                            try:
+                                with open('data/products.json', 'r') as f:
+                                    products = json_lib.load(f)
+                                for product in products:
+                                    if product['id'] == int(product_id):
+                                        product['stock'] = total_stock
+                                        break
+                                with open('data/products.json', 'w') as f:
+                                    json_lib.dump(products, f, indent=2)
+                            except:
+                                pass
+                            
+                            response_text = f"""✅ SUCCESS! Added {added_count} {product_name} accounts!
 
-➕ Added: {added_count} accounts
-❌ Failed: {failed_count} accounts
-📊 Total Stock: {total_available}
+📊 New Stock: {total_stock}
+🔑 Password: {password}
+📧 Emails processed: {len(emails)}
 
-All accounts ready for customers! 🚀
-
-Debug info:
-Emails found: {len(emails_only)}
-Password found: {len(common_password) if common_password else 0} chars"""
-                                
-                            except Exception as e:
-                                response_text = f"❌ Error processing accounts: {str(e)}\n\nDebug: Lines received: {len(accounts)}"
-                        
-                        # Add fallback if no accounts were processed
-                        if added_count == 0 and failed_count == 0:
-                            response_text = f"""⚠️ No accounts were added!
-
-🔍 Debug Info:
-• Lines processed: {len(accounts) if 'accounts' in locals() else 0}
-• Emails found: {len(emails_only) if 'emails_only' in locals() else 0}
-• Password found: {'Yes' if 'common_password' in locals() and common_password else 'No'}
-• Product: {product_name}
-
-📝 Expected format:
-/addacc spotify
-email1@domain.com
-email2@domain.com
-pass: yourpassword
-
-Or:
-/addacc spotify
-email1@domain.com:password
-email2@domain.com:password"""
+Ready for customers! 🚀"""
                         else:
                             response_text = "Usage: /addacc capcut"
 
