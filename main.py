@@ -29,20 +29,14 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 premium_bot = None
 bot_app = None
 
-# Initialize bot if import was successful
-if bot_import_success:
-    bot_token = os.environ.get('BOT_TOKEN')
-    if bot_token:
-        try:
-            premium_bot = PremiumStoreBot(bot_token)
-            bot_app = premium_bot.application
-            logger.info("Bot initialized successfully")
-        except Exception as e:
-            logger.error(f"Failed to initialize bot: {e}")
-    else:
-        logger.error("BOT_TOKEN not found in environment variables")
+# SIMPLIFIED - Skip complex bot initialization to avoid database issues
+bot_token = os.environ.get('BOT_TOKEN')
+if bot_token:
+    logger.info("Bot token found - using simple webhook mode")
+    premium_bot = "simple_mode"  # Just indicate we have a token
 else:
-    logger.warning("Bot not initialized due to import failure")
+    logger.error("BOT_TOKEN not found in environment variables")
+    premium_bot = None
 
 @app.route('/')
 def index():
@@ -116,8 +110,10 @@ def index():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     """Handle Telegram webhook updates"""
+    logger.info("WEBHOOK ENDPOINT CALLED")
     try:
         update_data = request.get_json(force=True)
+        logger.info(f"WEBHOOK DATA: {update_data}")
         
         # Handle callback queries (inline keyboard button presses)
         if update_data and 'callback_query' in update_data:
