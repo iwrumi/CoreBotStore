@@ -2455,40 +2455,9 @@ Ready to manage your store!"""
                     
                 elif text == "🛒 Browse Products":
                     logger.info(f"TEXT HANDLER: Browse Products clicked by user {user_id}")
-                    # LOAD AND DISPLAY ACTUAL PRODUCTS
-                    try:
-                        with open('data/products.json', 'r') as f:
-                            products = json_lib.load(f)
-                        
-                        response_text = "🛒 Available Products\n\nSelect a product to purchase:\n\n"
-                        inline_keyboard = {"inline_keyboard": []}
-                        
-                        for product in products:
-                            if product.get('stock', 0) > 0:
-                                name = product['name']
-                                price = product['price']
-                                stock = product['stock']
-                                
-                                # Add to text display  
-                                response_text += f"• {name.title()}\n"
-                                response_text += f"  Price: ₱{price}\n"
-                                response_text += f"  Stock: {stock} available\n\n"
-                                
-                                # Add button
-                                button_text = f"{name.title()} - ₱{price}"
-                                inline_keyboard["inline_keyboard"].append([{
-                                    "text": button_text, 
-                                    "callback_data": f"product_{product['id']}"
-                                }])
-                        
-                        if not inline_keyboard["inline_keyboard"]:
-                            response_text = "📦 No products available right now."
-                        else:
-                            inline_keyboard["inline_keyboard"].append([{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}])
-                        
-                    except Exception as e:
-                        response_text = f"Error loading products: {e}"
-                        inline_keyboard = {"inline_keyboard": []}
+                    # ULTRA SIMPLE - NO EMOJIS, NO SPECIAL CHARS, NO MARKDOWN
+                    response_text = "PRODUCTS:\n\nCAPCUT - 20 pesos\nSPOTIFY - 25 pesos\nDISNEY SHARED - 35 pesos\nSTUDOCU - 20 pesos\nPERPLEXITY - 35 pesos\nCANVA - 5 pesos\n\nMessage admin to buy: 09911127180"
+                    inline_keyboard = {"inline_keyboard": []}
                         
                 elif text == "👑 Customer Service":
                     response_text = "🆘 Customer Support\n\n📞 Contact Information:\n💬 Telegram/WhatsApp: 09911127180\n📧 For Receipts: Send to 09911127180 mb\n👤 Support: @tiramisucakekyo\n\n⚡ We Help With:\n• Payment issues\n• Product questions\n• Account problems\n• Technical support\n• Order problems\n\n🕐 Available: 24/7\n⚡ Response: Usually within 5 minutes\n\nReady to help! Contact us now! 💪"
@@ -2774,12 +2743,20 @@ Ready to shop! 🛍️"""
             # Send message using urllib
             url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
             
-            # For admin commands, don't use markdown to avoid 400 errors
-            if is_admin and text.startswith('/admin'):
-                data = json_lib.dumps({
-                    "chat_id": chat_id, 
-                    "text": response_text
-                }).encode('utf-8')
+            # For admin commands and browse products, don't use markdown to avoid 400 errors
+            if (is_admin and text.startswith('/admin')) or text == "🛒 Browse Products":
+                # Check if we have inline keyboard to send (for simple messages)
+                if 'inline_keyboard' in locals() and inline_keyboard:
+                    data = json_lib.dumps({
+                        "chat_id": chat_id, 
+                        "text": response_text,
+                        "reply_markup": inline_keyboard
+                    }).encode('utf-8')
+                else:
+                    data = json_lib.dumps({
+                        "chat_id": chat_id, 
+                        "text": response_text
+                    }).encode('utf-8')
             else:
                 # Check if we have inline keyboard to send (for custom button responses)
                 if 'inline_keyboard' in locals() and inline_keyboard:
