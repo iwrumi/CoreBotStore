@@ -909,5 +909,19 @@
       "added_at": "2025-09-09T12:15:00.000000",
       "removed_at": "2025-09-09T12:35:18.663088"
     }
+  ],
+  "5": [
+    {
+      "id": 1,
+      "type": "account",
+      "details": {
+        "email": "hiwoz@cakkyo.store",
+        "password": "tysmforbuying01-A",
+        "subscription": "Chatgpt Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:51:11.215117"
+    }
   ]
 }

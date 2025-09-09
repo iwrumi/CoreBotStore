@@ -41,13 +41,23 @@
   },
   {
     "id": 5,
-    "name": "chatgpt",
-    "description": "chatgpt - Premium Digital Service",
+    "name": "chatgpt_solo",
+    "description": "🤖 ChatGPT Plus Solo - AI Assistant\n\n✨ Features:\n• GPT-4 access (faster & smarter)\n• Priority access during peak times\n• Personal account (1 user only)\n• Unlimited usage\n• Advanced AI capabilities\n• Private conversation history\n\n🕐 Instant delivery after payment\n💻 Works on all devices",
     "price": 350.0,
-    "category": "digital",
-    "stock": 0,
+    "category": "ai",
+    "stock": 1,
     "image_url": "",
     "created_at": "2025-09-09T10:20:43.730647"
+  },
+  {
+    "id": 15,
+    "name": "chatgpt_shared",
+    "description": "🤖 ChatGPT Plus Shared - AI Assistant\n\n✨ Features:\n• GPT-4 access (faster & smarter)\n• Priority access during peak times\n• Shared family account (2-4 users)\n• Unlimited usage\n• Advanced AI capabilities\n• Budget-friendly option\n\n🕐 Instant delivery after payment\n💻 Works on all devices",
+    "price": 40.0,
+    "category": "ai",
+    "stock": 3,
+    "image_url": "",
+    "created_at": "2025-09-09T14:47:00.000000"
   },
   {
     "id": 6,

@@ -2649,7 +2649,6 @@ BOT Statistics :
 SHORTCUT :
 /start - Show main menu
 /stock - Check available stocks
-/bonus - Claim your daily bonus
 /leaderboard - View top users"""
                     
                     # EXACT primostorebot keyboard layout with custom buttons  
@@ -2750,13 +2749,13 @@ Contact: 09911127180 mb
 📱 **For better experience, use /start**
 
 **Payment Methods:**
-🟢 **GCash:** 09911127180
-🔵 **PayMaya:** 09911127180
+🟢 **GCash:** 09911127180 MB
+🔵 **PayMaya:** 09913796615 MD
 
 **Steps:**
 1. Send payment
 2. Screenshot receipt
-3. Send to: 09911127180 mb
+3. Send receipt photo to bot
 4. Wait for confirmation
 
 ⚠️ **No receipt = No processing**"""
@@ -2797,51 +2796,6 @@ Contact: 09911127180 mb
                     except Exception as e:
                         response_text = "❌ Unable to check stock right now. Try again later!"
 
-                elif text == '/bonus':
-                    # Daily bonus system
-                    from datetime import datetime, timedelta
-                    try:
-                        with open('data/users.json', 'r') as f:
-                            users = json_lib.load(f)
-                        
-                        user_data = users.get(str(user_id), {})
-                        last_bonus = user_data.get('last_bonus_date')
-                        today = datetime.now().strftime('%Y-%m-%d')
-                        
-                        if last_bonus == today:
-                            response_text = """🎁 **Daily Bonus**
-
-❌ **Already Claimed Today!**
-
-⏰ **Next Bonus:** Tomorrow
-💰 **Bonus Amount:** ₱2.00
-🔄 **Reset Time:** 12:00 AM
-
-📱 Come back tomorrow for your bonus!"""
-                        else:
-                            # Give bonus
-                            bonus_amount = 2.0
-                            current_balance = user_data.get('balance', 0)
-                            new_balance = current_balance + bonus_amount
-                            
-                            user_data['balance'] = new_balance
-                            user_data['last_bonus_date'] = today
-                            users[str(user_id)] = user_data
-                            
-                            with open('data/users.json', 'w') as f:
-                                json_lib.dump(users, f, indent=2)
-                            
-                            response_text = f"""🎁 **Daily Bonus Claimed!**
-
-✅ **Bonus Received:** +₱{bonus_amount}
-💰 **New Balance:** ₱{new_balance}
-⏰ **Next Bonus:** Tomorrow
-
-🎉 Thank you for being a loyal customer!
-📱 Use /start to start shopping!"""
-                        
-                    except Exception as e:
-                        response_text = "❌ Bonus system temporarily unavailable!"
 
                 elif text == '/leaderboard':
                     # Show top users by total spent
@@ -2859,7 +2813,7 @@ Contact: 09911127180 mb
                         
                         user_list.sort(key=lambda x: x[1], reverse=True)
                         
-                        response_text = "🏆 **Top Customers Leaderboard**\n\n"
+                        response_text = "🏆 **Top Spenders Leaderboard**\n\n"
                         
                         if user_list:
                             for i, (name, spent, uid) in enumerate(user_list[:10], 1):
@@ -2872,11 +2826,11 @@ Contact: 09911127180 mb
                                 else:
                                     emoji = f"{i}."
                                 
-                                # Highlight current user
+                                # Clean format without markdown
                                 if uid == str(user_id):
-                                    response_text += f"**{emoji} {name} - ₱{spent:.2f} ⭐ (YOU)**\n"
+                                    response_text += f"{emoji} **{name}**\n💸 Total Spent: ₱{spent}\n\n"
                                 else:
-                                    response_text += f"{emoji} {name} - ₱{spent:.2f}\n"
+                                    response_text += f"{emoji} **{name}**\n💸 Total Spent: ₱{spent}\n\n"
                         else:
                             response_text += "No customers yet!\n\n"
                         
