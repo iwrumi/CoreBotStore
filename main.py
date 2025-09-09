@@ -121,6 +121,15 @@ def webhook():
         
         # Handle callback queries (inline keyboard button presses)
         if update_data and 'callback_query' in update_data:
+            import urllib.request
+            import json as json_lib
+            
+            # Get bot token
+            bot_token = os.environ.get('BOT_TOKEN')
+            if not bot_token:
+                logger.error("BOT_TOKEN not found")
+                return jsonify({'error': 'BOT_TOKEN not configured'}), 500
+                
             callback_query = update_data['callback_query']
             query_id = callback_query['id']
             chat_id = str(callback_query['message']['chat']['id'])

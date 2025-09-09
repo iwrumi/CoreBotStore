@@ -1,0 +1,28 @@
+{
+  "welcome_message": "🛍️ **Welcome to Premium Store!**\n\n💎 **Your Digital Services Store**\n\n💰 **Balance:** ₱{balance:.2f}\n📦 **Products:** {product_count} Available\n\n🛒 **Use the menu below to navigate:**",
+  
+  "browse_products": "🏪 **Product Categories**\n\nSelect a category to browse:",
+  
+  "no_products": "📦 **No Products Available**\n\nProducts will appear here when admin adds them.",
+  
+  "balance_message": "💰 **Account Balance**\n\n**Current Balance:** ₱{balance:.2f}\n**Total Deposited:** ₱{total_deposited:.2f}\n**Total Spent:** ₱{total_spent:.2f}\n\n**Account Status:** Active ✅",
+  
+  "deposit_message": "💳 **Deposit Funds**\n\n**💰 Payment Methods:**\n\n🟢 **GCash:** 09911127180\n🔵 **PayMaya:** 09911127180\n\n**📋 Steps to Deposit:**\n1. Choose amount (Min: ₱50)\n2. Send payment to number above\n3. Screenshot your receipt\n4. Send receipt to: 09911127180 mb\n5. Wait for balance credit (Usually 1-5 mins)\n\n⚠️ **Important:** No receipt = No processing\n📞 **Contact:** 09911127180 mb",
+  
+  "cart_empty": "🛒 **Shopping Cart**\n\nYour cart is empty.\n\n**To add items:**\n1. Browse Products\n2. Select items \n3. Add to cart\n4. Checkout when ready",
+  
+  "orders_empty": "📦 **Order History**\n\nNo orders found.\n\n**When you make purchases:**\n• Orders will appear here\n• Track delivery status\n• View order details\n• Reorder items",
+  
+  "support_message": "🆘 **Customer Support**\n\n**📞 Contact Information:**\n💬 **Telegram/WhatsApp:** 09911127180\n📧 **For Receipts:** Send to 09911127180 mb\n\n**⚡ We Help With:**\n• Payment issues\n• Product questions\n• Account problems  \n• Technical support\n• Order problems\n\n**🕐 Available:** 24/7\n**⚡ Response:** Usually within 5 minutes\n\nReady to help! Contact us now! 💪",
+  
+  "button_labels": {
+    "browse_products": "🏪 Browse Products",
+    "check_balance": "💰 My Balance", 
+    "deposit_funds": "💳 Deposit Funds",
+    "view_cart": "🛒 My Cart",
+    "my_orders": "📦 My Orders",
+    "support": "🆘 Support",
+    "back_menu": "🔙 Back to Main Menu",
+    "payment_help": "💳 Payment Help"
+  }
+}
