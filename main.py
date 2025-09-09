@@ -743,6 +743,14 @@ Max quantity: {product['stock']}"""
                 
                 inline_keyboard = {"inline_keyboard": []}
                 
+            elif callback_data.startswith("msg_user_"):
+                # Handle "Message User" button from receipt approval
+                target_user_id = callback_data.replace("msg_user_", "")
+                response_text = f"💬 **Send Message to User**\n\nTo send a message to user {target_user_id}:\n\nUse: `/msg {target_user_id} your message here`\n\n**Example:**\n`/msg {target_user_id} Your payment has been processed!`"
+                inline_keyboard = {"inline_keyboard": [[
+                    {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
+                ]]}
+                
             else:
                 response_text = "❌ Unknown action"
                 inline_keyboard = {"inline_keyboard": [[
