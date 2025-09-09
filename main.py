@@ -1185,32 +1185,7 @@ When customers send payment proof, they'll appear here for your manual approval.
                         response_text = "❌ **Usage:** `/msg USER_ID your message here`\n\n**Example:** `/msg 123456789 Your receipt has been processed!`"
 
                 elif text.startswith('/admin'):
-                    response_text = f"""🔑 Admin Panel
-
-👤 Admin: {user_id}
-📊 Status: Active
-
-📦 Product Management:
-• /add ProductName Price Stock - Add products
-• /products - View all products
-• /addstock - Add accounts/codes
-
-📸 Receipt Management:
-• /receipts - View pending receipts
-• /approve ID - Approve deposit
-• /reject ID - Reject deposit
-• /msg USER_ID message - Message user
-
-📊 Analytics:
-• /stats - View statistics
-• /users - Manage users
-
-💰 Payment System:
-• Customers send receipt photos
-• You approve with buttons
-• Balance credited instantly
-
-⚡ System working perfectly!"""
+                    response_text = f"Admin Panel\n\nAdmin ID: {user_id}\nStatus: Active\n\nCommands:\n/add ProductName Price Stock\n/products - View products\n/receipts - View receipts\n/stats - Statistics\n\nSystem ready!"
 
                 else:
                     response_text = f"""👋 **Welcome Back, Admin!**
@@ -1420,11 +1395,19 @@ Ready to shop! 🛍️"""
 
             # Send message using urllib
             url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-            data = json_lib.dumps({
-                "chat_id": chat_id, 
-                "text": response_text,
-                "parse_mode": "Markdown"
-            }).encode('utf-8')
+            
+            # For admin commands, don't use markdown to avoid 400 errors
+            if is_admin and text.startswith('/admin'):
+                data = json_lib.dumps({
+                    "chat_id": chat_id, 
+                    "text": response_text
+                }).encode('utf-8')
+            else:
+                data = json_lib.dumps({
+                    "chat_id": chat_id, 
+                    "text": response_text,
+                    "parse_mode": "Markdown"
+                }).encode('utf-8')
             
             req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
             try:
