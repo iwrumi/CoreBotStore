@@ -63,5 +63,43 @@
     ],
     "emoji": "\ud83c\udfb5",
     "auto_delivery": true
+  },
+  "capcut_1m": {
+    "id": "capcut_1m",
+    "name": "capcut 1m",
+    "category_id": "general",
+    "description": "capcut 1m - Premium Service",
+    "variants": [
+      {
+        "id": 1,
+        "name": "Standard",
+        "price": 20.0,
+        "stock": 25,
+        "features": [
+          "Premium Access"
+        ]
+      }
+    ],
+    "emoji": "\u2b50",
+    "auto_delivery": true
+  },
+  "capcut_1month_premium": {
+    "id": "capcut_1month_premium",
+    "name": "capcut 1month Premium",
+    "category_id": "general",
+    "description": "capcut 1month Premium - Premium Service",
+    "variants": [
+      {
+        "id": 1,
+        "name": "Standard",
+        "price": 20.0,
+        "stock": 50,
+        "features": [
+          "Premium Access"
+        ]
+      }
+    ],
+    "emoji": "\u2b50",
+    "auto_delivery": true
   }
 }

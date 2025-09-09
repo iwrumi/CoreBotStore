@@ -153,9 +153,84 @@ def webhook():
                 logger.info(f"Pipe count: {text.count('|')}")
                 
                 if text.count('|') >= 2 and text.startswith('/addproduct'):
-                    # This should process the actual product addition
+                    # Parse product data - flexible format
                     logger.info("Processing product addition...")
-                    # The existing product addition code will run here
+                    try:
+                        parts = text.replace('/addproduct ', '').split('|')
+                        
+                        # Required fields
+                        name = parts[0].strip()
+                        price = float(parts[1].strip())
+                        stock = int(parts[2].strip())
+                        
+                        # Optional fields with defaults
+                        category = parts[3].strip() if len(parts) > 3 and parts[3].strip() else 'general'
+                        description = parts[4].strip() if len(parts) > 4 and parts[4].strip() else f"{name} - Premium Service"
+                        emoji = parts[5].strip() if len(parts) > 5 and parts[5].strip() else '⭐'
+                        
+                        # Load existing products
+                        products = {}
+                        try:
+                            with open('config/sample_products.json', 'r') as f:
+                                products = json_lib.load(f)
+                        except:
+                            pass
+                        
+                        # Create product ID
+                        product_id = name.lower().replace(' ', '_').replace('-', '_')
+                        
+                        # Add new product
+                        products[product_id] = {
+                            "id": product_id,
+                            "name": name,
+                            "category_id": category,
+                            "description": description,
+                            "variants": [
+                                {
+                                    "id": 1,
+                                    "name": "Standard",
+                                    "price": price,
+                                    "stock": stock,
+                                    "features": ["Premium Access"]
+                                }
+                            ],
+                            "emoji": emoji,
+                            "auto_delivery": True
+                        }
+                        
+                        # Save products
+                        with open('config/sample_products.json', 'w') as f:
+                            json_lib.dump(products, f, indent=2)
+                        
+                        response_text = f"""✅ **Product Added Successfully!**
+
+📦 **Product:** {name}
+💰 **Price:** ₱{price}
+📊 **Stock:** {stock}
+🏷️ **Category:** {category}
+{emoji} **Ready for customers!**
+
+Your product is now available in the store. Customers can browse and purchase it immediately!
+
+➕ Add another: `/addproduct ProductName|Price|Stock`
+📦 Add accounts: `/addstock {product_id}`
+📊 View all: `/products`"""
+
+                    except Exception as e:
+                        response_text = f"""❌ **Error Adding Product**
+
+**Simple Format:**
+`/addproduct ProductName|Price|Stock`
+
+**Examples:**
+• `/addproduct Netflix Premium|149|50`
+• `/addproduct Spotify|120|25`
+• `/addproduct Steam Wallet|500|15`
+
+**Optional extras:**
+`/addproduct Name|Price|Stock|Category|Description|Emoji`
+
+Try the simple format! Error: {str(e)}"""
                     
                 elif text.startswith('/addproduct'):
                     response_text = """➕ **Add New Product**
