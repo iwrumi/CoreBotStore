@@ -1711,40 +1711,80 @@ Ready to manage your store!"""
                     if 'photo' in message:
                         return jsonify({'status': 'ok'})
                         
-                    response_text = f"""🛍️ **Welcome to Premium Store!**
-
-💎 **Your Digital Services Store**
-
-💰 **Balance:** ₱{user_balance:.2f}
-📦 **Products:** {product_count} Available
-
-🛒 **Use the menu below to navigate:**"""
+                    # EXACT primostorebot interface
+                    current_time = datetime.now().strftime("%d/%m/%Y - %I:%M:%S %p")
+                    username = first_name if first_name else "User"
                     
-                    # Send with inline keyboard
+                    # Calculate bot statistics 
+                    total_users = len(users) if users else 1
+                    
+                    # Count total accounts sold across all products
+                    products_sold = 0
+                    try:
+                        with open('data/product_files.json', 'r') as f:
+                            product_files = json_lib.load(f)
+                        for product_id, accounts in product_files.items():
+                            products_sold += len([acc for acc in accounts if acc.get('status') == 'sold'])
+                    except:
+                        products_sold = 0
+                    
+                    response_text = f"""👋 — Hello @{username}
+{current_time}
+
+User Details :
+└ ID : {user_id}
+└ Name : {username}
+└ Balance : ₱{user_balance}
+└ Total Spent : ₱0
+
+BOT Statistics :
+└ Products Sold : {products_sold} Accounts
+└ Total Users : {total_users}
+
+SHORTCUT :
+/start - Show main menu
+/stock - Check available stocks
+/bonus - Claim your daily bonus
+/leaderboard - View top users"""
+                    
+                    # EXACT primostorebot keyboard layout with custom buttons  
                     inline_keyboard = {
                         "inline_keyboard": [
                             [
-                                {"text": "🏪 Browse Products", "callback_data": "browse_products"},
-                                {"text": "💰 My Balance", "callback_data": "check_balance"}
+                                {"text": "APPS STREAMING", "callback_data": "category_streaming"},
+                                {"text": "EDITING PREMI..", "callback_data": "category_video"}
                             ],
                             [
-                                {"text": "💳 Deposit Funds", "callback_data": "deposit_funds"},
-                                {"text": "🛒 My Cart", "callback_data": "view_cart"}
-                            ],
-                            [
-                                {"text": "📦 My Orders", "callback_data": "my_orders"},
-                                {"text": "🆘 Support", "callback_data": "support"}
+                                {"text": "Other Categories", "callback_data": "browse_products"}
                             ]
                         ]
                     }
                     
-                    # Send message with inline keyboard
+                    # Custom keyboard (the bottom buttons like primostorebot)
+                    keyboard = {
+                        "keyboard": [
+                            [
+                                {"text": "💰 Deposit Balance"},
+                                {"text": "🛒 Browse Products"}
+                            ],
+                            [
+                                {"text": "💳 Check Balance"},
+                                {"text": "👑 Customer Service"}
+                            ],
+                            [
+                                {"text": "❓ How to order"}
+                            ]
+                        ],
+                        "resize_keyboard": True,
+                        "one_time_keyboard": False
+                    }
+                    
+                    # Send message with BOTH inline and custom keyboard like primostorebot
                     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
                     data = json_lib.dumps({
                         "chat_id": chat_id,
                         "text": response_text,
-                        "parse_mode": "Markdown",
-                        "reply_markup": inline_keyboard
+                        "reply_markup": keyboard  # Use custom keyboard for bottom buttons
                     }).encode('utf-8')
                     
                     req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
