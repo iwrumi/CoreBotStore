@@ -520,24 +520,23 @@ Thank you for shopping with us! 🎉"""
                                             
                                             # Send account details
                                             if file_data['type'] == 'account':
-                                                account_message = f"""📦 **Your {product['name']} Account #{i+1}**
+                                                account_message = f"""📦 Your {product['name']} Account #{i+1}
 
-🔐 **Login Credentials:**
-📧 **Email:** {file_data['details']['email']}
-🔑 **Password:** {file_data['details']['password']}
-💎 **Subscription:** {file_data['details']['subscription']}
+🔐 Login Credentials:
+📧 Email: {file_data['details']['email']}
+🔑 Password: {file_data['details']['password']}
+💎 Subscription: {file_data['details'].get('subscription', 'Premium Access')}
 
-📋 **Instructions:**
-{file_data['details']['instructions']}
+📋 Instructions:
+{file_data['details'].get('instructions', 'Login with these credentials')}
 
-⚠️ **Important:** Keep these credentials safe and follow the instructions!"""
+⚠️ Important: Keep these credentials safe!"""
                                                 
-                                                # Send account details to customer
+                                                # Send account details to customer (no markdown to avoid errors)
                                                 account_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
                                                 account_data = json_lib.dumps({
                                                     "chat_id": user_id,
-                                                    "text": account_message,
-                                                    "parse_mode": "Markdown"
+                                                    "text": account_message
                                                 }).encode('utf-8')
                                                 account_req = urllib.request.Request(account_url, data=account_data, headers={'Content-Type': 'application/json'})
                                                 urllib.request.urlopen(account_req)
@@ -545,8 +544,26 @@ Thank you for shopping with us! 🎉"""
                                         # Save updated product files
                                         with open('data/product_files.json', 'w') as f:
                                             json_lib.dump(product_files, f, indent=2)
-                            except:
-                                pass
+                                    else:
+                                        # Not enough files - alert admin
+                                        admin_alert = f"⚠️ ALERT: {product['name']} sold but only {len(available_files)} accounts available for {quantity} requested!"
+                                        admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                        admin_data = json_lib.dumps({
+                                            "chat_id": "7240133914",
+                                            "text": admin_alert
+                                        }).encode('utf-8')
+                                        admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
+                                        urllib.request.urlopen(admin_req)
+                            except Exception as e:
+                                # Send error to admin
+                                error_msg = f"❌ File delivery error for {product['name']}: {str(e)}"
+                                admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                admin_data = json_lib.dumps({
+                                    "chat_id": "7240133914",
+                                    "text": error_msg
+                                }).encode('utf-8')
+                                admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
+                                urllib.request.urlopen(admin_req)
                             
                 except Exception as e:
                     response_text = f"❌ Purchase failed: {str(e)}"
@@ -950,6 +967,44 @@ Try the simple format!"""
 👥 Manage Users: /users
 💸 View Deposits: /deposits"""
 
+                elif text.startswith('/addfile'):
+                    # Add files/accounts to products
+                    parts = text.split()
+                    if len(parts) == 2:
+                        try:
+                            product_id = int(parts[1])
+                            
+                            # Load products to verify ID exists
+                            with open('data/products.json', 'r') as f:
+                                products = json_lib.load(f)
+                            
+                            product = next((p for p in products if p['id'] == product_id), None)
+                            if product:
+                                response_text = f"""📁 Adding Files to: {product['name']}
+
+🔧 Send me the following:
+1. Email and password (one per message)
+2. Format: email@example.com:password123
+3. Send one account per message
+4. Type /done when finished
+
+Example:
+user1@gmail.com:mypassword123
+
+Ready to receive accounts!"""
+                            else:
+                                response_text = f"❌ Product ID {product_id} not found"
+                        except:
+                            response_text = "❌ Invalid product ID"
+                    else:
+                        response_text = """📁 Add Files to Product
+
+Usage: /addfile ProductID
+
+Example: /addfile 1
+
+This will let you add accounts/files to a product."""
+
                 elif text.startswith('/addstock'):
                     if len(text.split()) == 1:
                         response_text = """📦 **Add Account/Stock**
@@ -1185,7 +1240,7 @@ When customers send payment proof, they'll appear here for your manual approval.
                         response_text = "❌ **Usage:** `/msg USER_ID your message here`\n\n**Example:** `/msg 123456789 Your receipt has been processed!`"
 
                 elif text.startswith('/admin'):
-                    response_text = f"Admin Panel\n\nAdmin ID: {user_id}\nStatus: Active\n\nCommands:\n/add ProductName Price Stock\n/products - View products\n/receipts - View receipts\n/stats - Statistics\n\nSystem ready!"
+                    response_text = f"Admin Panel\n\nAdmin ID: {user_id}\nStatus: Active\n\nCommands:\n/add ProductName Price Stock\n/products - View products\n/addfile ProductID - Add files to products\n/receipts - View receipts\n/stats - Statistics\n\nSystem ready!"
 
                 else:
                     response_text = f"""👋 **Welcome Back, Admin!**
