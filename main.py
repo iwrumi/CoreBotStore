@@ -171,13 +171,13 @@ def webhook():
                 
             # Handle different callback actions
             elif callback_data == "browse_products":
-                # Get products and create categories
+                # SIMPLIFIED browse products handler
                 try:
                     with open('data/products.json', 'r') as f:
                         products = json_lib.load(f)
                     
                     if products:
-                        response_text = messages.get("browse_products", "🏪 Product Categories\n\nSelect a category to browse:")
+                        response_text = "🏪 Product Categories\n\nSelect a category:"
                         
                         # Create category buttons
                         categories = {}
@@ -190,20 +190,20 @@ def webhook():
                         inline_keyboard = {"inline_keyboard": []}
                         for category, count in categories.items():
                             inline_keyboard["inline_keyboard"].append([
-                                {"text": f"{category} ({count} items)", "callback_data": f"category_{category}"}
+                                {"text": f"{category} ({count})", "callback_data": f"category_{category}"}
                             ])
                         inline_keyboard["inline_keyboard"].append([
-                            {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
+                            {"text": "🔙 Main Menu", "callback_data": "main_menu"}
                         ])
                     else:
-                        response_text = messages.get("no_products", "📦 No Products Available\n\nProducts will appear here when admin adds them.")
+                        response_text = "📦 No Products Available"
                         inline_keyboard = {"inline_keyboard": [[
-                            {"text": messages.get("button_labels", {}).get("back_menu", "🔙 Back to Main Menu"), "callback_data": "main_menu"}
+                            {"text": "🔙 Main Menu", "callback_data": "main_menu"}
                         ]]}
                 except:
-                    response_text = "❌ Error loading products"
+                    response_text = "Error loading products"
                     inline_keyboard = {"inline_keyboard": [[
-                        {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
+                        {"text": "🔙 Main Menu", "callback_data": "main_menu"}
                     ]]}
             
             elif callback_data == "check_balance":
