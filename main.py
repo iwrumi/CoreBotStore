@@ -1055,6 +1055,9 @@ Send accounts now!"""
                                 common_password = None
                                 emails_only = []
                                 
+                                # Debug: log what we're processing
+                                logger.info(f"Processing {len(accounts)} lines for product {product_name}")
+                                
                                 for line in accounts:
                                     line = line.strip()
                                     if not line:
@@ -1222,7 +1225,28 @@ Emails found: {len(emails_only)}
 Password found: {len(common_password) if common_password else 0} chars"""
                                 
                             except Exception as e:
-                                response_text = f"❌ Error processing accounts: {str(e)}"
+                                response_text = f"❌ Error processing accounts: {str(e)}\n\nDebug: Lines received: {len(accounts)}"
+                        
+                        # Add fallback if no accounts were processed
+                        if added_count == 0 and failed_count == 0:
+                            response_text = f"""⚠️ No accounts were added!
+
+🔍 Debug Info:
+• Lines processed: {len(accounts) if 'accounts' in locals() else 0}
+• Emails found: {len(emails_only) if 'emails_only' in locals() else 0}
+• Password found: {'Yes' if 'common_password' in locals() and common_password else 'No'}
+• Product: {product_name}
+
+📝 Expected format:
+/addacc spotify
+email1@domain.com
+email2@domain.com
+pass: yourpassword
+
+Or:
+/addacc spotify
+email1@domain.com:password
+email2@domain.com:password"""
                         else:
                             response_text = "Usage: /addacc capcut"
 
