@@ -776,7 +776,6 @@ Max quantity: {product['stock']}"""
                 "chat_id": chat_id,
                 "message_id": message_id,
                 "text": response_text,
-                "parse_mode": "Markdown",
                 "reply_markup": inline_keyboard
             }).encode('utf-8')
             
