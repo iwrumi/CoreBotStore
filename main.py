@@ -1834,13 +1834,15 @@ Ready to order! 🛍️"""
                     except:
                         products_sold = 0
                     
-                    # Load actual user spending data
+                    # Load actual user spending data AND BALANCE
                     try:
                         with open('data/users.json', 'r') as f:
                             users = json_lib.load(f)
                         user_data = users.get(str(user_id), {})
+                        user_balance = user_data.get('balance', 0)  # LOAD FRESH BALANCE
                         total_spent = user_data.get('total_spent', 0)
                     except:
+                        user_balance = 0
                         total_spent = 0
                     
                     response_text = f"""👋 — Hello @{username}
