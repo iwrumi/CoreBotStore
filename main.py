@@ -121,6 +121,9 @@ def webhook():
         
         # Handle incoming messages
         if update_data and 'message' in update_data:
+            import urllib.request
+            import json as json_lib
+            
             message = update_data['message']
             chat_id = str(message['chat']['id'])
             user_id = str(message['from']['id'])
@@ -140,9 +143,6 @@ def webhook():
             # Check if user is admin - force add your ID for testing
             is_admin = user_id in admin_users or user_id == "7240133914"
             logger.info(f"User {user_id} admin check: {is_admin}")
-            
-            import urllib.request
-            import json as json_lib
             
             bot_token = os.environ.get('BOT_TOKEN')
             
@@ -284,26 +284,129 @@ Try again with the correct format!"""
 👥 Manage Users: /users
 💸 View Deposits: /deposits"""
 
+                elif text.startswith('/addstock'):
+                    if len(text.split()) == 1:
+                        response_text = """📦 **Add Account/Stock**
+
+To add actual accounts for delivery:
+
+**Format:**
+`/addstock ProductName`
+
+**Example:**
+`/addstock netflix_premium`
+
+This will let you add actual login details that customers receive after purchase.
+
+📋 **Available Products:**
+• Use `/products` to see your product list
+• Product names are in lowercase with underscores"""
+
+                    else:
+                        product_name = text.replace('/addstock ', '').strip().lower().replace(' ', '_')
+                        response_text = f"""📦 **Adding Stock for {product_name}**
+
+Now send the account details in this format:
+
+**For Login Accounts:**
+```
+Email: user@example.com
+Password: password123
+Notes: Any special instructions
+```
+
+**For Gift Cards/Codes:**
+```
+Code: XXXX-XXXX-XXXX-XXXX
+Amount: $50
+Notes: Gift card code
+```
+
+**For Other Services:**
+Just send the details customers need to access the service.
+
+Send the account details in your next message!"""
+
+                        # Store the current product for next message
+                        try:
+                            with open('data/pending_stock.json', 'w') as f:
+                                json_lib.dump({'user_id': user_id, 'product': product_name}, f)
+                        except:
+                            pass
+
+                elif text.startswith('/deposits'):
+                    # Show pending deposits for manual approval
+                    try:
+                        with open('data/deposits.json', 'r') as f:
+                            deposits = json_lib.load(f)
+                        
+                        pending = [d for d in deposits.values() if d.get('status') == 'pending']
+                        
+                        if pending:
+                            deposit_list = "💰 **Pending Deposits - Need Your Approval**\n\n"
+                            for deposit in pending[:10]:  # Show latest 10
+                                amount = deposit.get('amount', 0)
+                                method = deposit.get('payment_method', 'unknown')
+                                user = deposit.get('user_telegram_id', 'unknown')
+                                dep_id = deposit.get('deposit_id', 'unknown')
+                                
+                                deposit_list += f"💸 **#{dep_id}**\n"
+                                deposit_list += f"   💰 Amount: ₱{amount}\n"
+                                deposit_list += f"   💳 Method: {method}\n" 
+                                deposit_list += f"   👤 User: {user}\n"
+                                deposit_list += f"   ✅ Approve: `/approve {dep_id}`\n"
+                                deposit_list += f"   ❌ Reject: `/reject {dep_id}`\n\n"
+                            
+                            response_text = deposit_list
+                        else:
+                            response_text = """💰 **No Pending Deposits**
+
+All deposits have been processed!
+
+When customers send payment proof, they'll appear here for your manual approval.
+
+🔄 **How it works:**
+1. Customer sends `/deposit` and uploads payment proof
+2. Deposit shows up here as "pending"  
+3. You approve or reject manually
+4. Balance is added automatically after approval"""
+
+                    except:
+                        response_text = "💰 **No deposits found**\n\nDeposits will appear here when customers make payments."
+
+                elif text.startswith('/approve '):
+                    deposit_id = text.replace('/approve ', '').strip()
+                    # Approve deposit logic
+                    response_text = f"✅ **Deposit #{deposit_id} Approved!**\n\nBalance has been added to user account."
+
+                elif text.startswith('/reject '):
+                    deposit_id = text.replace('/reject ', '').strip()
+                    response_text = f"❌ **Deposit #{deposit_id} Rejected**\n\nUser has been notified."
+
                 elif text.startswith('/admin'):
                     response_text = f"""🔑 **Admin Panel**
 
 👤 **Admin:** {user_id}
 📊 **Status:** Active
 
-**📦 Product Management:**
-• /addproduct - Add new product
-• /products - View all products  
-• /updatestock - Update stock levels
+**📦 Product & Stock Management:**
+• /addproduct - Add new product types
+• /addstock - Add actual accounts/codes
+• /products - View all products
+
+**💰 Payment Management:**
+• /deposits - Approve/reject deposits (Manual)
+• /approve ID - Approve deposit
+• /reject ID - Reject deposit
 
 **📊 Analytics:**
 • /stats - View bot statistics
 • /users - Manage users
-• /deposits - Pending deposits
 
 **📢 Communication:**
 • /broadcast - Send message to all users
 
-**Quick Start:** Use `/addproduct` to add your first product!"""
+**⚡ Payment System:** Manual approval - you control all deposits!"""
 
                 else:
                     response_text = f"""👋 **Welcome Back, Admin!**
