@@ -1459,14 +1459,34 @@ DM him with the vouch!
                             with open('data/product_files.json', 'w') as f:
                                 json_lib.dump(product_files, f, indent=2)
                             
-                            total_accounts = len(product_files[product_id])
+                            # AUTOMATICALLY UPDATE PRODUCT STOCK TO MATCH ACCOUNT COUNT
+                            available_accounts = [acc for acc in product_files[product_id] if acc['status'] == 'available']
+                            total_available = len(available_accounts)
+                            
+                            # Update capcut product stock
+                            try:
+                                with open('data/products.json', 'r') as f:
+                                    products = json_lib.load(f)
+                                
+                                for product in products:
+                                    if product['id'] == 1:  # capcut
+                                        product['stock'] = total_available
+                                        break
+                                
+                                with open('data/products.json', 'w') as f:
+                                    json_lib.dump(products, f, indent=2)
+                                    
+                            except:
+                                pass
+                            
                             response_text = f"""✅ Account Added to CapCut!
 
 📧 Email: {email}
 🔑 Password: {password}
-📊 Total Accounts: {total_accounts}
+📊 Available Accounts: {total_available}
+📦 Product Stock Updated: {total_available}
 
-Send another account or use /addfile 1 for other products."""
+Send more accounts to automatically increase stock!"""
                             
                         except Exception as e:
                             response_text = f"❌ Error adding account: {str(e)}"
