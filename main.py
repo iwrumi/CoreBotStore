@@ -968,11 +968,12 @@ Try the simple format!"""
 💸 View Deposits: /deposits"""
 
                 elif text.startswith('/addfile'):
-                    # Add files/accounts to products
-                    parts = text.split()
-                    if len(parts) == 2:
+                    # Add files/accounts to products - handle both "/addfile 1" and "/addfile1"
+                    command_part = text.replace('/addfile', '').strip()
+                    
+                    if command_part:
                         try:
-                            product_id = int(parts[1])
+                            product_id = int(command_part)
                             
                             # Load products to verify ID exists
                             with open('data/products.json', 'r') as f:
@@ -982,28 +983,24 @@ Try the simple format!"""
                             if product:
                                 response_text = f"""📁 Adding Files to: {product['name']}
 
-🔧 Send me the following:
-1. Email and password (one per message)
-2. Format: email@example.com:password123
-3. Send one account per message
-4. Type /done when finished
+🔧 Now send accounts one by one:
+
+Format: email@example.com:password123
 
 Example:
 user1@gmail.com:mypassword123
 
-Ready to receive accounts!"""
+Send one account per message, I'll add them automatically!"""
                             else:
-                                response_text = f"❌ Product ID {product_id} not found"
+                                response_text = f"❌ Product ID {product_id} not found\n\nAvailable products:\n/products - View all products"
                         except:
-                            response_text = "❌ Invalid product ID"
+                            response_text = f"❌ Invalid product ID: {command_part}\n\nUsage: /addfile 1"
                     else:
                         response_text = """📁 Add Files to Product
 
-Usage: /addfile ProductID
+Usage: /addfile 1
 
-Example: /addfile 1
-
-This will let you add accounts/files to a product."""
+This will let you add accounts/files to product ID 1 (capcut)"""
 
                 elif text.startswith('/addstock'):
                     if len(text.split()) == 1:
