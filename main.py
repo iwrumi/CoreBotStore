@@ -1024,21 +1024,33 @@ Try the simple format!"""
 💸 View Deposits: /deposits"""
 
                 elif text.startswith('/addacc'):
-                    # SIMPLE WORKING VERSION
+                    # BULLETPROOF WORKING VERSION  
+                    logger.info(f"Admin {user_id} used /addacc command")
+                    
                     try:
-                        # Split by lines
+                        # Split by lines and clean
                         lines = [line.strip() for line in text.strip().split('\n') if line.strip()]
+                        logger.info(f"Parsed {len(lines)} lines from /addacc command")
                         
                         if len(lines) < 3:
-                            response_text = """📦 Add Accounts:
+                            response_text = """📦 **Add Accounts:**
 
+**Format:**
+```
 /addacc spotify
 email1@domain.com
-email2@domain.com
-pass: password123"""
+email2@domain.com  
+pass: password123
+```
+
+**Products:** capcut, spotify, disney, quizlet"""
                         else:
-                            # Get product name from first line
-                            product_name = lines[0].split()[1].lower()
+                            # Extract product name
+                            try:
+                                product_name = lines[0].split()[1].lower()
+                                logger.info(f"Product name: {product_name}")
+                            except:
+                                response_text = "❌ Invalid format. Use: /addacc [product_name]"
                             
                             # Extract emails and password
                             emails = []
@@ -1046,15 +1058,16 @@ pass: password123"""
                             
                             for line in lines[1:]:
                                 if '@' in line and 'pass' not in line.lower():
-                                    emails.append(line)
+                                    emails.append(line.strip())
                                 elif 'pass:' in line.lower():
                                     password = line.split(':', 1)[1].strip()
                             
                             # Remove duplicates
                             emails = list(dict.fromkeys(emails))
+                            logger.info(f"Found {len(emails)} unique emails, password: {password}")
                             
                             if emails:
-                                # Load files
+                                # Load product files
                                 try:
                                     with open('data/product_files.json', 'r') as f:
                                         product_files = json_lib.load(f)
@@ -1086,28 +1099,40 @@ pass: password123"""
                                     product_files[product_id].append(account)
                                     added += 1
                                 
-                                # Save files
+                                # Save product files
                                 with open('data/product_files.json', 'w') as f:
                                     json_lib.dump(product_files, f, indent=2)
+                                logger.info(f"Saved {added} accounts to product_files.json")
                                 
-                                # Update stock
+                                # Update stock count
                                 try:
                                     with open('data/products.json', 'r') as f:
                                         products = json_lib.load(f)
+                                    
                                     for product in products:
                                         if product['id'] == int(product_id):
-                                            product['stock'] = len([acc for acc in product_files[product_id] if acc['status'] == 'available'])
+                                            new_stock = len([acc for acc in product_files[product_id] if acc['status'] == 'available'])
+                                            product['stock'] = new_stock
+                                            logger.info(f"Updated {product['name']} stock to {new_stock}")
                                             break
+                                    
                                     with open('data/products.json', 'w') as f:
                                         json_lib.dump(products, f, indent=2)
-                                except:
-                                    pass
+                                except Exception as e:
+                                    logger.error(f"Error updating stock: {e}")
                                 
-                                response_text = f"✅ Added {added} {product_name} accounts!\n🔑 Password: {password}\n📦 Ready for customers!"
+                                response_text = f"""✅ **SUCCESS!** Added {added} {product_name} accounts!
+
+🔑 **Password:** {password}
+📦 **Product:** {product_name.title()}
+📊 **Total Stock:** {len(product_files[product_id])} accounts
+
+Ready for customers! 🛍️"""
                             else:
-                                response_text = "❌ No emails found!"
+                                response_text = "❌ No valid emails found! Make sure to include email addresses."
                     except Exception as e:
-                        response_text = f"❌ Error: {str(e)}"
+                        logger.error(f"Error in /addacc: {e}")
+                        response_text = f"❌ Error processing accounts: {str(e)}"
 
                 elif text.startswith('/addstock'):
                     if len(text.split()) == 1:
