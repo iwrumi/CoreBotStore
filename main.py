@@ -119,38 +119,247 @@ def webhook():
     try:
         update_data = request.get_json(force=True)
         
-        # Simple response to acknowledge webhook
+        # Handle incoming messages
         if update_data and 'message' in update_data:
             message = update_data['message']
-            chat_id = message['chat']['id']
+            chat_id = str(message['chat']['id'])
+            user_id = str(message['from']['id'])
+            text = message.get('text', '')
             
-            # Send simple response directly via API
+            # Load admin configuration
+            admin_users = []
+            try:
+                with open('config/admin_settings.json', 'r') as f:
+                    admin_config = json.load(f)
+                    admin_users = admin_config.get('admin_users', [])
+            except:
+                admin_users = []
+            
+            # Check if user is admin
+            is_admin = user_id in admin_users
+            
             import urllib.request
-            import urllib.parse
             import json as json_lib
             
             bot_token = os.environ.get('BOT_TOKEN')
             
-            response_text = """👋 Hello! Welcome to Premium Store Bot!
+            # Different responses for admins vs regular users
+            if is_admin:
+                if text.startswith('/addproduct'):
+                    response_text = """➕ **Add New Product**
 
-🏪 Available Commands:
-/start - Main menu
-/balance - Check your balance  
-/products - Browse products
-/deposit - Add balance
+Send product details in this format:
+```
+/addproduct Netflix Premium|streaming|149|50|1 Month Netflix Premium Account|📺
+```
 
-💰 Current Balance: ₱0.00
+**Format:** `/addproduct Name|Category|Price|Stock|Description|Emoji`
 
-Choose an option to get started!"""
-            
+**Categories:** streaming, gaming, productivity, vpn
+
+**Example:**
+`/addproduct Spotify Premium|streaming|120|25|1 Month Spotify Premium|🎵`
+
+Ready to add your product!"""
+
+                elif text.count('|') >= 5 and text.startswith('/addproduct'):
+                    # Parse product data
+                    try:
+                        parts = text.replace('/addproduct ', '').split('|')
+                        name, category, price, stock, description, emoji = parts[:6]
+                        
+                        # Load existing products
+                        products = {}
+                        try:
+                            with open('config/sample_products.json', 'r') as f:
+                                products = json_lib.load(f)
+                        except:
+                            pass
+                        
+                        # Create product ID
+                        product_id = name.lower().replace(' ', '_').replace('-', '_')
+                        
+                        # Add new product
+                        products[product_id] = {
+                            "id": product_id,
+                            "name": name,
+                            "category_id": category,
+                            "description": description,
+                            "variants": [
+                                {
+                                    "id": 1,
+                                    "name": "Standard",
+                                    "price": float(price),
+                                    "stock": int(stock),
+                                    "features": ["Premium Access"]
+                                }
+                            ],
+                            "emoji": emoji,
+                            "auto_delivery": True
+                        }
+                        
+                        # Save products
+                        with open('config/sample_products.json', 'w') as f:
+                            json_lib.dump(products, f, indent=2)
+                        
+                        response_text = f"""✅ **Product Added Successfully!**
+
+📦 **Product:** {name}
+💰 **Price:** ₱{price}
+📊 **Stock:** {stock}
+🏷️ **Category:** {category}
+{emoji} **Ready for customers!**
+
+Your product is now available in the store. Customers can browse and purchase it immediately!
+
+➕ Add another product: /addproduct
+📊 View all products: /products"""
+
+                    except Exception as e:
+                        response_text = f"""❌ **Error Adding Product**
+
+Please use the correct format:
+`/addproduct Name|Category|Price|Stock|Description|Emoji`
+
+**Example:**
+`/addproduct Netflix Premium|streaming|149|50|1 Month Netflix Premium|📺`
+
+Try again with the correct format!"""
+
+                elif text.startswith('/products'):
+                    # Show existing products
+                    try:
+                        with open('config/sample_products.json', 'r') as f:
+                            products = json_lib.load(f)
+                        
+                        if products:
+                            product_list = "📦 **Your Products:**\n\n"
+                            for pid, product in products.items():
+                                variant = product['variants'][0] if product['variants'] else {}
+                                price = variant.get('price', 0)
+                                stock = variant.get('stock', 0)
+                                product_list += f"{product.get('emoji', '⭐')} **{product['name']}**\n"
+                                product_list += f"   💰 ₱{price} | 📊 Stock: {stock}\n"
+                                product_list += f"   🏷️ {product.get('category_id', 'general')}\n\n"
+                            
+                            product_list += "➕ **Add New Product:** /addproduct\n"
+                            product_list += "🔄 **Update Stock:** /updatestock ProductName NewAmount"
+                            response_text = product_list
+                        else:
+                            response_text = """📦 **No Products Yet**
+
+➕ Add your first product:
+`/addproduct Netflix Premium|streaming|149|50|1 Month Netflix Premium|📺`
+
+**Popular categories:**
+• streaming - Netflix, Spotify, Disney+
+• gaming - Steam, Epic Games
+• productivity - Office, Adobe
+• vpn - Nord VPN, Express VPN"""
+
+                    except:
+                        response_text = "❌ Error loading products. Try again!"
+
+                elif text.startswith('/stats'):
+                    try:
+                        with open('config/sample_products.json', 'r') as f:
+                            products = json_lib.load(f)
+                        product_count = len(products)
+                    except:
+                        product_count = 0
+                    
+                    response_text = f"""📊 **Bot Statistics**
+
+👥 **Users:** 1 registered
+📦 **Products:** {product_count} available
+💰 **Deposits:** 0 pending
+📈 **Orders:** 0 completed
+
+🔧 **Quick Actions:**
+➕ Add Product: /addproduct
+📦 View Products: /products  
+👥 Manage Users: /users
+💸 View Deposits: /deposits"""
+
+                elif text.startswith('/admin'):
+                    response_text = f"""🔑 **Admin Panel**
+
+👤 **Admin:** {user_id}
+📊 **Status:** Active
+
+**📦 Product Management:**
+• /addproduct - Add new product
+• /products - View all products  
+• /updatestock - Update stock levels
+
+**📊 Analytics:**
+• /stats - View bot statistics
+• /users - Manage users
+• /deposits - Pending deposits
+
+**📢 Communication:**
+• /broadcast - Send message to all users
+
+**Quick Start:** Use `/addproduct` to add your first product!"""
+
+                else:
+                    response_text = f"""👋 **Welcome Back, Admin!**
+
+🔑 **Admin Access Confirmed**
+🆔 **Your ID:** {user_id}
+
+**Quick Actions:**
+➕ Add Product: `/addproduct`  
+📦 View Products: `/products`
+📊 Statistics: `/stats`
+🔧 Full Panel: `/admin`
+
+**Add Product Format:**
+`/addproduct Name|Category|Price|Stock|Description|Emoji`
+
+**Example:**
+`/addproduct Netflix Premium|streaming|149|50|1 Month Netflix|📺`
+
+Ready to manage your store!"""
+
+            else:
+                # Regular user response
+                response_text = f"""👋 **Welcome to Premium Store!**
+
+🏪 **Available Services:**
+• Netflix Premium Accounts
+• Spotify Premium Accounts  
+• Gaming Accounts
+• VPN Services
+
+💰 **Your Balance:** ₱0.00
+
+📱 **Quick Actions:**
+/balance - Check your balance
+/deposit - Add money to account
+/products - Browse our catalog
+/support - Get help
+
+🎯 **How to Order:**
+1. Add balance to your account
+2. Browse products
+3. Purchase instantly
+4. Receive your account details
+
+Start by adding balance to begin shopping!"""
+
             # Send message using urllib
             url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-            data = json_lib.dumps({"chat_id": chat_id, "text": response_text}).encode('utf-8')
+            data = json_lib.dumps({
+                "chat_id": chat_id, 
+                "text": response_text,
+                "parse_mode": "Markdown"
+            }).encode('utf-8')
             
             req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
             try:
                 with urllib.request.urlopen(req) as response:
-                    logger.info(f"Sent message to chat {chat_id}")
+                    logger.info(f"Sent {'admin' if is_admin else 'user'} message to chat {chat_id}")
             except Exception as e:
                 logger.error(f"Failed to send message: {e}")
         
