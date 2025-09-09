@@ -524,30 +524,110 @@ When customers send payment proof, they'll appear here for your manual approval.
 Ready to manage your store!"""
 
             else:
-                # Regular user response
-                response_text = f"""👋 **Welcome to Premium Store!**
+                # Regular user response - connect to the complete bot system
+                try:
+                    from complete_bot import PremiumTelegramStoreBot
+                    from data_manager import DataManager
+                    
+                    # Initialize bot system
+                    data_manager = DataManager()
+                    
+                    # Get actual user balance
+                    user_data = data_manager.get_or_create_user(user_id)
+                    user_balance = user_data.get('balance', 0.0)
+                    
+                    # Get products count
+                    products = data_manager.get_products()
+                    product_count = len(products)
+                    
+                    if text == '/start' or text == '/menu':
+                        response_text = f"""🛍️ **Welcome to Premium Store!**
 
-🏪 **Available Services:**
-• Netflix Premium Accounts
-• Spotify Premium Accounts  
-• Gaming Accounts
-• VPN Services
+👋 Hello! I'm your personal shopping assistant.
 
-💰 **Your Balance:** ₱0.00
+💰 **Your Balance:** ₱{user_balance:.2f}
+📦 **Available Products:** {product_count} items
 
-📱 **Quick Actions:**
+**🏪 Browse & Shop:**
+/products - Browse our catalog
 /balance - Check your balance
 /deposit - Add money to account
-/products - Browse our catalog
+
+**📱 Quick Actions:**
+/cart - View your cart
+/orders - Your purchase history
 /support - Get help
 
-🎯 **How to Order:**
-1. Add balance to your account
-2. Browse products
-3. Purchase instantly
-4. Receive your account details
+**🎯 How to Shop:**
+1. Browse products with /products
+2. Add balance with /deposit if needed
+3. Purchase instantly with your balance
+4. Get instant delivery!
 
-Start by adding balance to begin shopping!"""
+Ready to start shopping? Use /products to browse! 🚀"""
+                    
+                    elif text == '/products' or text == '/catalog':
+                        # Show actual products from database
+                        if products:
+                            response_text = "🏪 **Our Product Catalog**\n\n"
+                            categories = {}
+                            for product in products:
+                                cat = product.get('category', 'General')
+                                if cat not in categories:
+                                    categories[cat] = []
+                                categories[cat].append(product)
+                            
+                            for category, cat_products in categories.items():
+                                response_text += f"**{category}:**\n"
+                                for product in cat_products[:5]:  # Show first 5 per category
+                                    stock_text = f"✅ {product['stock']} in stock" if product['stock'] > 0 else "❌ Out of stock"
+                                    response_text += f"• {product['name']} - ₱{product['price']} ({stock_text})\n"
+                                response_text += "\n"
+                            
+                            response_text += "🛒 **To purchase:** Contact admin or use /balance to add funds first!"
+                        else:
+                            response_text = "📦 **No products available yet.**\n\nCheck back soon! New products are added regularly."
+                    
+                    elif text == '/balance':
+                        response_text = f"""💰 **Your Account Balance**
+
+**Current Balance:** ₱{user_balance:.2f}
+**Total Deposited:** ₱{user_data.get('total_deposited', 0.0):.2f}
+**Total Spent:** ₱{user_data.get('total_spent', 0.0):.2f}
+
+**Need to add funds?**
+Use /deposit to add money to your account and start shopping!
+
+**Recent Activity:**
+• Last purchase: {user_data.get('last_purchase', 'None')}
+• Account created: {user_data.get('created_at', 'Unknown')}"""
+                    
+                    else:
+                        # Default welcome message
+                        response_text = f"""👋 **Welcome to Premium Store!**
+
+🏪 **Your one-stop shop for premium services!**
+
+💰 **Your Balance:** ₱{user_balance:.2f}
+📦 **Products Available:** {product_count} items
+
+**Quick Start:**
+• /products - Browse our catalog
+• /balance - Check your funds  
+• /deposit - Add money to shop
+
+Ready to explore? Try /products! 🛍️"""
+                        
+                except Exception as e:
+                    # Fallback response
+                    response_text = f"""👋 **Welcome to Premium Store!**
+
+🏪 **Premium Services Available**
+📱 Use /products to browse
+💰 Use /balance to check funds
+📞 Contact: 09911127180 mb
+
+Ready to shop! 🛍️"""
 
             # Send message using urllib
             url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
