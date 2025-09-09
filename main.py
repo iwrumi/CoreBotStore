@@ -215,14 +215,14 @@ def webhook():
             
             elif callback_data == "deposit_funds":
                 # Send GCash QR code exactly like primostorebot
-                gcash_qr_message = """📋 **Steps to Deposit:**
+                gcash_qr_message = """📋 Steps to Deposit:
 3. Screenshot your receipt  
-4. Send receipt photo to this bot
+4. Send receipt photo here
 5. Wait for admin approval
 6. Get balance credit instantly after approval
 
-⚠️ **Important:** Send receipt as photo to this bot
-📞 **Contact:** 09911127180 mb"""
+⚠️ Important: Receipt will be sent to admin automatically
+📞 Contact: 09911127180 mb"""
 
                 # Your GCash QR code for 09911127180
                 qr_code_url = "https://i.ibb.co/QcTNbMW/gcash-qr-09911127180.png"
@@ -239,7 +239,6 @@ def webhook():
                     "chat_id": chat_id,
                     "photo": qr_code_url,
                     "caption": gcash_qr_message,
-                    "parse_mode": "Markdown",
                     "reply_markup": inline_keyboard
                 }).encode('utf-8')
                 
@@ -939,14 +938,13 @@ Ready to manage your store!"""
                     
                     # Notify admin
                     admin_id = "7240133914"  # Your admin ID
-                    admin_message = f"📸 **New Receipt #{receipt_id}**\n\n👤 **User:** @{receipt_data['username']} ({receipt_data['first_name']})\n💬 **Caption:** {caption}\n🆔 **User ID:** {user_id}\n\n✅ Approve: /approve {receipt_id}\n❌ Reject: /reject {receipt_id}\n💬 Message: /msg {user_id} your_message"
+                    admin_message = f"📸 New Receipt #{receipt_id}\n\n👤 User: @{receipt_data['username']} ({receipt_data['first_name']})\n💬 Caption: {caption}\n🆔 User ID: {user_id}\n\n✅ Approve: /approve {receipt_id}\n❌ Reject: /reject {receipt_id}\n💬 Message: /msg {user_id} your_message"
                     
                     # Send notification to admin (text message first, then forward photo)
                     admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
                     admin_data = json_lib.dumps({
                         "chat_id": admin_id,
-                        "text": admin_message,
-                        "parse_mode": "Markdown"
+                        "text": admin_message
                     }).encode('utf-8')
                     
                     admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
