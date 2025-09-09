@@ -385,6 +385,7 @@ Ready to help! Contact us now! 💪"""
             elif callback_data.startswith("product_"):
                 # Show individual product with quantity selection
                 product_id = int(callback_data.replace("product_", ""))
+                logger.info(f"User {user_id} clicked product {product_id}")
                 try:
                     with open('data/products.json', 'r') as f:
                         products = json_lib.load(f)
