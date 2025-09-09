@@ -148,7 +148,16 @@ def webhook():
             
             # Different responses for admins vs regular users
             if is_admin:
-                if text.startswith('/addproduct'):
+                # Debug logging
+                logger.info(f"Admin command received: {text}")
+                logger.info(f"Pipe count: {text.count('|')}")
+                
+                if text.count('|') >= 2 and text.startswith('/addproduct'):
+                    # This should process the actual product addition
+                    logger.info("Processing product addition...")
+                    # The existing product addition code will run here
+                    
+                elif text.startswith('/addproduct'):
                     response_text = """➕ **Add New Product**
 
 **Super Simple Format:**
