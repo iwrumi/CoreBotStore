@@ -413,7 +413,7 @@ def webhook():
                         response_text = f"🛒 **Purchase Confirmation**\n\n📦 **Product:** {product['name'].title()}\n🔢 **Quantity:** {quantity}\n💰 **Price per item:** ₱{product['price']}\n💸 **Total Cost:** ₱{total_cost}\n\n💳 **Your Balance:** ₱{user_balance}\n💰 **After Purchase:** ₱{user_balance - total_cost}\n\n❓ **Are you sure you want to buy this?**"
                         
                         if user_balance < total_cost:
-                            response_text += f"\n\n❌ **Insufficient Balance!**\nYou need ₱{total_cost - user_balance} more to complete this purchase."
+                            response_text = "No funds."
                             inline_keyboard = {"inline_keyboard": [
                                 [{"text": "💰 Add Balance", "callback_data": "add_balance"}],
                                 [{"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}]
@@ -459,13 +459,7 @@ def webhook():
                         total_cost = product['price'] * quantity
                         
                         if user_balance < total_cost:
-                            response_text = f"""❌ **Insufficient Balance**
-
-💰 **Your Balance:** ₱{user_balance}
-💸 **Required:** ₱{total_cost}
-💔 **Short:** ₱{total_cost - user_balance}
-
-Please deposit more funds to complete this purchase."""
+                            response_text = "No funds."
                             inline_keyboard = {"inline_keyboard": [
                                 [{"text": "💳 Deposit Funds", "callback_data": "deposit_funds"}],
                                 [{"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}]
@@ -2137,14 +2131,7 @@ When customers send payment proof, they'll appear here for your manual approval.
                             total_cost = product['price'] * quantity
                             
                             if user_balance < total_cost:
-                                response_text = f"""❌ Insufficient Balance
-
-💰 Your Balance: ₱{user_balance}
-💸 Required: ₱{total_cost}
-📦 Product: {product['name']} × {quantity}
-💔 Short: ₱{total_cost - user_balance}
-
-Please deposit more funds to complete this purchase."""
+                                response_text = "No funds."
                             else:
                                 # Process the custom quantity purchase immediately
                                 # Update user balance
