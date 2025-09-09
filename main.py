@@ -1006,104 +1006,122 @@ Try the simple format!"""
 💸 View Deposits: /deposits"""
 
                 elif text.startswith('/addacc'):
-                    # SIMPLE BULLETPROOF VERSION
+                    # FIXED WORKING VERSION
                     lines = text.strip().split('\n')
                     
-                    if len(lines) == 1:
-                        response_text = "Usage: /addacc capcut\n\nThen send accounts like:\nemail1@domain.com:password\nemail2@domain.com:password"
+                    if len(lines) <= 2:  # Just command or command + 1 line
+                        response_text = """📦 **Add Accounts**
+
+**Format:**
+```
+/addacc spotify
+email1@domain.com
+email2@domain.com
+email3@domain.com
+pass: yourpassword
+```
+
+**Supported Products:**
+• capcut - CapCut Pro accounts
+• spotify - Spotify Premium accounts  
+• disney - Disney+ accounts
+• quizlet - Quizlet Plus accounts"""
                     else:
+                        # Parse command with accounts
                         first_line = lines[0].split()
                         if len(first_line) >= 2:
                             product_name = ' '.join(first_line[1:]).lower()
-                            accounts = lines[1:]
+                            account_lines = lines[1:]  # All lines after command
                             
-                            # SIMPLE PROCESSING
+                            # Process accounts
                             added_count = 0
-                            
-                            try:
-                                # Load files
-                                with open('data/product_files.json', 'r') as f:
-                                    product_files = json_lib.load(f)
-                            except:
-                                product_files = {}
-                            
-                            # Map products
-                            product_map = {'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4"}
-                            product_id = product_map.get(product_name, "1")
-                            if product_id not in product_files:
-                                product_files[product_id] = []
-                            
-                            # Find emails and password
+                            password = "defaultpass123"  # Default password
                             emails = []
-                            password = "masuk12345"  # Default password
                             
-                            for line in accounts:
+                            # Extract emails and password
+                            for line in account_lines:
                                 line = line.strip()
-                                if '@' in line:
+                                if not line:
+                                    continue
+                                    
+                                if '@' in line and 'pass' not in line.lower():
+                                    # This is an email
                                     if ':' in line:
-                                        # email:password format
-                                        parts = line.split(':', 1)
-                                        emails.append(parts[0].strip())
-                                        password = parts[1].strip()
-                                    elif '|' in line:
-                                        # email|password format  
-                                        parts = line.split('|', 1)
-                                        emails.append(parts[0].strip())
-                                        password = parts[1].strip()
+                                        email, pwd = line.split(':', 1)
+                                        emails.append(email.strip())
+                                        password = pwd.strip()
                                     else:
-                                        # Just email
-                                        emails.append(line)
+                                        emails.append(line.strip())
                                 elif 'pass' in line.lower() and ':' in line:
-                                    # Extract password from "pass: password"
+                                    # Extract password
                                     password = line.split(':', 1)[1].strip()
                             
-                            # Add accounts
-                            for email in emails:
-                                if '@' in email:
-                                    new_account = {
-                                        "id": len(product_files[product_id]) + 1,
-                                        "type": "account",
-                                        "details": {
-                                            "email": email,
-                                            "password": password,
-                                            "subscription": f"{product_name.title()} Premium - 1 Month",
-                                            "instructions": "Login with these credentials. Do not change password for 24 hours."
-                                        },
-                                        "status": "available",
-                                        "added_at": datetime.now().isoformat()
-                                    }
-                                    product_files[product_id].append(new_account)
-                                    added_count += 1
-                            
-                            # Save files
-                            with open('data/product_files.json', 'w') as f:
-                                json_lib.dump(product_files, f, indent=2)
-                            
-                            # Update stock
-                            available = [acc for acc in product_files[product_id] if acc['status'] == 'available']
-                            total_stock = len(available)
-                            
-                            try:
-                                with open('data/products.json', 'r') as f:
-                                    products = json_lib.load(f)
-                                for product in products:
-                                    if product['id'] == int(product_id):
-                                        product['stock'] = total_stock
-                                        break
-                                with open('data/products.json', 'w') as f:
-                                    json_lib.dump(products, f, indent=2)
-                            except:
-                                pass
-                            
-                            response_text = f"""✅ SUCCESS! Added {added_count} {product_name} accounts!
+                            if emails:
+                                # Load/create product files
+                                try:
+                                    with open('data/product_files.json', 'r') as f:
+                                        product_files = json_lib.load(f)
+                                except:
+                                    product_files = {}
+                                
+                                # Map products to IDs
+                                product_map = {'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4"}
+                                product_id = product_map.get(product_name, "1")
+                                
+                                if product_id not in product_files:
+                                    product_files[product_id] = []
+                                
+                                # Add each account
+                                for email in emails:
+                                    if '@' in email:
+                                        account = {
+                                            "id": len(product_files[product_id]) + 1,
+                                            "type": "account", 
+                                            "details": {
+                                                "email": email,
+                                                "password": password,
+                                                "subscription": f"{product_name.title()} Premium - 1 Month",
+                                                "instructions": "Login with these credentials. Do not change password for 24 hours."
+                                            },
+                                            "status": "available",
+                                            "added_at": datetime.now().isoformat()
+                                        }
+                                        product_files[product_id].append(account)
+                                        added_count += 1
+                                
+                                # Save product files
+                                with open('data/product_files.json', 'w') as f:
+                                    json_lib.dump(product_files, f, indent=2)
+                                
+                                # Update stock count in products.json
+                                available_count = len([acc for acc in product_files[product_id] if acc['status'] == 'available'])
+                                
+                                try:
+                                    with open('data/products.json', 'r') as f:
+                                        products = json_lib.load(f)
+                                    
+                                    for product in products:
+                                        if product['id'] == int(product_id):
+                                            product['stock'] = available_count
+                                            break
+                                    
+                                    with open('data/products.json', 'w') as f:
+                                        json_lib.dump(products, f, indent=2)
+                                except:
+                                    pass
+                                
+                                response_text = f"""✅ **SUCCESS!** Added {added_count} {product_name} accounts!
 
-📊 New Stock: {total_stock}
-🔑 Password: {password}
-📧 Emails processed: {len(emails)}
+📦 **Product:** {product_name.title()}
+📧 **Emails:** {len(emails)} processed
+🔑 **Password:** {password}
+📊 **New Stock:** {available_count} available
 
-Ready for customers! 🚀"""
+Ready for customers! 🛍️"""
+                            else:
+                                response_text = f"❌ No valid emails found. Make sure you include email addresses!"
                         else:
-                            response_text = "Usage: /addacc capcut"
+                            response_text = "Usage: /addacc [product_name]"
 
                 elif text.startswith('/addstock'):
                     if len(text.split()) == 1:
