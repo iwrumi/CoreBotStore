@@ -2,17 +2,17 @@
   {
     "id": 1,
     "name": "capcut",
-    "description": "🎬 CapCut Pro - Premium Video Editor\n\n✨ Features:\n• Professional video editing tools\n• HD export without watermark\n• Advanced filters and effects\n• Audio mixing capabilities\n• Cloud storage included\n\n🕐 Instant delivery after payment\n📱 Works on iOS & Android",
+    "description": "\ud83c\udfac CapCut Pro - Premium Video Editor\n\n\u2728 Features:\n\u2022 Professional video editing tools\n\u2022 HD export without watermark\n\u2022 Advanced filters and effects\n\u2022 Audio mixing capabilities\n\u2022 Cloud storage included\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on iOS & Android",
     "price": 20.0,
     "category": "video",
-    "stock": 2,
+    "stock": 1,
     "image_url": "",
     "created_at": "2025-09-09T07:12:03.680395"
   },
   {
     "id": 2,
     "name": "spotify",
-    "description": "🎵 Spotify Premium - Music & Podcasts\n\n✨ Features:\n• Ad-free music streaming\n• Offline downloads\n• High quality audio\n• Unlimited skips\n• Access to exclusive content\n\n🕐 Instant delivery after payment\n📱 Works on all devices",
+    "description": "\ud83c\udfb5 Spotify Premium - Music & Podcasts\n\n\u2728 Features:\n\u2022 Ad-free music streaming\n\u2022 Offline downloads\n\u2022 High quality audio\n\u2022 Unlimited skips\n\u2022 Access to exclusive content\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on all devices",
     "price": 25.0,
     "category": "music",
     "stock": 2,
@@ -22,7 +22,7 @@
   {
     "id": 3,
     "name": "disney",
-    "description": "🏰 Disney+ Shared - Movies & Shows\n\n✨ Features:\n• Marvel, Star Wars, Pixar content\n• 4K Ultra HD streaming\n• Download for offline viewing\n• Multiple user profiles\n• Exclusive Disney originals\n• Shared family account\n\n🕐 Instant delivery after payment\n📺 Works on all devices",
+    "description": "\ud83c\udff0 Disney+ Shared - Movies & Shows\n\n\u2728 Features:\n\u2022 Marvel, Star Wars, Pixar content\n\u2022 4K Ultra HD streaming\n\u2022 Download for offline viewing\n\u2022 Multiple user profiles\n\u2022 Exclusive Disney originals\n\u2022 Shared family account\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcfa Works on all devices",
     "price": 35.0,
     "category": "streaming",
     "stock": 0,
@@ -32,7 +32,7 @@
   {
     "id": 4,
     "name": "quizlet",
-    "description": "📚 Quizlet Plus - Study Tools\n\n✨ Features:\n• Create unlimited study sets\n• Advanced study modes\n• Progress tracking\n• Offline access\n• No ads\n\n🕐 Instant delivery after payment\n💻 Works on all devices",
+    "description": "\ud83d\udcda Quizlet Plus - Study Tools\n\n\u2728 Features:\n\u2022 Create unlimited study sets\n\u2022 Advanced study modes\n\u2022 Progress tracking\n\u2022 Offline access\n\u2022 No ads\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcbb Works on all devices",
     "price": 12.0,
     "category": "education",
     "stock": 0,
