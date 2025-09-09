@@ -526,18 +526,32 @@ Ready to manage your store!"""
             else:
                 # Regular user response - connect to the complete bot system
                 try:
-                    from complete_bot import PremiumTelegramStoreBot
-                    from data_manager import DataManager
+                    # Simple import without complex systems
+                    import os
                     
-                    # Initialize bot system
-                    data_manager = DataManager()
+                    # Initialize data manager directly
+                    data_dir = "data"
+                    products_file = os.path.join(data_dir, "products.json")
+                    users_file = os.path.join(data_dir, "users.json")
                     
                     # Get actual user balance
-                    user_data = data_manager.get_or_create_user(user_id)
-                    user_balance = user_data.get('balance', 0.0)
+                    user_balance = 0.0
+                    user_data = {}
+                    try:
+                        with open(users_file, 'r') as f:
+                            users = json_lib.load(f)
+                            user_data = next((u for u in users if u.get('telegram_id') == user_id), {})
+                            user_balance = user_data.get('balance', 0.0)
+                    except:
+                        user_balance = 0.0
                     
                     # Get products count
-                    products = data_manager.get_products()
+                    products = []
+                    try:
+                        with open(products_file, 'r') as f:
+                            products = json_lib.load(f)
+                    except:
+                        products = []
                     product_count = len(products)
                     
                     if text == '/start' or text == '/menu':
