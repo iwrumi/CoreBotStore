@@ -526,13 +526,9 @@ Ready to manage your store!"""
             else:
                 # Regular user response - connect to the complete bot system
                 try:
-                    # Simple import without complex systems
-                    import os
-                    
                     # Initialize data manager directly
-                    data_dir = "data"
-                    products_file = os.path.join(data_dir, "products.json")
-                    users_file = os.path.join(data_dir, "users.json")
+                    products_file = "data/products.json"
+                    users_file = "data/users.json"
                     
                     # Get actual user balance
                     user_balance = 0.0
