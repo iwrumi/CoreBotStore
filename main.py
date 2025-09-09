@@ -530,6 +530,10 @@ Thank you for shopping with us! 🎉"""
 📋 Instructions:
 {file_data['details'].get('instructions', 'Login with these credentials')}
 
+🛡️ WARRANTY ACTIVATION:
+Vouch @tiramisucakekyo within 24 hours to activate warranty.
+DM him with the vouch!
+
 ⚠️ Important: Keep these credentials safe!"""
                                                 
                                                 # Send account details to customer (no markdown to avoid errors)
