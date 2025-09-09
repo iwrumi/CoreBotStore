@@ -1713,6 +1713,7 @@ Ready to manage your store!"""
                         
                     # EXACT primostorebot interface
                     current_time = datetime.now().strftime("%d/%m/%Y - %I:%M:%S %p")
+                    first_name = message['from'].get('first_name', 'User')
                     username = first_name if first_name else "User"
                     
                     # Calculate bot statistics 
