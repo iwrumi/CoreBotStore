@@ -2455,48 +2455,37 @@ Ready to manage your store!"""
                     
                 elif text == "🛒 Browse Products":
                     logger.info(f"TEXT HANDLER: Browse Products clicked by user {user_id}")
-                    # FORMATTED PRODUCT LIST LIKE BEFORE
+                    # SUPER SIMPLE VERSION WITHOUT PROBLEMATIC CHARACTERS
                     try:
                         with open('data/products.json', 'r') as f:
                             products = json_lib.load(f)
                         
-                        response_text = "🛒 Available Products\n\nSelect a product to purchase:\n\n"
+                        response_text = "Available Products:\n\n"
                         inline_keyboard = {"inline_keyboard": []}
                         
                         for product in products:
                             if product.get('stock', 0) > 0:
-                                # Get category emoji
-                                category_emoji = {
-                                    'video': '🎬',
-                                    'music': '🎵', 
-                                    'streaming': '📺',
-                                    'education': '📚',
-                                    'digital': '📦'
-                                }.get(product.get('category', ''), '📦')
-                                
                                 name = product['name']
                                 price = product['price']
                                 stock = product['stock']
                                 
-                                # Add to text display
-                                response_text += f"{category_emoji} {name.title()}\n"
-                                response_text += f"💰 Price: ₱{price}\n"
-                                response_text += f"📦 Stock: {stock} available\n\n"
+                                # Simple text display
+                                response_text += f"{name.title()}\n"
+                                response_text += f"Price: P{price}\n"
+                                response_text += f"Stock: {stock}\n\n"
                                 
-                                # Add button
-                                button_text = f"{category_emoji} {name.title()} - ₱{price} (Stock: {stock})"
+                                # Simple button
+                                button_text = f"{name.title()} - P{price}"
                                 inline_keyboard["inline_keyboard"].append([{
                                     "text": button_text, 
                                     "callback_data": f"product_{product['id']}"
                                 }])
                         
                         if not inline_keyboard["inline_keyboard"]:
-                            response_text = "📦 No Products Available\n\nAll products are out of stock. Check back later!"
-                        else:
-                            inline_keyboard["inline_keyboard"].append([{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}])
+                            response_text = "No products available right now."
                         
                     except Exception as e:
-                        response_text = "Error loading products. Please try again."
+                        response_text = "Please try again."
                         inline_keyboard = {"inline_keyboard": []}
                         
                 elif text == "👑 Customer Service":
