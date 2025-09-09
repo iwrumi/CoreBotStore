@@ -1112,10 +1112,11 @@ Error: {str(e)}"""
                             # Product mapping
                             product_map = {
                                 'capcut': "1", 'spotify': "2", 'disney_shared': "3", 'quizlet': "4", 
-                                'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
+                                'chatgpt_solo': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
                                 'picsart': "9", 'surfshark': "10", 'youtube_1m': "11", 'youtube_3m': "12",
-                                'disney_solo': "13", 'capcut_7d': "14",
+                                'disney_solo': "13", 'capcut_7d': "14", 'chatgpt_shared': "15",
                                 # Alternative names
+                                'chatgpt': "5", 'chatgpt-solo': "5", 'chatgptshared': "15", 'chatgpt-shared': "15",
                                 'disney': "3", 'disney+': "3", 'disneyplus': "3", 'disney-shared': "3", 'disneyshared': "3",
                                 'disney+solo': "13", 'disney-solo': "13", 'disneyplus-solo': "13", 'disneyplussolo': "13", 'disneysolo': "13",
                                 'gpt': "5", 'chat-gpt': "5", 'syudocu': "6", 'studycu': "6", 'studecu': "6",
