@@ -5,7 +5,7 @@
     "description": "\ud83c\udfac CapCut Pro - Premium Video Editor\n\n\u2728 Features:\n\u2022 Professional video editing tools\n\u2022 HD export without watermark\n\u2022 Advanced filters and effects\n\u2022 Audio mixing capabilities\n\u2022 Cloud storage included\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on iOS & Android",
     "price": 20.0,
     "category": "video",
-    "stock": 16,
+    "stock": 18,
     "image_url": "",
     "created_at": "2025-09-09T07:12:03.680395"
   },
@@ -15,7 +15,7 @@
     "description": "\ud83c\udfb5 Spotify Premium - Music & Podcasts\n\n\u2728 Features:\n\u2022 Ad-free music streaming\n\u2022 Offline downloads\n\u2022 High quality audio\n\u2022 Unlimited skips\n\u2022 Access to exclusive content\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on all devices",
     "price": 25.0,
     "category": "music",
-    "stock": 1,
+    "stock": 2,
     "image_url": "",
     "created_at": "2025-09-09T08:15:00.000000"
   },
