@@ -330,6 +330,186 @@ Ready to help! Contact us now! 💪"""
                     ]
                 }
             
+            elif callback_data.startswith("category_"):
+                # Show products in selected category
+                category = callback_data.replace("category_", "")
+                try:
+                    with open('data/products.json', 'r') as f:
+                        products = json_lib.load(f)
+                    
+                    category_products = [p for p in products if p.get('category') == category]
+                    
+                    if category_products:
+                        response_text = f"🏪 **{category} Products**\n\nSelect a product to view details:"
+                        inline_keyboard = {"inline_keyboard": []}
+                        
+                        for product in category_products:
+                            stock_text = f"({product['stock']} left)" if product['stock'] > 0 else "(Out of Stock)"
+                            button_text = f"📦 {product['name']} - ₱{product['price']} {stock_text}"
+                            inline_keyboard["inline_keyboard"].append([
+                                {"text": button_text, "callback_data": f"product_{product['id']}"}
+                            ])
+                        
+                        inline_keyboard["inline_keyboard"].append([
+                            {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
+                        ])
+                    else:
+                        response_text = f"📦 **{category}**\n\nNo products available in this category."
+                        inline_keyboard = {"inline_keyboard": [[
+                            {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
+                        ]]}
+                except:
+                    response_text = "❌ Error loading category products"
+                    inline_keyboard = {"inline_keyboard": [[
+                        {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
+                    ]]}
+            
+            elif callback_data.startswith("product_"):
+                # Show individual product with quantity selection
+                product_id = int(callback_data.replace("product_", ""))
+                try:
+                    with open('data/products.json', 'r') as f:
+                        products = json_lib.load(f)
+                    
+                    product = next((p for p in products if p['id'] == product_id), None)
+                    
+                    if product:
+                        stock = product['stock']
+                        stock_status = "✅ In Stock" if stock > 0 else "❌ Out of Stock"
+                        
+                        response_text = f"""📦 **{product['name']}**
+
+📝 **Description:** {product['description']}
+💰 **Price:** ₱{product['price']} each
+📊 **Stock:** {stock_status} ({stock} available)
+🏷️ **Category:** {product['category']}
+
+**Select quantity to purchase:**"""
+                        
+                        inline_keyboard = {"inline_keyboard": []}
+                        
+                        if stock > 0:
+                            # Add quantity buttons (1-5 or max stock)
+                            qty_buttons = []
+                            max_qty = min(5, stock)
+                            for qty in range(1, max_qty + 1):
+                                total = product['price'] * qty
+                                qty_buttons.append({
+                                    "text": f"{qty}x (₱{total})", 
+                                    "callback_data": f"buy_{product_id}_{qty}"
+                                })
+                            
+                            # Add quantity buttons in rows of 2
+                            for i in range(0, len(qty_buttons), 2):
+                                row = qty_buttons[i:i+2]
+                                inline_keyboard["inline_keyboard"].append(row)
+                            
+                            # Add custom quantity option if stock > 5
+                            if stock > 5:
+                                inline_keyboard["inline_keyboard"].append([
+                                    {"text": f"💯 More (Max {stock})", "callback_data": f"custom_qty_{product_id}"}
+                                ])
+                        
+                        inline_keyboard["inline_keyboard"].append([
+                            {"text": "🔙 Back to Category", "callback_data": f"category_{product['category']}"}
+                        ])
+                    else:
+                        response_text = "❌ Product not found"
+                        inline_keyboard = {"inline_keyboard": [[
+                            {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
+                        ]]}
+                except:
+                    response_text = "❌ Error loading product"
+                    inline_keyboard = {"inline_keyboard": [[
+                        {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
+                    ]]}
+            
+            elif callback_data.startswith("buy_"):
+                # Process purchase with quantity
+                parts = callback_data.replace("buy_", "").split("_")
+                product_id = int(parts[0])
+                quantity = int(parts[1])
+                
+                try:
+                    # Load product and user data
+                    with open('data/products.json', 'r') as f:
+                        products = json_lib.load(f)
+                    with open('data/users.json', 'r') as f:
+                        users = json_lib.load(f)
+                    
+                    product = next((p for p in products if p['id'] == product_id), None)
+                    user_balance = users.get(user_id, {}).get('balance', 0)
+                    
+                    if not product:
+                        response_text = "❌ Product not found"
+                        inline_keyboard = {"inline_keyboard": [[
+                            {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
+                        ]]}
+                    elif product['stock'] < quantity:
+                        response_text = f"❌ **Insufficient Stock**\n\nOnly {product['stock']} items available.\nYou tried to buy {quantity} items."
+                        inline_keyboard = {"inline_keyboard": [[
+                            {"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}
+                        ]]}
+                    else:
+                        total_cost = product['price'] * quantity
+                        
+                        if user_balance < total_cost:
+                            response_text = f"""❌ **Insufficient Balance**
+
+💰 **Your Balance:** ₱{user_balance}
+💸 **Required:** ₱{total_cost}
+💔 **Short:** ₱{total_cost - user_balance}
+
+Please deposit more funds to complete this purchase."""
+                            inline_keyboard = {"inline_keyboard": [
+                                [{"text": "💳 Deposit Funds", "callback_data": "deposit_funds"}],
+                                [{"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}]
+                            ]}
+                        else:
+                            # Process successful purchase
+                            # Update user balance
+                            if user_id not in users:
+                                users[user_id] = {"balance": 0, "total_spent": 0}
+                            users[user_id]["balance"] = user_balance - total_cost
+                            users[user_id]["total_spent"] = users[user_id].get("total_spent", 0) + total_cost
+                            
+                            # Update product stock
+                            for p in products:
+                                if p['id'] == product_id:
+                                    p['stock'] -= quantity
+                                    break
+                            
+                            # Save updates
+                            with open('data/users.json', 'w') as f:
+                                json_lib.dump(users, f, indent=2)
+                            with open('data/products.json', 'w') as f:
+                                json_lib.dump(products, f, indent=2)
+                            
+                            response_text = f"""✅ **Purchase Successful!**
+
+🛍️ **Product:** {product['name']}
+📦 **Quantity:** {quantity}x
+💰 **Total Paid:** ₱{total_cost}
+💳 **Remaining Balance:** ₱{users[user_id]['balance']}
+
+📋 **Your purchase details will be sent shortly!**
+
+Thank you for shopping with us! 🎉"""
+                            
+                            inline_keyboard = {"inline_keyboard": [
+                                [{"text": "🏪 Buy More", "callback_data": "browse_products"}],
+                                [{"text": "📦 My Orders", "callback_data": "my_orders"}],
+                                [{"text": "🏠 Main Menu", "callback_data": "main_menu"}]
+                            ]}
+                            
+                            # TODO: Send product files/accounts to user here
+                            
+                except Exception as e:
+                    response_text = f"❌ Purchase failed: {str(e)}"
+                    inline_keyboard = {"inline_keyboard": [[
+                        {"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}
+                    ]]}
+            
             elif callback_data.startswith("approve_receipt_"):
                 receipt_id = callback_data.replace("approve_receipt_", "")
                 # Approve receipt logic
