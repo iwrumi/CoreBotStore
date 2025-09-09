@@ -1,1 +1,40 @@
-{}
+{
+  "1": [
+    {
+      "id": 1,
+      "type": "account",
+      "details": {
+        "email": "capcut_user1@example.com",
+        "password": "SecurePass123",
+        "subscription": "CapCut Pro - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T07:25:00.000000"
+    },
+    {
+      "id": 2,
+      "type": "account", 
+      "details": {
+        "email": "capcut_user2@example.com",
+        "password": "SecurePass456",
+        "subscription": "CapCut Pro - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T07:25:00.000000"
+    },
+    {
+      "id": 3,
+      "type": "account", 
+      "details": {
+        "email": "capcut_user3@example.com",
+        "password": "SecurePass789",
+        "subscription": "CapCut Pro - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T07:25:00.000000"
+    }
+  ]
+}

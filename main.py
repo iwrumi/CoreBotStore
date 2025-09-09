@@ -502,7 +502,51 @@ Thank you for shopping with us! 🎉"""
                                 [{"text": "🏠 Main Menu", "callback_data": "main_menu"}]
                             ]}
                             
-                            # TODO: Send product files/accounts to user here
+                            # Send product files/accounts to user
+                            try:
+                                with open('data/product_files.json', 'r') as f:
+                                    product_files = json_lib.load(f)
+                                
+                                if str(product_id) in product_files:
+                                    available_files = [f for f in product_files[str(product_id)] if f['status'] == 'available']
+                                    
+                                    if available_files and len(available_files) >= quantity:
+                                        # Send account details to customer
+                                        for i in range(quantity):
+                                            file_data = available_files[i]
+                                            file_data['status'] = 'sold'
+                                            file_data['sold_to'] = user_id
+                                            file_data['sold_at'] = json_lib.dumps({"timestamp": "now"})
+                                            
+                                            # Send account details
+                                            if file_data['type'] == 'account':
+                                                account_message = f"""📦 **Your {product['name']} Account #{i+1}**
+
+🔐 **Login Credentials:**
+📧 **Email:** {file_data['details']['email']}
+🔑 **Password:** {file_data['details']['password']}
+💎 **Subscription:** {file_data['details']['subscription']}
+
+📋 **Instructions:**
+{file_data['details']['instructions']}
+
+⚠️ **Important:** Keep these credentials safe and follow the instructions!"""
+                                                
+                                                # Send account details to customer
+                                                account_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                                account_data = json_lib.dumps({
+                                                    "chat_id": user_id,
+                                                    "text": account_message,
+                                                    "parse_mode": "Markdown"
+                                                }).encode('utf-8')
+                                                account_req = urllib.request.Request(account_url, data=account_data, headers={'Content-Type': 'application/json'})
+                                                urllib.request.urlopen(account_req)
+                                        
+                                        # Save updated product files
+                                        with open('data/product_files.json', 'w') as f:
+                                            json_lib.dump(product_files, f, indent=2)
+                            except:
+                                pass
                             
                 except Exception as e:
                     response_text = f"❌ Purchase failed: {str(e)}"
