@@ -1004,40 +1004,39 @@ Try the simple format!"""
 👥 Manage Users: /users
 💸 View Deposits: /deposits"""
 
-                elif text.startswith('/addfile'):
-                    # Add files/accounts to products - handle both "/addfile 1" and "/addfile1"
-                    command_part = text.replace('/addfile', '').strip()
-                    
-                    if command_part:
-                        try:
-                            product_id = int(command_part)
-                            
-                            # Load products to verify ID exists
-                            with open('data/products.json', 'r') as f:
-                                products = json_lib.load(f)
-                            
-                            product = next((p for p in products if p['id'] == product_id), None)
-                            if product:
-                                response_text = f"""📁 Adding Files to: {product['name']}
+                elif text.startswith('/addacc'):
+                    # Simple account addition like @primostorebot
+                    parts = text.split()
+                    if len(parts) >= 2:
+                        product_name = ' '.join(parts[1:]).lower()
+                        
+                        # Map product names to IDs
+                        product_map = {
+                            'capcut': 1,
+                            'cap cut': 1,
+                            'cap': 1
+                        }
+                        
+                        product_id = product_map.get(product_name, 1)  # Default to capcut
+                        
+                        response_text = f"""📱 Adding accounts to {product_name}
 
-🔧 Now send accounts one by one:
+Send accounts in this format:
+email@example.com:password123
 
-Format: email@example.com:password123
+Send one per message, I'll add them automatically!
 
-Example:
-user1@gmail.com:mypassword123
-
-Send one account per message, I'll add them automatically!"""
-                            else:
-                                response_text = f"❌ Product ID {product_id} not found\n\nAvailable products:\n/products - View all products"
-                        except:
-                            response_text = f"❌ Invalid product ID: {command_part}\n\nUsage: /addfile 1"
+Ready to receive accounts for {product_name}! 🚀"""
                     else:
-                        response_text = """📁 Add Files to Product
+                        response_text = """📱 Add Accounts
 
-Usage: /addfile 1
+Usage: /addacc productname
 
-This will let you add accounts/files to product ID 1 (capcut)"""
+Examples:
+/addacc capcut
+/addacc netflix
+
+Then send accounts as: email@example.com:password123"""
 
                 elif text.startswith('/addstock'):
                     if len(text.split()) == 1:
@@ -1281,7 +1280,7 @@ When customers send payment proof, they'll appear here for your manual approval.
 📦 Product Commands:
 /add ProductName Price Stock - Add products
 /products - View all products  
-/addfile 1 - Add accounts to products
+/addacc capcut - Add accounts to products
 
 📸 Receipt Commands:
 /receipts - View pending receipts
@@ -1302,7 +1301,7 @@ When customers send payment proof, they'll appear here for your manual approval.
 - System is silent like primostorebot"""
 
                 elif text.startswith('/admin'):
-                    response_text = f"Admin Panel\n\nAdmin ID: {user_id}\nStatus: Active\n\nCommands:\n/add ProductName Price Stock\n/products - View products\n/addfile ProductID - Add files to products\n/receipts - View receipts\n/stats - Statistics\n\nSystem ready!"
+                    response_text = f"Admin Panel\n\nAdmin ID: {user_id}\nStatus: Active\n\nCommands:\n/add ProductName Price Stock\n/products - View products\n/addacc capcut - Add accounts to products\n/receipts - View receipts\n/stats - Statistics\n\nSystem ready!"
 
                 elif text.isdigit() and not text.startswith('/'):
                     # Handle custom quantity input from customer 
