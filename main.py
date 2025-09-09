@@ -1095,8 +1095,12 @@ Ready to manage your store!"""
                 except:
                     product_count = 0
 
-                # Handle /start command with inline keyboard
-                if text == '/start' or text == '/menu' or not text.startswith('/'):
+                # Handle /start command with inline keyboard ONLY if no photo was sent
+                if (text == '/start' or text == '/menu' or (not text.startswith('/') and not message.get('photo'))):
+                    # Don't send welcome if photo was already processed
+                    if 'photo' in message:
+                        return jsonify({'status': 'ok'})
+                        
                     response_text = f"""🛍️ **Welcome to Premium Store!**
 
 💎 **Your Digital Services Store**
