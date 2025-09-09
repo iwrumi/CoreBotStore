@@ -38,5 +38,10 @@
     "balance": 0.0,
     "total_deposited": 20.0,
     "total_spent": 20
+  },
+  "7768712211": {
+    "balance": 350.0,
+    "total_deposited": 350.0,
+    "total_spent": 0
   }
 }
