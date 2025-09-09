@@ -488,10 +488,64 @@ def webhook():
                             with open('data/products.json', 'w') as f:
                                 json_lib.dump(products, f, indent=2)
                             
-                            # Check if this is a plugging service
+                            # Check if this is a plugging service or method product
                             is_plugging_service = product['category'] == 'plugging'
+                            is_method_product = product['category'] == 'method'
                             
-                            if is_plugging_service:
+                            if is_method_product:
+                                # Special handling for method products
+                                method_info = ""
+                                if "spotify" in product['name'].lower():
+                                    method_info = f"""📱 Access Your Spotify Method:
+👉 Join: https://t.me/+HWlGFmVMwAAzNzI9
+
+⚡ For Fast Approval:
+📞 Contact: @tiramisucakekyo"""
+                                elif "capcut" in product['name'].lower() or "bin" in product['name'].lower():
+                                    method_info = f"""📱 Access Your Method:
+👉 Join: https://t.me/+FVSR3Chu7YI4MjNl
+
+⚡ For Fast Approval:
+📞 Contact: @tiramisucakekyo"""
+                                else:
+                                    method_info = f"""📱 Access Your Method:
+📞 Contact: @tiramisucakekyo for delivery
+
+Your method will be delivered via private channel access."""
+                                
+                                response_text = f"""✅ Method Purchase Successful!
+
+🔥 Method: {product['name']}
+💰 Total Paid: ₱{total_cost}
+💳 Remaining Balance: ₱{users[user_id]['balance']}
+
+{method_info}
+
+Thank you for your purchase! 🎉"""
+                                
+                                # Notify admin about method purchase
+                                try:
+                                    admin_notification = f"""🔥 NEW METHOD SALE!
+
+👤 Customer: {user_id}
+🎯 Method: {product['name']}
+💰 Price: ₱{product['price']}
+💸 Total: ₱{total_cost}
+
+✅ Method delivery information sent to customer!"""
+                                    
+                                    admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                    admin_req = urllib.request.Request(admin_url, 
+                                        data=json_lib.dumps({
+                                            'chat_id': '7240133914',
+                                            'text': admin_notification
+                                        }).encode('utf-8'),
+                                        headers={'Content-Type': 'application/json'})
+                                    urllib.request.urlopen(admin_req)
+                                except Exception as e:
+                                    logger.error(f"Failed to notify admin of method sale: {e}")
+                                    
+                            elif is_plugging_service:
                                 # Special handling for plugging services
                                 response_text = f"""✅ Payment Received!
 
