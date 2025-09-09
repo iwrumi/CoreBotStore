@@ -750,12 +750,33 @@ Max quantity: {product['stock']}"""
                 "reply_markup": inline_keyboard
             }).encode('utf-8')
             
+            # DEBUG: Log the request details
+            logger.info(f"DEBUG: Sending editMessageText for user {user_id}, callback: {callback_data}")
+            logger.info(f"DEBUG: chat_id={chat_id}, message_id={message_id}")
+            logger.info(f"DEBUG: text='{response_text}'")
+            logger.info(f"DEBUG: keyboard={inline_keyboard}")
+            
             edit_req = urllib.request.Request(edit_url, data=edit_data, headers={'Content-Type': 'application/json'})
             try:
                 with urllib.request.urlopen(edit_req) as response:
-                    logger.info(f"Handled callback: {callback_data}")
+                    logger.info(f"SUCCESS: Handled callback: {callback_data}")
             except Exception as e:
-                logger.error(f"Failed to edit message: {e}")
+                logger.error(f"FAILED to edit message for user {user_id}: {e}")
+                logger.error(f"FAILED request data: {edit_data.decode('utf-8')}")
+                
+                # Try alternative: send new message instead of editing
+                try:
+                    send_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                    send_data = json_lib.dumps({
+                        "chat_id": chat_id,
+                        "text": response_text,
+                        "reply_markup": inline_keyboard
+                    }).encode('utf-8')
+                    send_req = urllib.request.Request(send_url, data=send_data, headers={'Content-Type': 'application/json'})
+                    with urllib.request.urlopen(send_req) as response:
+                        logger.info(f"FALLBACK SUCCESS: Sent new message for {callback_data}")
+                except Exception as e2:
+                    logger.error(f"FALLBACK FAILED: {e2}")
             
             return jsonify({'status': 'ok'})
 
