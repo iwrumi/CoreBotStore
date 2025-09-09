@@ -1242,13 +1242,19 @@ pass: password123
                                     except:
                                         product_files = {}
                                     
-                                    # Product mapping - FIXED STUDOCU
+                                    # Complete product mapping for all 10 products (CONSISTENT)
                                     product_map = {
                                         'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
                                         'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
                                         'picsart': "9", 'surfshark': "10",
-                                        # Alternative spellings
-                                        'syudocu': "6", 'studycu': "6", 'studecu': "6"
+                                        # Alternative names and spellings
+                                        'disney+': "3", 'disneyplus': "3",
+                                        'gpt': "5", 'chat-gpt': "5", 'chatgpt-plus': "5",
+                                        'syudocu': "6", 'studycu': "6", 'studecu': "6", 'studocu-premium': "6",
+                                        'perplexity-ai': "7", 'perplexity-pro': "7",
+                                        'canva-pro': "8", 'canva-premium': "8",
+                                        'picsart-gold': "9", 'pics-art': "9",
+                                        'surf-shark': "10", 'surfshark-vpn': "10"
                                     }
                                     product_id = product_map.get(product_name, "1")
                                     
