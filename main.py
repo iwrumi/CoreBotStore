@@ -870,6 +870,58 @@ Examples:
 
 Error: {str(e)}"""
                     
+                elif text.startswith('/history '):
+                    # Show balance history for a user: /history UserID
+                    try:
+                        user_id_to_check = text.replace('/history ', '').strip()
+                        
+                        if not user_id_to_check:
+                            response_text = "❌ Format: /history UserID\n\nExample: /history 123456789"
+                        else:
+                            # Load balance history
+                            try:
+                                with open('data/balance_history.json', 'r') as f:
+                                    history_data = json_lib.load(f)
+                            except:
+                                history_data = {}
+                            
+                            user_history = history_data.get(user_id_to_check, [])
+                            
+                            if not user_history:
+                                response_text = f"📜 **Balance History**\n\nNo balance history found for user {user_id_to_check}"
+                            else:
+                                response_text = f"📜 **Balance History for User {user_id_to_check}**\n\n"
+                                
+                                # Show last 10 transactions
+                                for transaction in user_history[-10:]:
+                                    action = transaction.get('action', 'Unknown')
+                                    amount = transaction.get('amount', 0)
+                                    new_balance = transaction.get('new_balance', 0)
+                                    timestamp = transaction.get('timestamp', 'Unknown')
+                                    
+                                    # Format action emoji
+                                    if action == 'added':
+                                        emoji = "💰 +"
+                                        color = "✅"
+                                    elif action == 'removed':
+                                        emoji = "💸 -"
+                                        color = "❌"
+                                    elif action == 'spent':
+                                        emoji = "🛒 -"
+                                        color = "🔴"
+                                    else:
+                                        emoji = "📝"
+                                        color = "ℹ️"
+                                    
+                                    response_text += f"{color} **{action.title()}** {emoji}₱{amount}\n"
+                                    response_text += f"💳 New Balance: ₱{new_balance}\n"
+                                    response_text += f"🕐 {timestamp}\n\n"
+                                
+                                if len(user_history) > 10:
+                                    response_text += f"... and {len(user_history) - 10} more transactions"
+                    except Exception as e:
+                        response_text = f"❌ Error getting history: {str(e)}\n\nFormat: /history UserID"
+
                 elif text.startswith('/addbalance '):
                     # Add balance to user: /addbalance UserID Amount
                     try:
@@ -890,12 +942,37 @@ Error: {str(e)}"""
                             if target_user_id not in users:
                                 users[target_user_id] = {"balance": 0, "total_deposited": 0, "total_spent": 0}
                             
-                            users[target_user_id]["balance"] = users[target_user_id].get("balance", 0) + amount
+                            old_balance = users[target_user_id].get("balance", 0)
+                            users[target_user_id]["balance"] = old_balance + amount
                             users[target_user_id]["total_deposited"] = users[target_user_id].get("total_deposited", 0) + amount
+                            new_balance = users[target_user_id]["balance"]
                             
                             # Save users
                             with open('data/users.json', 'w') as f:
                                 json_lib.dump(users, f, indent=2)
+                            
+                            # Track balance history
+                            try:
+                                from datetime import datetime
+                                with open('data/balance_history.json', 'r') as f:
+                                    history = json_lib.load(f)
+                            except:
+                                history = {}
+                            
+                            if target_user_id not in history:
+                                history[target_user_id] = []
+                            
+                            history[target_user_id].append({
+                                "action": "added",
+                                "amount": amount,
+                                "old_balance": old_balance,
+                                "new_balance": new_balance,
+                                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                "admin_id": user_id
+                            })
+                            
+                            with open('data/balance_history.json', 'w') as f:
+                                json_lib.dump(history, f, indent=2)
                             
                             # Notify user
                             user_message = f"💰 Balance Added!\n\n✅ +₱{amount} added to your account\n💳 New Balance: ₱{users[target_user_id]['balance']}\n\nYou can now shop! 🎉"
@@ -945,10 +1022,34 @@ Error: {str(e)}"""
                                 else:
                                     # Deduct balance
                                     users[target_user_id]["balance"] = current_balance - amount
+                                    new_balance = users[target_user_id]["balance"]
                                     
                                     # Save users
                                     with open('data/users.json', 'w') as f:
                                         json_lib.dump(users, f, indent=2)
+                                    
+                                    # Track balance history
+                                    try:
+                                        from datetime import datetime
+                                        with open('data/balance_history.json', 'r') as f:
+                                            history = json_lib.load(f)
+                                    except:
+                                        history = {}
+                                    
+                                    if target_user_id not in history:
+                                        history[target_user_id] = []
+                                    
+                                    history[target_user_id].append({
+                                        "action": "removed",
+                                        "amount": amount,
+                                        "old_balance": current_balance,
+                                        "new_balance": new_balance,
+                                        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                        "admin_id": user_id
+                                    })
+                                    
+                                    with open('data/balance_history.json', 'w') as f:
+                                        json_lib.dump(history, f, indent=2)
                                     
                                     # Notify user about deduction
                                     user_message = f"💸 Balance Deducted!\n\n❌ -₱{amount} removed from your account\n💳 New Balance: ₱{users[target_user_id]['balance']}\n\nContact admin if this is incorrect."
@@ -1062,12 +1163,20 @@ Error: {str(e)}"""
                             total_spent = user_info.get('total_spent', 0)
                             balance = user_info.get('balance', 0)
                             
-                            # Get user info from Telegram if possible
+                            # Get user info - try multiple sources
+                            username = "Unknown User"
                             try:
-                                user_chat = application.bot.get_chat(user_id_key)
-                                username = f"@{user_chat.username}" if user_chat.username else user_chat.first_name or "User"
+                                # First try to get from stored user data
+                                if 'username' in user_info:
+                                    username = f"@{user_info['username']}"
+                                elif 'first_name' in user_info:
+                                    username = user_info['first_name']
+                                else:
+                                    # Last resort: try Telegram API
+                                    user_chat = application.bot.get_chat(user_id_key)
+                                    username = f"@{user_chat.username}" if user_chat.username else user_chat.first_name or f"User{user_id_key[-4:]}"
                             except:
-                                username = "Unknown User"
+                                username = f"User{user_id_key[-4:]}"
                             
                             # Add medal emojis for top 3
                             if i == 1:
@@ -1900,12 +2009,20 @@ When customers send payment proof, they'll appear here for your manual approval.
                             total_deposited = user_info.get('total_deposited', 0)
                             total_spent = user_info.get('total_spent', 0)
                             
-                            # Get user info from Telegram if possible
+                            # Get user info - try multiple sources
+                            username = "Unknown User"
                             try:
-                                user_chat = application.bot.get_chat(user_id_key)
-                                username = f"@{user_chat.username}" if user_chat.username else user_chat.first_name or "User"
+                                # First try to get from stored user data
+                                if 'username' in user_info:
+                                    username = f"@{user_info['username']}"
+                                elif 'first_name' in user_info:
+                                    username = user_info['first_name']
+                                else:
+                                    # Last resort: try Telegram API
+                                    user_chat = application.bot.get_chat(user_id_key)
+                                    username = f"@{user_chat.username}" if user_chat.username else user_chat.first_name or f"User{user_id_key[-4:]}"
                             except:
-                                username = "Unknown User"
+                                username = f"User{user_id_key[-4:]}"
                             
                             response_text += f"👤 **{username}** (ID: {user_id_key})\n"
                             response_text += f"💰 Balance: ₱{balance}\n"
@@ -2351,12 +2468,20 @@ Ready to order! 🛍️"""
                         for i, (user_id_key, user_info) in enumerate(sorted_users[:10], 1):
                             total_spent = user_info.get('total_spent', 0)
                             
-                            # Get user info from Telegram if possible
+                            # Get user info - try multiple sources
+                            username = "Unknown User"
                             try:
-                                user_chat = application.bot.get_chat(user_id_key)
-                                username = f"@{user_chat.username}" if user_chat.username else user_chat.first_name or "User"
+                                # First try to get from stored user data
+                                if 'username' in user_info:
+                                    username = f"@{user_info['username']}"
+                                elif 'first_name' in user_info:
+                                    username = user_info['first_name']
+                                else:
+                                    # Last resort: try Telegram API
+                                    user_chat = application.bot.get_chat(user_id_key)
+                                    username = f"@{user_chat.username}" if user_chat.username else user_chat.first_name or f"User{user_id_key[-4:]}"
                             except:
-                                username = "Unknown User"
+                                username = f"User{user_id_key[-4:]}"
                             
                             # Add medal emojis for top 3
                             if i == 1:
