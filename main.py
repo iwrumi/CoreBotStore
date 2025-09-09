@@ -1330,7 +1330,8 @@ Ready to manage your store!"""
                     except Exception as e:
                         logger.error(f"Failed to notify admin: {e}")
                     
-                    response_text = "Please wait for admin approval"
+                    # SILENT LIKE @PRIMOSTOREBOT - NO MESSAGE TO CUSTOMER
+                    return jsonify({'status': 'ok'})
 
                 # Professional Store Bot Interface with Inline Keyboards
                 # Get user data

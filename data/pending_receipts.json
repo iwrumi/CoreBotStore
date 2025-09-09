@@ -16,9 +16,20 @@
     "photo_file_id": "AgACAgEAAxkBAAOiaL_bIhB0-5hQZufX61F-frmRttkAAvSvMRtZTAABRg79nnVurSH7AQADAgADeQADNgQ",
     "caption": "",
     "timestamp": "2025-09-09T07:46:16.716957",
-    "status": "pending",
+    "status": "approved",
     "username": "uhshton",
     "first_name": "Ashton",
     "receipt_id": 2
+  },
+  {
+    "user_id": "8034378887",
+    "chat_id": "8034378887",
+    "photo_file_id": "AgACAgEAAxkBAAOiaL_bIhB0-5hQZufX61F-frmRttkAAvSvMRtZTAABRg79nnVurSH7AQADAgADeQADNgQ",
+    "caption": "150",
+    "timestamp": "2025-09-09T07:48:19.247483",
+    "status": "approved",
+    "username": "uhshton",
+    "first_name": "Ashton",
+    "receipt_id": 3
   }
 ]
