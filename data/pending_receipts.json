@@ -218,5 +218,16 @@
     "username": "amansinaya",
     "first_name": "eka",
     "receipt_id": 20
+  },
+  {
+    "user_id": "1106534253",
+    "chat_id": "1106534253",
+    "photo_file_id": "AgACAgUAAxkBAAIEDGjAZKDhW-ACaLlHxfiKq23S6hFrAAIywzEb88sIVv6tdjDMbq9GAQADAgADeQADNgQ",
+    "caption": "",
+    "timestamp": "2025-09-09T17:32:16.753163",
+    "status": "approved",
+    "username": "xoxoovyy",
+    "first_name": "xoxo",
+    "receipt_id": 21
   }
 ]

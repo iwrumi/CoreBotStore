@@ -176,7 +176,9 @@ def webhook():
                     [{"text": "📺 Streaming", "callback_data": "category_streaming"}],
                     [{"text": "📚 Education", "callback_data": "category_education"}],
                     [{"text": "🎨 Design", "callback_data": "category_design"}],
+                    [{"text": "📸 Photo Editing", "callback_data": "category_photo"}],
                     [{"text": "🤖 AI Tools", "callback_data": "category_ai"}],
+                    [{"text": "🛡️ VPN & Security", "callback_data": "category_vpn"}],
                     [{"text": "🤖 Automated Plugging", "callback_data": "category_plugging"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
@@ -2520,7 +2522,9 @@ Ready to manage your store!"""
                         [{"text": "📺 Streaming", "callback_data": "category_streaming"}],
                         [{"text": "📚 Education", "callback_data": "category_education"}],
                         [{"text": "🎨 Design", "callback_data": "category_design"}],
+                        [{"text": "📸 Photo Editing", "callback_data": "category_photo"}],
                         [{"text": "🤖 AI Tools", "callback_data": "category_ai"}],
+                        [{"text": "🛡️ VPN & Security", "callback_data": "category_vpn"}],
                         [{"text": "🤖 Automated Plugging", "callback_data": "category_plugging"}],
                         [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                     ]}
