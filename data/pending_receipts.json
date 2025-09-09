@@ -207,5 +207,16 @@
     "username": "francisxdr",
     "first_name": "frans",
     "receipt_id": 19
+  },
+  {
+    "user_id": "984161192",
+    "chat_id": "984161192",
+    "photo_file_id": "AgACAgUAAxkBAAID7GjAYNqBGdxnkURQ86t3ClmtzGo1AAJ_0DEbEY0JVoz7HHwDxS5-AQADAgADeQADNgQ",
+    "caption": "",
+    "timestamp": "2025-09-09T17:16:10.616518",
+    "status": "approved",
+    "username": "amansinaya",
+    "first_name": "eka",
+    "receipt_id": 20
   }
 ]

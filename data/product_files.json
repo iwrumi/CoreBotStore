@@ -981,8 +981,10 @@
         "subscription": "ChatGPT Plus Shared - 1 Month",
         "instructions": "Login with these credentials. This is a SHARED account for 2-4 users. Do not change password for 24 hours. Vouch @tiramisucakekyo within 24 hours to activate warranty."
       },
-      "status": "available",
-      "added_at": "2025-09-09T15:50:00.000000"
+      "status": "sold",
+      "added_at": "2025-09-09T15:50:00.000000",
+      "sold_to": "984161192",
+      "sold_at": "{\"timestamp\": \"now\"}"
     },
     {
       "id": 4,
@@ -995,6 +997,209 @@
       },
       "status": "available",
       "added_at": "2025-09-09T17:11:40.608749"
+    },
+    {
+      "id": 5,
+      "type": "account",
+      "details": {
+        "email": "vazdol@motionisme.co",
+        "password": "freepalestine",
+        "subscription": "Chatgpt_Shared Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T17:11:49.087467"
+    },
+    {
+      "id": 6,
+      "type": "account",
+      "details": {
+        "email": "vazdol@motionisme.co",
+        "password": "freepalestine",
+        "subscription": "Chatgpt_Shared Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T17:11:50.964183"
+    },
+    {
+      "id": 7,
+      "type": "account",
+      "details": {
+        "email": "vazdol@motionisme.co",
+        "password": "freepalestine",
+        "subscription": "Chatgpt_Shared Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T17:11:52.656540"
+    }
+  ],
+  "24": [
+    {
+      "id": 1,
+      "type": "account",
+      "details": {
+        "email": "quillbot1@example.com",
+        "password": "quill123",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 2,
+      "type": "account",
+      "details": {
+        "email": "quillbot2@example.com",
+        "password": "quill456",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 3,
+      "type": "account",
+      "details": {
+        "email": "quillbot3@example.com",
+        "password": "quill789",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 4,
+      "type": "account",
+      "details": {
+        "email": "quillbot4@example.com",
+        "password": "quill101",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 5,
+      "type": "account",
+      "details": {
+        "email": "quillbot5@example.com",
+        "password": "quill202",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 6,
+      "type": "account",
+      "details": {
+        "email": "quillbot6@example.com",
+        "password": "quill303",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 7,
+      "type": "account",
+      "details": {
+        "email": "quillbot7@example.com",
+        "password": "quill404",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 8,
+      "type": "account",
+      "details": {
+        "email": "quillbot8@example.com",
+        "password": "quill505",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 9,
+      "type": "account",
+      "details": {
+        "email": "quillbot9@example.com",
+        "password": "quill606",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 10,
+      "type": "account",
+      "details": {
+        "email": "quillbot10@example.com",
+        "password": "quill707",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 11,
+      "type": "account",
+      "details": {
+        "email": "quillbot11@example.com",
+        "password": "quill808",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 12,
+      "type": "account",
+      "details": {
+        "email": "quillbot12@example.com",
+        "password": "quill909",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 13,
+      "type": "account",
+      "details": {
+        "email": "quillbot13@example.com",
+        "password": "quill010",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 14,
+      "type": "account",
+      "details": {
+        "email": "quillbot14@example.com",
+        "password": "quill111",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
+    },
+    {
+      "id": 15,
+      "type": "account",
+      "details": {
+        "email": "quillbot15@example.com",
+        "password": "quill212",
+        "subscription": "QuillBot Shared - 1 Month",
+        "instructions": "Login with these credentials. AI writing assistant with paraphrasing tools. Shared account."
+      },
+      "status": "available"
     }
   ]
 }

@@ -55,7 +55,7 @@
     "description": "\ud83e\udd16 ChatGPT Plus Shared - AI Assistant\n\n\u2728 Features:\n\u2022 GPT-4 access (faster & smarter)\n\u2022 Priority access during peak times\n\u2022 Shared family account (2-4 users)\n\u2022 Unlimited usage\n\u2022 Advanced AI capabilities\n\u2022 Budget-friendly option\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcbb Works on all devices",
     "price": 40.0,
     "category": "ai",
-    "stock": 2,
+    "stock": 4,
     "image_url": "",
     "created_at": "2025-09-09T14:47:00.000000"
   },
@@ -228,5 +228,15 @@
     "stock": 999,
     "image_url": "",
     "created_at": "2025-09-09T16:35:00.000000"
+  },
+  {
+    "id": 24,
+    "name": "quillbot",
+    "description": "✍️ QuillBot Shared - AI Writing Assistant\n\n🎯 Features:\n• Advanced paraphrasing tool\n• Grammar and spell checker\n• Citation generator\n• Summarizer tool\n• Shared account (2-3 users)\n• All premium features unlocked\n\n🕐 Instant delivery after payment\n💻 Works on all devices",
+    "price": 55.0,
+    "category": "ai",
+    "stock": 15,
+    "image_url": "",
+    "created_at": "2025-09-09T17:25:00.000000"
   }
 ]
