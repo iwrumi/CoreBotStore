@@ -171,40 +171,11 @@ def webhook():
                 
             # Handle different callback actions
             elif callback_data == "browse_products":
-                # SIMPLIFIED browse products handler
-                try:
-                    with open('data/products.json', 'r') as f:
-                        products = json_lib.load(f)
-                    
-                    if products:
-                        response_text = "🏪 Product Categories\n\nSelect a category:"
-                        
-                        # Create category buttons
-                        categories = {}
-                        for product in products:
-                            cat = product.get('category', 'General')
-                            if cat not in categories:
-                                categories[cat] = 0
-                            categories[cat] += 1
-                        
-                        inline_keyboard = {"inline_keyboard": []}
-                        for category, count in categories.items():
-                            inline_keyboard["inline_keyboard"].append([
-                                {"text": f"{category} ({count})", "callback_data": f"category_{category}"}
-                            ])
-                        inline_keyboard["inline_keyboard"].append([
-                            {"text": "🔙 Main Menu", "callback_data": "main_menu"}
-                        ])
-                    else:
-                        response_text = "📦 No Products Available"
-                        inline_keyboard = {"inline_keyboard": [[
-                            {"text": "🔙 Main Menu", "callback_data": "main_menu"}
-                        ]]}
-                except:
-                    response_text = "Error loading products"
-                    inline_keyboard = {"inline_keyboard": [[
-                        {"text": "🔙 Main Menu", "callback_data": "main_menu"}
-                    ]]}
+                # ULTRA MINIMAL TEST - just return basic text
+                response_text = "Products available"
+                inline_keyboard = {"inline_keyboard": [[
+                    {"text": "Back", "callback_data": "main_menu"}
+                ]]}
             
             elif callback_data == "check_balance":
                 # Load actual user data
