@@ -623,8 +623,9 @@
         "subscription": "Youtube_1M Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T12:11:21.590288"
+      "status": "removed_by_admin",
+      "added_at": "2025-09-09T12:11:21.590288",
+      "removed_at": "2025-09-09T12:13:22.266852"
     }
   ],
   "12": []
