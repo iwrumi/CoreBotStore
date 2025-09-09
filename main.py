@@ -224,8 +224,8 @@ def webhook():
 ⚠️ **Important:** Send receipt as photo to this bot
 📞 **Contact:** 09911127180 mb"""
 
-                # Use your GCash QR code image URL here
-                qr_code_url = "https://telegra.ph/file/a1b2c3d4e5f6.jpg"  # Replace with actual URL
+                # Your GCash QR code for 09911127180
+                qr_code_url = "https://i.ibb.co/QcTNbMW/gcash-qr-09911127180.png"
                 
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "📩 Message Admin for Approval", "callback_data": "message_admin"}],
