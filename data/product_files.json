@@ -416,8 +416,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388210"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388210",
+      "cleared_at": "2025-09-09T14:26:02.786307"
     },
     {
       "id": 13,
@@ -428,8 +429,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388261"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388261",
+      "cleared_at": "2025-09-09T14:26:02.786319"
     },
     {
       "id": 14,
@@ -440,8 +442,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388283"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388283",
+      "cleared_at": "2025-09-09T14:26:02.786322"
     },
     {
       "id": 15,
@@ -452,8 +455,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388303"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388303",
+      "cleared_at": "2025-09-09T14:26:02.786324"
     },
     {
       "id": 16,
@@ -464,8 +468,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388323"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388323",
+      "cleared_at": "2025-09-09T14:26:02.786341"
     },
     {
       "id": 17,
@@ -476,8 +481,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388343"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388343",
+      "cleared_at": "2025-09-09T14:26:02.786345"
     },
     {
       "id": 18,
@@ -488,8 +494,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388364"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388364",
+      "cleared_at": "2025-09-09T14:26:02.786347"
     },
     {
       "id": 19,
@@ -500,8 +507,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388390"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388390",
+      "cleared_at": "2025-09-09T14:26:02.786419"
     },
     {
       "id": 20,
@@ -512,8 +520,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388411"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388411",
+      "cleared_at": "2025-09-09T14:26:02.786421"
     },
     {
       "id": 21,
@@ -524,8 +533,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388433"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388433",
+      "cleared_at": "2025-09-09T14:26:02.786423"
     },
     {
       "id": 22,
@@ -536,8 +546,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388454"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388454",
+      "cleared_at": "2025-09-09T14:26:02.786424"
     },
     {
       "id": 23,
@@ -548,8 +559,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388479"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388479",
+      "cleared_at": "2025-09-09T14:26:02.786425"
     },
     {
       "id": 24,
@@ -560,8 +572,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388515"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388515",
+      "cleared_at": "2025-09-09T14:26:02.786426"
     },
     {
       "id": 25,
@@ -572,8 +585,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388538"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388538",
+      "cleared_at": "2025-09-09T14:26:02.786426"
     },
     {
       "id": 26,
@@ -584,8 +598,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388560"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388560",
+      "cleared_at": "2025-09-09T14:26:02.786427"
     },
     {
       "id": 27,
@@ -596,8 +611,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388583"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388583",
+      "cleared_at": "2025-09-09T14:26:02.786431"
     },
     {
       "id": 28,
@@ -608,8 +624,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388606"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388606",
+      "cleared_at": "2025-09-09T14:26:02.786432"
     },
     {
       "id": 29,
@@ -620,8 +637,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388628"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388628",
+      "cleared_at": "2025-09-09T14:26:02.786433"
     },
     {
       "id": 30,
@@ -632,8 +650,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388649"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388649",
+      "cleared_at": "2025-09-09T14:26:02.786434"
     },
     {
       "id": 31,
@@ -644,8 +663,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388671"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388671",
+      "cleared_at": "2025-09-09T14:26:02.786435"
     },
     {
       "id": 32,
@@ -656,8 +676,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388696"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388696",
+      "cleared_at": "2025-09-09T14:26:02.786436"
     },
     {
       "id": 33,
@@ -668,8 +689,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388719"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388719",
+      "cleared_at": "2025-09-09T14:26:02.786437"
     },
     {
       "id": 34,
@@ -680,8 +702,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388744"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388744",
+      "cleared_at": "2025-09-09T14:26:02.786438"
     },
     {
       "id": 35,
@@ -692,8 +715,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388768"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388768",
+      "cleared_at": "2025-09-09T14:26:02.786439"
     },
     {
       "id": 36,
@@ -704,8 +728,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388793"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388793",
+      "cleared_at": "2025-09-09T14:26:02.786440"
     },
     {
       "id": 37,
@@ -716,8 +741,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388819"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388819",
+      "cleared_at": "2025-09-09T14:26:02.786441"
     },
     {
       "id": 38,
@@ -728,8 +754,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388844"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388844",
+      "cleared_at": "2025-09-09T14:26:02.786442"
     },
     {
       "id": 39,
@@ -740,8 +767,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388934"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388934",
+      "cleared_at": "2025-09-09T14:26:02.786443"
     },
     {
       "id": 40,
@@ -752,8 +780,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T14:15:05.388965"
+      "status": "cleared_by_admin",
+      "added_at": "2025-09-09T14:15:05.388965",
+      "cleared_at": "2025-09-09T14:26:02.786443"
     }
   ],
   "3": [
