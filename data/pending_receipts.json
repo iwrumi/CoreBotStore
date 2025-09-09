@@ -119,5 +119,16 @@
     "username": "seisieray",
     "first_name": "Seira",
     "receipt_id": 11
+  },
+  {
+    "user_id": "6938115962",
+    "chat_id": "6938115962",
+    "photo_file_id": "AgACAgUAAxkBAAICGWjAICjP4TkFtXUrGzVSV3I90GVIAAKCxjEbiDwJVvGndtq002sbAQADAgADeQADNgQ",
+    "caption": "",
+    "timestamp": "2025-09-09T12:40:08.687391",
+    "status": "approved",
+    "username": "vveeejay",
+    "first_name": "VINCE",
+    "receipt_id": 12
   }
 ]

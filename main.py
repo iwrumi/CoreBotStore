@@ -1492,7 +1492,8 @@ pass: mypass123
                                     'picsart-gold': "9", 'pics-art': "9",
                                     'surf-shark': "10", 'surfshark-vpn': "10",
                                 'youtube1m': "11", 'yt1m': "11", 'yt1': "11", 'youtube1': "11",
-                                'youtube3m': "12", 'yt3m': "12", 'yt3': "12", 'youtube3': "12"
+                                'youtube3m': "12", 'yt3m': "12", 'yt3': "12", 'youtube3': "12",
+                                'capcut-7d': "14", 'capcut7d': "14", 'capcut_7': "14", 'capcut7': "14"
                                 }
                                 product_id = product_map.get(product_name, "1")
                                 
