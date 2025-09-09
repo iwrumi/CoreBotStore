@@ -1051,50 +1051,100 @@ Send accounts now!"""
                                 if product_id not in product_files:
                                     product_files[product_id] = []
                                 
-                                for account_line in accounts:
-                                    account_line = account_line.strip()
-                                    if not account_line:
-                                        continue
+                                # Check for "pass: password" format
+                                common_password = None
+                                emails_only = []
+                                
+                                for line in accounts:
+                                    line = line.strip()
+                                    if line.startswith('pass:') or line.startswith('password:'):
+                                        # Extract common password
+                                        common_password = line.split(':', 1)[1].strip()
+                                    elif '@' in line and ':' not in line and '|' not in line:
+                                        # Just email
+                                        emails_only.append(line)
+                                
+                                # If we found emails and a common password, use them
+                                if emails_only and common_password:
+                                    for email in emails_only:
+                                        email = email.strip()
+                                        if '@' in email:
+                                            # Get product details for subscription name
+                                            subscription_names = {
+                                                "1": "CapCut Pro - 1 Month",
+                                                "2": "Spotify Premium - 1 Month", 
+                                                "3": "Disney+ Shared Account",
+                                                "4": "Quizlet Plus - 1 Month"
+                                            }
+                                            
+                                            # Add account
+                                            new_account = {
+                                                "id": len(product_files[product_id]) + 1,
+                                                "type": "account",
+                                                "details": {
+                                                    "email": email,
+                                                    "password": common_password,
+                                                    "subscription": subscription_names.get(product_id, "Premium Account - 1 Month"),
+                                                    "instructions": "Login with these credentials. Do not change password for 24 hours."
+                                                },
+                                                "status": "available",
+                                                "added_at": datetime.now().isoformat()
+                                            }
+                                            
+                                            product_files[product_id].append(new_account)
+                                            added_count += 1
+                                        else:
+                                            failed_count += 1
+                                else:
+                                    # Handle normal email:password or email|password format
+                                    for account_line in accounts:
+                                        account_line = account_line.strip()
+                                        if not account_line:
+                                            continue
                                         
-                                    # Handle both : and | formats
-                                    if '|' in account_line:
-                                        parts = account_line.split('|')
-                                    elif ':' in account_line:
-                                        parts = account_line.split(':')
-                                    else:
-                                        failed_count += 1
-                                        continue
-                                    
-                                    if len(parts) >= 2 and '@' in parts[0]:
-                                        email = parts[0].strip()
-                                        password = ('|' if '|' in account_line else ':').join(parts[1:]).strip()
+                                        # Skip password lines
+                                        if account_line.startswith('pass:') or account_line.startswith('password:'):
+                                            continue
+                                            
+                                        # Handle both : and | formats
+                                        if '|' in account_line:
+                                            parts = account_line.split('|')
+                                        elif ':' in account_line:
+                                            parts = account_line.split(':')
+                                        else:
+                                            failed_count += 1
+                                            continue
                                         
-                                        # Get product details for subscription name
-                                        subscription_names = {
-                                            "1": "CapCut Pro - 1 Month",
-                                            "2": "Spotify Premium - 1 Month", 
-                                            "3": "Disney+ Shared Account",
-                                            "4": "Quizlet Plus - 1 Month"
-                                        }
+                                        if len(parts) >= 2 and '@' in parts[0]:
+                                            email = parts[0].strip()
+                                            password = ('|' if '|' in account_line else ':').join(parts[1:]).strip()
                                         
-                                        # Add account
-                                        new_account = {
-                                            "id": len(product_files[product_id]) + 1,
-                                            "type": "account",
-                                            "details": {
-                                                "email": email,
-                                                "password": password,
-                                                "subscription": subscription_names.get(product_id, "Premium Account - 1 Month"),
-                                                "instructions": "Login with these credentials. Do not change password for 24 hours."
-                                            },
-                                            "status": "available",
-                                            "added_at": datetime.now().isoformat()
-                                        }
-                                        
-                                        product_files[product_id].append(new_account)
-                                        added_count += 1
-                                    else:
-                                        failed_count += 1
+                                            # Get product details for subscription name
+                                            subscription_names = {
+                                                "1": "CapCut Pro - 1 Month",
+                                                "2": "Spotify Premium - 1 Month", 
+                                                "3": "Disney+ Shared Account",
+                                                "4": "Quizlet Plus - 1 Month"
+                                            }
+                                            
+                                            # Add account
+                                            new_account = {
+                                                "id": len(product_files[product_id]) + 1,
+                                                "type": "account",
+                                                "details": {
+                                                    "email": email,
+                                                    "password": password,
+                                                    "subscription": subscription_names.get(product_id, "Premium Account - 1 Month"),
+                                                    "instructions": "Login with these credentials. Do not change password for 24 hours."
+                                                },
+                                                "status": "available",
+                                                "added_at": datetime.now().isoformat()
+                                            }
+                                            
+                                            product_files[product_id].append(new_account)
+                                            added_count += 1
+                                        else:
+                                            failed_count += 1
                                 
                                 # Save updated files
                                 with open('data/product_files.json', 'w') as f:
