@@ -914,6 +914,59 @@ Error: {str(e)}"""
                     except Exception as e:
                         response_text = f"❌ Error adding balance: {str(e)}\n\nFormat: /addbalance UserID Amount"
                 
+                elif text.startswith('/removebalance '):
+                    # Remove balance from user: /removebalance UserID Amount
+                    try:
+                        parts = text.replace('/removebalance ', '').split()
+                        if len(parts) >= 2:
+                            target_user_id = parts[0]
+                            amount = float(parts[1])
+                            
+                            # Load users
+                            users = {}
+                            try:
+                                with open('data/users.json', 'r') as f:
+                                    users = json_lib.load(f)
+                            except:
+                                pass
+                            
+                            # Check if user exists
+                            if target_user_id not in users:
+                                response_text = f"❌ User {target_user_id} not found in system"
+                            else:
+                                current_balance = users[target_user_id].get("balance", 0)
+                                
+                                if current_balance < amount:
+                                    response_text = f"❌ Insufficient Balance!\n\n💰 Current Balance: ₱{current_balance}\n💸 Requested Deduction: ₱{amount}\n📉 Short: ₱{amount - current_balance}\n\nCannot deduct more than available balance."
+                                else:
+                                    # Deduct balance
+                                    users[target_user_id]["balance"] = current_balance - amount
+                                    
+                                    # Save users
+                                    with open('data/users.json', 'w') as f:
+                                        json_lib.dump(users, f, indent=2)
+                                    
+                                    # Notify user about deduction
+                                    user_message = f"💸 Balance Deducted!\n\n❌ -₱{amount} removed from your account\n💳 New Balance: ₱{users[target_user_id]['balance']}\n\nContact admin if this is incorrect."
+                                    
+                                    user_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                    user_data = json_lib.dumps({
+                                        "chat_id": target_user_id,
+                                        "text": user_message
+                                    }).encode('utf-8')
+                                    
+                                    user_req = urllib.request.Request(user_url, data=user_data, headers={'Content-Type': 'application/json'})
+                                    try:
+                                        urllib.request.urlopen(user_req)
+                                    except:
+                                        pass
+                                    
+                                    response_text = f"✅ Balance Deducted!\n\n💸 Removed ₱{amount} from user {target_user_id}\n💳 New Balance: ₱{users[target_user_id]['balance']}\n\nUser has been notified! 📢"
+                        else:
+                            response_text = "❌ Format: /removebalance UserID Amount\n\nExample: /removebalance 123456789 50"
+                    except Exception as e:
+                        response_text = f"❌ Error removing balance: {str(e)}\n\nFormat: /removebalance UserID Amount"
+                
                 elif text.startswith('/removestock '):
                     # Remove specific amount of stock: /removestock product amount
                     try:
@@ -984,6 +1037,79 @@ Error: {str(e)}"""
                             response_text = "❌ Format: /removestock ProductName Amount\n\nExample: /removestock canva 5"
                     except Exception as e:
                         response_text = f"❌ Error removing stock: {str(e)}"
+
+                elif text.startswith('/leaderboard'):
+                    # Show top users by spending
+                    try:
+                        with open('data/users.json', 'r') as f:
+                            users_data = json_lib.load(f)
+                    except:
+                        users_data = {}
+                    
+                    if not users_data:
+                        response_text = "📊 **Leaderboard**\n\nNo users found yet!"
+                    else:
+                        # Sort users by total spent (descending)
+                        sorted_users = sorted(users_data.items(), key=lambda x: x[1].get('total_spent', 0), reverse=True)
+                        
+                        response_text = "🏆 **Top Spenders Leaderboard**\n\n"
+                        
+                        for i, (user_id_key, user_info) in enumerate(sorted_users[:10], 1):
+                            total_spent = user_info.get('total_spent', 0)
+                            balance = user_info.get('balance', 0)
+                            
+                            # Get user info from Telegram if possible
+                            try:
+                                user_chat = application.bot.get_chat(user_id_key)
+                                username = f"@{user_chat.username}" if user_chat.username else user_chat.first_name or "User"
+                            except:
+                                username = "Unknown User"
+                            
+                            # Add medal emojis for top 3
+                            if i == 1:
+                                medal = "🥇"
+                            elif i == 2:
+                                medal = "🥈"
+                            elif i == 3:
+                                medal = "🥉"
+                            else:
+                                medal = f"{i}."
+                            
+                            response_text += f"{medal} **{username}**\n"
+                            response_text += f"💸 Spent: ₱{total_spent} | 💰 Balance: ₱{balance}\n\n"
+                        
+                        if len(sorted_users) > 10:
+                            response_text += f"... and {len(sorted_users) - 10} more users"
+
+                elif text.startswith('/stock'):
+                    # Show current stock levels for all products
+                    try:
+                        with open('data/products.json', 'r') as f:
+                            products = json_lib.load(f)
+                    except:
+                        products = []
+                    
+                    if not products:
+                        response_text = "📦 **Stock Levels**\n\nNo products found!"
+                    else:
+                        response_text = "📦 **Current Stock Levels**\n\n"
+                        
+                        for product in products:
+                            name = product.get('name', 'Unknown')
+                            stock = product.get('stock', 0)
+                            price = product.get('price', 0)
+                            
+                            # Stock status indicator
+                            if stock == 0:
+                                status = "❌ Out of Stock"
+                            elif stock <= 5:
+                                status = "⚠️ Low Stock"
+                            else:
+                                status = "✅ In Stock"
+                            
+                            response_text += f"**{name.title()}**\n"
+                            response_text += f"📊 Stock: {stock} | 💰 Price: ₱{price}\n"
+                            response_text += f"Status: {status}\n\n"
 
                 elif text.startswith('/clearstock '):
                     # Clear all stock for a product: /clearstock product
