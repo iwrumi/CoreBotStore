@@ -283,49 +283,16 @@ Send your screenshot now:
         result = self.balance_system.submit_deposit_proof(deposit_id, user_telegram_id)
         
         if result['success']:
-            # Show confirmation message like in premium bot
-            text = f"""
-✅ **Proof submitted for deposit #{deposit_id}.**
-
-Thank you. Your deposit is being verified and will be processed within 5 minutes. If you don't receive a notification within 5 minutes, please tap [Customer Service] for support.
-
-⏰ **Estimated processing time:** {result['estimated_time']}
-            """
-            
-            keyboard = [
-                [InlineKeyboardButton("💬 Customer Service", callback_data="customer_service")],
-                [InlineKeyboardButton("💳 Check Balance", callback_data="check_balance")],
-                [InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu")]
-            ]
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            
-            await update.message.reply_text(text, reply_markup=reply_markup, parse_mode=ParseMode.MARKDOWN)
-            
-            # Simulate auto-approval for demo (in real implementation, admin reviews)
-            # This creates the "Deposit #15 has been approved" message
-            import asyncio
-            asyncio.create_task(self._simulate_approval(deposit_id, user_telegram_id))
+            # NO MESSAGE TO CUSTOMER - exactly like primostorebot
+            # Just save the receipt silently, no confirmation
+            pass
             
         else:
             await update.message.reply_text(f"❌ {result['message']}")
         
         return ConversationHandler.END
     
-    async def _simulate_approval(self, deposit_id: str, user_telegram_id: str):
-        """Simulate automatic deposit approval (for demo purposes)"""
-        import asyncio
-        await asyncio.sleep(10)  # Wait 10 seconds
-        
-        # Auto-approve the deposit
-        result = self.balance_system.approve_deposit(deposit_id, 'System Auto-Approval')
-        
-        if result['success']:
-            # Send approval notification
-            await self.notifications.notify_deposit_approved(
-                user_telegram_id, 
-                result['deposit'], 
-                result['new_balance']
-            )
+    # Removed auto-approval simulation - primostorebot requires manual approval only
     
     async def show_deposit_history(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Show full deposit history"""
