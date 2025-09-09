@@ -266,9 +266,15 @@ Come back daily to maintain your streak!
     async def handle_callbacks(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle callback queries"""
         query = update.callback_query
+        if not query:
+            logger.error("No callback query found in update")
+            return
+            
         await query.answer()
         
         data = query.data
+        user_id = query.from_user.id if query.from_user else "unknown"
+        logger.info(f"CALLBACK HANDLER: Processing {data} for user {user_id}")
         
         if data == "deposit_balance":
             from balance_commands import BalanceCommands
@@ -276,11 +282,19 @@ Come back daily to maintain your streak!
             await balance_commands.deposit_balance_command(query, context)
         
         elif data == "browse_products" or data == "other_categories":
-            logger.info(f"COMPLETE_BOT.PY: Processing browse_products for user {query.from_user.id}")
-            # ULTRA SIMPLE RESPONSE TO FIX THE ISSUE
-            await query.edit_message_text("Products available", reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton("Back", callback_data="start_over")
-            ]]))
+            logger.info(f"COMPLETE_BOT.PY: Processing browse_products for user {user_id}")
+            try:
+                # ULTRA SIMPLE RESPONSE TO FIX THE ISSUE
+                await query.edit_message_text("Products available", reply_markup=InlineKeyboardMarkup([[
+                    InlineKeyboardButton("Back", callback_data="start_over")
+                ]]))
+                logger.info(f"SUCCESS: browse_products handled for user {user_id}")
+            except Exception as e:
+                logger.error(f"ERROR in browse_products handler: {e}")
+                try:
+                    await query.edit_message_text("Error loading products")
+                except:
+                    pass
         
         elif data == "check_balance":
             from balance_commands import BalanceCommands
