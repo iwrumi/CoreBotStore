@@ -168,11 +168,17 @@ def webhook():
             # Handle different callback actions
             elif callback_data == "browse_products":
                 logger.info(f"WEBHOOK: browse_products clicked by user {user_id}")
-                # ULTRA MINIMAL TEST - just return basic text
-                response_text = "Products available"
-                inline_keyboard = {"inline_keyboard": [[
-                    {"text": "Back", "callback_data": "main_menu"}
-                ]]}
+                # SHOW PRODUCT CATEGORIES
+                response_text = "🏪 Product Categories\n\nChoose a category to browse:"
+                inline_keyboard = {"inline_keyboard": [
+                    [{"text": "🎬 Video", "callback_data": "category_video"}],
+                    [{"text": "🎵 Music", "callback_data": "category_music"}], 
+                    [{"text": "📺 Streaming", "callback_data": "category_streaming"}],
+                    [{"text": "📚 Education", "callback_data": "category_education"}],
+                    [{"text": "🎨 Design", "callback_data": "category_design"}],
+                    [{"text": "🤖 AI Tools", "callback_data": "category_ai"}],
+                    [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
+                ]}
                 logger.info(f"WEBHOOK: Prepared response for browse_products")
             
             elif callback_data == "check_balance":
