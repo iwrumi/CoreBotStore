@@ -177,7 +177,7 @@ def webhook():
                         products = json_lib.load(f)
                     
                     if products:
-                        response_text = messages.get("browse_products", "🏪 **Product Categories**\n\nSelect a category to browse:")
+                        response_text = messages.get("browse_products", "🏪 Product Categories\n\nSelect a category to browse:")
                         
                         # Create category buttons
                         categories = {}
@@ -196,7 +196,7 @@ def webhook():
                             {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
                         ])
                     else:
-                        response_text = messages.get("no_products", "📦 **No Products Available**\n\nProducts will appear here when admin adds them.")
+                        response_text = messages.get("no_products", "📦 No Products Available\n\nProducts will appear here when admin adds them.")
                         inline_keyboard = {"inline_keyboard": [[
                             {"text": messages.get("button_labels", {}).get("back_menu", "🔙 Back to Main Menu"), "callback_data": "main_menu"}
                         ]]}
@@ -218,13 +218,7 @@ def webhook():
                 except:
                     balance = total_deposited = total_spent = 0
                 
-                response_text = f"""💰 **Account Balance**
-
-**Current Balance:** ₱{balance:.2f}
-**Total Deposited:** ₱{total_deposited:.2f}
-**Total Spent:** ₱{total_spent:.2f}
-
-**Account Status:** Active ✅"""
+                response_text = f"💰 Account Balance\n\nCurrent Balance: ₱{balance:.2f}\nTotal Deposited: ₱{total_deposited:.2f}\nTotal Spent: ₱{total_spent:.2f}\n\nAccount Status: Active ✅"
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "💳 Deposit Funds", "callback_data": "deposit_funds"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
@@ -232,14 +226,7 @@ def webhook():
             
             elif callback_data == "deposit_funds":
                 # Send GCash QR code exactly like primostorebot
-                gcash_qr_message = """📋 Steps to Deposit:
-3. Screenshot your receipt  
-4. Send receipt photo here
-5. Wait for admin approval
-6. Get balance credit instantly after approval
-
-⚠️ Important: Receipt will be sent to admin automatically
-📞 Contact: 09911127180 mb"""
+                gcash_qr_message = "📋 Steps to Deposit:\n3. Screenshot your receipt\n4. Send receipt photo here\n5. Wait for admin approval\n6. Get balance credit instantly after approval\n\n⚠️ Important: Receipt will be sent to admin automatically\n📞 Contact: 09911127180 mb"
 
                 # Your GCash QR code for 09911127180
                 qr_code_url = "https://i.ibb.co/QcTNbMW/gcash-qr-09911127180.png"
@@ -289,24 +276,7 @@ def webhook():
                 ]}
             
             elif callback_data == "support":
-                response_text = """🆘 **Customer Support**
-
-**📞 Contact Information:**
-💬 **Telegram/WhatsApp:** 09911127180
-📧 **For Receipts:** Send to 09911127180 mb
-👤 **Support:** @tiramisucakekyo
-
-**⚡ We Help With:**
-• Payment issues
-• Product questions
-• Account problems  
-• Technical support
-• Order problems
-
-**🕐 Available:** 24/7
-**⚡ Response:** Usually within 5 minutes
-
-Ready to help! Contact us now! 💪"""
+                response_text = "🆘 Customer Support\n\n📞 Contact Information:\n💬 Telegram/WhatsApp: 09911127180\n📧 For Receipts: Send to 09911127180 mb\n👤 Support: @tiramisucakekyo\n\n⚡ We Help With:\n• Payment issues\n• Product questions\n• Account problems\n• Technical support\n• Order problems\n\n🕐 Available: 24/7\n⚡ Response: Usually within 5 minutes\n\nReady to help! Contact us now! 💪"
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "💳 Payment Help", "callback_data": "deposit_funds"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
@@ -358,7 +328,7 @@ Ready to help! Contact us now! 💪"""
                     category_products = [p for p in products if p.get('category') == category]
                     
                     if category_products:
-                        response_text = f"🏪 **{category} Products**\n\nSelect a product to view details:"
+                        response_text = f"🏪 {category.title()} Products\n\nSelect a product:"
                         inline_keyboard = {"inline_keyboard": []}
                         
                         for product in category_products:
@@ -372,7 +342,7 @@ Ready to help! Contact us now! 💪"""
                             {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
                         ])
                     else:
-                        response_text = f"📦 **{category}**\n\nNo products available in this category."
+                        response_text = f"📦 {category.title()}\n\nNo products available in this category."
                         inline_keyboard = {"inline_keyboard": [[
                             {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
                         ]]}
@@ -396,14 +366,7 @@ Ready to help! Contact us now! 💪"""
                         stock = product['stock']
                         stock_status = "✅ In Stock" if stock > 0 else "❌ Out of Stock"
                         
-                        response_text = f"""📦 **{product['name']}**
-
-📝 **Description:** {product['description']}
-💰 **Price:** ₱{product['price']} each
-📊 **Stock:** {stock_status} ({stock} available)
-🏷️ **Category:** {product['category']}
-
-**Select quantity to purchase:**"""
+                        response_text = f"📦 {product['name']}\n\n💰 Price: ₱{product['price']} each\n📊 Stock: {stock_status} ({stock} available)\n\nSelect quantity:"
                         
                         inline_keyboard = {"inline_keyboard": []}
                         
@@ -2499,17 +2462,7 @@ Ready to manage your store!"""
 
                 # Handle custom keyboard button presses (from primostorebot-style interface)
                 if text == "💰 Deposit Balance":
-                    response_text = """💳 **Deposit Funds**
-
-**📋 Steps to Deposit:**
-1. Send to GCash: 09911127180
-2. Screenshot your receipt  
-3. Send receipt photo here
-4. Wait for admin approval
-5. Get balance credit instantly after approval
-
-⚠️ **Important:** Send receipt as photo to this bot
-📞 **Contact:** 09911127180 mb"""
+                    response_text = "💳 Deposit Funds\n\n📋 Steps to Deposit:\n1. Send to GCash: 09911127180\n2. Screenshot your receipt\n3. Send receipt photo here\n4. Wait for admin approval\n5. Get balance credit instantly after approval\n\n⚠️ Important: Send receipt as photo to this bot\n📞 Contact: 09911127180 mb"
                     
                 elif text == "🛒 Browse Products":
                     # Show products directly with stock counts
@@ -2518,7 +2471,7 @@ Ready to manage your store!"""
                             products = json_lib.load(f)
                         
                         if products:
-                            response_text = "🛒 **Available Products**\n\nSelect a product to purchase:\n\n"
+                            response_text = "🛒 Available Products\n\nSelect a product to purchase:\n\n"
                             
                             # Generate inline keyboard for direct product selection
                             inline_keyboard = {"inline_keyboard": []}
@@ -2535,59 +2488,27 @@ Ready to manage your store!"""
                                     button_text = f"{category_emoji} {product['name'].title()} - ₱{product['price']} (Stock: {product['stock']})"
                                     inline_keyboard["inline_keyboard"].append([{"text": button_text, "callback_data": f"product_{product['id']}"}])
                                     
-                                    response_text += f"{category_emoji} **{product['name'].title()}**\n"
+                                    response_text += f"{category_emoji} {product['name'].title()}\n"
                                     response_text += f"💰 Price: ₱{product['price']}\n"
                                     response_text += f"📦 Stock: {product['stock']} available\n\n"
                             
                             if not inline_keyboard["inline_keyboard"]:
-                                response_text = "📦 **No Products Available**\n\nAll products are out of stock. Check back later!"
+                                response_text = "📦 No Products Available\n\nAll products are out of stock. Check back later!"
                                 inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
                             else:
                                 inline_keyboard["inline_keyboard"].append([{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}])
                         else:
-                            response_text = "📦 **No Products Available**\n\nProducts will appear here when admin adds them."
+                            response_text = "📦 No Products Available\n\nProducts will appear here when admin adds them."
                             inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
                     except Exception as e:
                         response_text = f"❌ Error loading products: {str(e)}"
                         inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
                         
                 elif text == "👑 Customer Service":
-                    response_text = """🆘 **Customer Support**
-
-**📞 Contact Information:**
-💬 **Telegram/WhatsApp:** 09911127180
-📧 **For Receipts:** Send to 09911127180 mb
-👤 **Support:** @tiramisucakekyo
-
-**⚡ We Help With:**
-• Payment issues
-• Product questions
-• Account problems  
-• Technical support
-• Order problems
-
-**🕐 Available:** 24/7
-**⚡ Response:** Usually within 5 minutes
-
-Ready to help! Contact us now! 💪"""
+                    response_text = "🆘 Customer Support\n\n📞 Contact Information:\n💬 Telegram/WhatsApp: 09911127180\n📧 For Receipts: Send to 09911127180 mb\n👤 Support: @tiramisucakekyo\n\n⚡ We Help With:\n• Payment issues\n• Product questions\n• Account problems\n• Technical support\n• Order problems\n\n🕐 Available: 24/7\n⚡ Response: Usually within 5 minutes\n\nReady to help! Contact us now! 💪"
                     
                 elif text == "❓ How to order":
-                    response_text = """❓ **How to Order**
-
-**📋 Simple Steps:**
-1️⃣ Browse Products (🛒 button)
-2️⃣ Select what you want
-3️⃣ Add to cart
-4️⃣ Make sure you have balance
-5️⃣ Complete purchase
-6️⃣ Get your account instantly!
-
-**💰 Need Balance?**
-• Use 💰 Deposit Balance button
-• Send GCash receipt to 09911127180
-• Get approved and start shopping!
-
-Ready to order! 🛍️"""
+                    response_text = "❓ How to Order\n\n📋 Simple Steps:\n1️⃣ Browse Products (🛒 button)\n2️⃣ Select what you want\n3️⃣ Add to cart\n4️⃣ Make sure you have balance\n5️⃣ Complete purchase\n6️⃣ Get your account instantly!\n\n💰 Need Balance?\n• Use 💰 Deposit Balance button\n• Send GCash receipt to 09911127180\n• Get approved and start shopping!\n\nReady to order! 🛍️"
                     
                 # Handle user commands (available to all users)
                 elif text.startswith('/leaderboard'):
