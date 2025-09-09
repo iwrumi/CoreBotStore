@@ -119,8 +119,215 @@ def webhook():
     try:
         update_data = request.get_json(force=True)
         
+        # Handle callback queries (inline keyboard button presses)
+        if update_data and 'callback_query' in update_data:
+            callback_query = update_data['callback_query']
+            query_id = callback_query['id']
+            chat_id = str(callback_query['message']['chat']['id'])
+            user_id = str(callback_query['from']['id'])
+            callback_data = callback_query['data']
+            message_id = callback_query['message']['message_id']
+            
+            # Answer callback query first
+            answer_url = f"https://api.telegram.org/bot{bot_token}/answerCallbackQuery"
+            answer_data = json_lib.dumps({"callback_query_id": query_id}).encode('utf-8')
+            answer_req = urllib.request.Request(answer_url, data=answer_data, headers={'Content-Type': 'application/json'})
+            
+            try:
+                urllib.request.urlopen(answer_req)
+            except:
+                pass
+            
+            # Handle different callback actions
+            if callback_data == "browse_products":
+                # Get products and create categories
+                try:
+                    with open('data/products.json', 'r') as f:
+                        products = json_lib.load(f)
+                    
+                    if products:
+                        response_text = """🏪 **Product Categories**
+
+Select a category to browse:"""
+                        
+                        # Create category buttons
+                        categories = {}
+                        for product in products:
+                            cat = product.get('category', 'General')
+                            if cat not in categories:
+                                categories[cat] = 0
+                            categories[cat] += 1
+                        
+                        inline_keyboard = {"inline_keyboard": []}
+                        for category, count in categories.items():
+                            inline_keyboard["inline_keyboard"].append([
+                                {"text": f"{category} ({count} items)", "callback_data": f"category_{category}"}
+                            ])
+                        inline_keyboard["inline_keyboard"].append([
+                            {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
+                        ])
+                    else:
+                        response_text = "📦 **No Products Available**\n\nProducts will appear here when admin adds them."
+                        inline_keyboard = {"inline_keyboard": [[
+                            {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
+                        ]]}
+                except:
+                    response_text = "❌ Error loading products"
+                    inline_keyboard = {"inline_keyboard": [[
+                        {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
+                    ]]}
+            
+            elif callback_data == "check_balance":
+                response_text = """💰 **Account Balance**
+
+**Current Balance:** ₱0.00
+**Total Deposited:** ₱0.00
+**Total Spent:** ₱0.00
+
+**Account Status:** Active ✅"""
+                inline_keyboard = {"inline_keyboard": [
+                    [{"text": "💳 Deposit Funds", "callback_data": "deposit_funds"}],
+                    [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
+                ]}
+            
+            elif callback_data == "deposit_funds":
+                response_text = """💳 **Deposit Funds**
+
+**💰 Payment Methods:**
+
+🟢 **GCash:** 09911127180
+🔵 **PayMaya:** 09911127180
+
+**📋 Steps to Deposit:**
+1. Choose amount (Min: ₱50)
+2. Send payment to number above
+3. Screenshot your receipt
+4. Send receipt to: 09911127180 mb
+5. Wait for balance credit (Usually 1-5 mins)
+
+⚠️ **Important:** No receipt = No processing
+📞 **Contact:** 09911127180 mb"""
+                inline_keyboard = {"inline_keyboard": [
+                    [{"text": "💰 Check Balance", "callback_data": "check_balance"}],
+                    [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
+                ]}
+            
+            elif callback_data == "view_cart":
+                response_text = """🛒 **Shopping Cart**
+
+Your cart is empty.
+
+**To add items:**
+1. Browse Products
+2. Select items 
+3. Add to cart
+4. Checkout when ready"""
+                inline_keyboard = {"inline_keyboard": [
+                    [{"text": "🏪 Browse Products", "callback_data": "browse_products"}],
+                    [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
+                ]}
+            
+            elif callback_data == "my_orders":
+                response_text = """📦 **Order History**
+
+No orders found.
+
+**When you make purchases:**
+• Orders will appear here
+• Track delivery status
+• View order details
+• Reorder items"""
+                inline_keyboard = {"inline_keyboard": [
+                    [{"text": "🏪 Browse Products", "callback_data": "browse_products"}],
+                    [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
+                ]}
+            
+            elif callback_data == "support":
+                response_text = """🆘 **Customer Support**
+
+**📞 Contact Information:**
+💬 **Telegram/WhatsApp:** 09911127180
+📧 **For Receipts:** Send to 09911127180 mb
+
+**⚡ We Help With:**
+• Payment issues
+• Product questions
+• Account problems  
+• Technical support
+• Order problems
+
+**🕐 Available:** 24/7
+**⚡ Response:** Usually within 5 minutes
+
+Ready to help! Contact us now! 💪"""
+                inline_keyboard = {"inline_keyboard": [
+                    [{"text": "💳 Payment Help", "callback_data": "deposit_funds"}],
+                    [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
+                ]}
+            
+            elif callback_data == "main_menu":
+                user_balance = 0.0
+                product_count = 0
+                try:
+                    with open('data/products.json', 'r') as f:
+                        products = json_lib.load(f)
+                        product_count = len(products)
+                except:
+                    product_count = 0
+
+                response_text = f"""🛍️ **Welcome to Premium Store!**
+
+💎 **Your Digital Services Store**
+
+💰 **Balance:** ₱{user_balance:.2f}
+📦 **Products:** {product_count} Available
+
+🛒 **Use the menu below to navigate:**"""
+                
+                inline_keyboard = {
+                    "inline_keyboard": [
+                        [
+                            {"text": "🏪 Browse Products", "callback_data": "browse_products"},
+                            {"text": "💰 My Balance", "callback_data": "check_balance"}
+                        ],
+                        [
+                            {"text": "💳 Deposit Funds", "callback_data": "deposit_funds"},
+                            {"text": "🛒 My Cart", "callback_data": "view_cart"}
+                        ],
+                        [
+                            {"text": "📦 My Orders", "callback_data": "my_orders"},
+                            {"text": "🆘 Support", "callback_data": "support"}
+                        ]
+                    ]
+                }
+            
+            else:
+                response_text = "❌ Unknown action"
+                inline_keyboard = {"inline_keyboard": [[
+                    {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
+                ]]}
+            
+            # Edit the message with new content
+            edit_url = f"https://api.telegram.org/bot{bot_token}/editMessageText"
+            edit_data = json_lib.dumps({
+                "chat_id": chat_id,
+                "message_id": message_id,
+                "text": response_text,
+                "parse_mode": "Markdown",
+                "reply_markup": inline_keyboard
+            }).encode('utf-8')
+            
+            edit_req = urllib.request.Request(edit_url, data=edit_data, headers={'Content-Type': 'application/json'})
+            try:
+                with urllib.request.urlopen(edit_req) as response:
+                    logger.info(f"Handled callback: {callback_data}")
+            except Exception as e:
+                logger.error(f"Failed to edit message: {e}")
+            
+            return jsonify({'status': 'ok'})
+
         # Handle incoming messages
-        if update_data and 'message' in update_data:
+        elif update_data and 'message' in update_data:
             import urllib.request
             import json as json_lib
             from datetime import datetime
@@ -524,8 +731,9 @@ When customers send payment proof, they'll appear here for your manual approval.
 Ready to manage your store!"""
 
             else:
-                # Regular user response - SIMPLE AND RELIABLE
-                # Get product count
+                # Professional Store Bot Interface with Inline Keyboards
+                # Get user data
+                user_balance = 0.0
                 product_count = 0
                 try:
                     with open('data/products.json', 'r') as f:
@@ -533,124 +741,102 @@ Ready to manage your store!"""
                         product_count = len(products)
                 except:
                     product_count = 0
-                
-                if text == '/products':
-                    if product_count > 0:
-                        try:
-                            with open('data/products.json', 'r') as f:
-                                products = json_lib.load(f)
-                            
-                            response_text = "🏪 **Our Products Available:**\n\n"
-                            for product in products[:10]:  # Show first 10
-                                stock_text = f"✅ {product['stock']} in stock" if product['stock'] > 0 else "❌ Out of stock"
-                                response_text += f"• **{product['name']}** - ₱{product['price']:.2f}\n  {stock_text}\n\n"
-                            
-                            response_text += "💰 **To Purchase:** Contact admin 09911127180 mb"
-                        except:
-                            response_text = "📦 **No products available yet.**"
-                    else:
-                        response_text = "📦 **No products available yet.**\n\nCheck back soon!"
-                
-                elif text == '/balance':
-                    response_text = """💰 **Your Balance:** ₱0.00
 
-**To add funds:** Use /deposit
-📞 **Contact:** 09911127180 mb
-
-**Commands:**
-• /products - View catalog
-• /balance - Check balance
-• /deposit - Add money"""
-
-                elif text == '/deposit':
-                    response_text = """💰 **Add Money to Your Account**
-
-**Payment Methods Available:**
-🟢 **GCash** - Instant processing
-🔵 **PayMaya** - Fast & secure
-🟡 **Bank Transfer** - All major banks
-
-**How to Deposit:**
-1. Choose your amount (minimum ₱50)
-2. Send payment to our account
-3. Send screenshot of receipt
-4. Get instant balance credit!
-
-**💳 Payment Details:**
-📞 **GCash/PayMaya:** 09911127180
-🏦 **Bank:** Ask for details
-
-**📧 Send receipt to:** 09911127180 mb
-⚠️ **No receipt = No processing**
-
-**💬 Contact for instant processing:**
-Message: 09911127180
-
-Ready to add funds! Send your payment screenshot! 💳"""
-
-                elif text == '/support' or text == '/help':
-                    response_text = """🆘 **Customer Support**
-
-**📞 Direct Contact:**
-💬 **WhatsApp/Telegram:** 09911127180
-📧 **For receipts:** Send to 09911127180 mb
-
-**⚡ Fast Help:**
-• Product questions
-• Payment issues  
-• Account problems
-• Technical support
-
-**📱 Available Commands:**
-• /products - Browse catalog
-• /balance - Check balance
-• /deposit - Add money
-• /support - Get help
-
-**🕐 Support Hours:** 24/7 available
-**⚡ Response Time:** Usually within 5 minutes
-
-We're here to help! Contact us now! 💪"""
-
-                elif text == '/start' or text == '/menu':
+                # Handle /start command with inline keyboard
+                if text == '/start' or text == '/menu' or not text.startswith('/'):
                     response_text = f"""🛍️ **Welcome to Premium Store!**
 
-👋 **Hello! Your digital services store!**
+💎 **Your Digital Services Store**
 
-📦 **Products Available:** {product_count} items
-💰 **Your Balance:** ₱0.00
+💰 **Balance:** ₱{user_balance:.2f}
+📦 **Products:** {product_count} Available
 
-**🏪 Quick Actions:**
-• /products - Browse our catalog  
-• /deposit - Add money to account
-• /balance - Check your funds
-• /support - Get help
+🛒 **Use the menu below to navigate:**"""
+                    
+                    # Send with inline keyboard
+                    inline_keyboard = {
+                        "inline_keyboard": [
+                            [
+                                {"text": "🏪 Browse Products", "callback_data": "browse_products"},
+                                {"text": "💰 My Balance", "callback_data": "check_balance"}
+                            ],
+                            [
+                                {"text": "💳 Deposit Funds", "callback_data": "deposit_funds"},
+                                {"text": "🛒 My Cart", "callback_data": "view_cart"}
+                            ],
+                            [
+                                {"text": "📦 My Orders", "callback_data": "my_orders"},
+                                {"text": "🆘 Support", "callback_data": "support"}
+                            ]
+                        ]
+                    }
+                    
+                    # Send message with inline keyboard
+                    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                    data = json_lib.dumps({
+                        "chat_id": chat_id,
+                        "text": response_text,
+                        "parse_mode": "Markdown",
+                        "reply_markup": inline_keyboard
+                    }).encode('utf-8')
+                    
+                    req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
+                    try:
+                        with urllib.request.urlopen(req) as response:
+                            logger.info(f"Sent inline menu to chat {chat_id}")
+                        return jsonify({'status': 'ok'})
+                    except Exception as e:
+                        logger.error(f"Failed to send inline menu: {e}")
+                
+                # Handle old text commands for compatibility
+                elif text == '/products':
+                    response_text = """🏪 **Product Catalog**
 
-**🛒 How to Shop:**
-1. Browse products with /products
-2. Add balance with /deposit  
-3. Contact admin to purchase
-4. Get instant delivery!
+Use the main menu button for better experience!
+Type /start to see the interactive menu.
 
-📞 **Contact:** 09911127180 mb
-Ready to start shopping! 🚀"""
+📱 **Quick Commands:**
+• /start - Interactive menu
+• /balance - Check balance
+• /deposit - Add funds"""
+                
+                elif text == '/balance':
+                    response_text = f"""💰 **Account Balance**
+
+**Current Balance:** ₱{user_balance:.2f}
+**Status:** Active
+
+📱 **Use /start for interactive menu**
+💳 **Use /deposit to add funds**"""
+                
+                elif text == '/deposit':
+                    response_text = """💳 **Deposit Funds**
+
+📱 **For better experience, use /start**
+
+**Payment Methods:**
+🟢 **GCash:** 09911127180
+🔵 **PayMaya:** 09911127180
+
+**Steps:**
+1. Send payment
+2. Screenshot receipt
+3. Send to: 09911127180 mb
+4. Wait for confirmation
+
+⚠️ **No receipt = No processing**"""
                 
                 else:
-                    # Default response for ANY message
-                    response_text = f"""👋 **Welcome to Premium Store!**
+                    # Redirect to main menu
+                    response_text = """👋 **Welcome to Premium Store!**
 
-🏪 **Digital Services & Accounts**
-📦 **Products Available:** {product_count} items
+📱 **Use /start for interactive menu**
 
-**📱 Quick Commands:**
-• /products - Browse catalog
-• /balance - Check balance
-📞 **Contact:** 09911127180 mb
-
-**🛒 How to Order:**
-1. Browse with /products
-2. Contact admin to purchase
-3. Get instant delivery!
+**Quick Commands:**
+• /start - Main menu
+• /products - Browse
+• /balance - Check funds
+• /deposit - Add money
 
 Ready to shop! 🛍️"""
 
