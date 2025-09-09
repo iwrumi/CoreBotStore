@@ -1801,21 +1801,6 @@ Ready to manage your store!"""
                         response_text = f"❌ Error loading products: {str(e)}"
                         inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
                         
-                elif text == "💳 Check Balance":
-                    # Load user balance
-                    user_data = users.get(str(user_id), {})
-                    balance = user_data.get('balance', 0)
-                    total_deposited = user_data.get('total_deposited', 0)
-                    total_spent = user_data.get('total_spent', 0)
-                    
-                    response_text = f"""💰 **Account Balance**
-
-**Current Balance:** ₱{balance:.2f}
-**Total Deposited:** ₱{total_deposited:.2f}
-**Total Spent:** ₱{total_spent:.2f}
-
-**Account Status:** Active ✅"""
-                    
                 elif text == "👑 Customer Service":
                     response_text = """🆘 **Customer Support**
 
@@ -1929,7 +1914,6 @@ SHORTCUT :
                                 {"text": "🛒 Browse Products"}
                             ],
                             [
-                                {"text": "💳 Check Balance"},
                                 {"text": "👑 Customer Service"}
                             ],
                             [
