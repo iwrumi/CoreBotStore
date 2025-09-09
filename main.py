@@ -129,6 +129,13 @@ def webhook():
             if not bot_token:
                 logger.error("BOT_TOKEN not found")
                 return jsonify({'error': 'BOT_TOKEN not configured'}), 500
+            
+            # Load editable messages
+            try:
+                with open('bot_messages.json', 'r') as f:
+                    messages = json_lib.load(f)
+            except:
+                messages = {}
                 
             callback_query = update_data['callback_query']
             query_id = callback_query['id']
@@ -155,9 +162,7 @@ def webhook():
                         products = json_lib.load(f)
                     
                     if products:
-                        response_text = """🏪 **Product Categories**
-
-Select a category to browse:"""
+                        response_text = messages.get("browse_products", "🏪 **Product Categories**\n\nSelect a category to browse:")
                         
                         # Create category buttons
                         categories = {}
@@ -176,9 +181,9 @@ Select a category to browse:"""
                             {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
                         ])
                     else:
-                        response_text = "📦 **No Products Available**\n\nProducts will appear here when admin adds them."
+                        response_text = messages.get("no_products", "📦 **No Products Available**\n\nProducts will appear here when admin adds them.")
                         inline_keyboard = {"inline_keyboard": [[
-                            {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
+                            {"text": messages.get("button_labels", {}).get("back_menu", "🔙 Back to Main Menu"), "callback_data": "main_menu"}
                         ]]}
                 except:
                     response_text = "❌ Error loading products"
@@ -187,65 +192,28 @@ Select a category to browse:"""
                     ]]}
             
             elif callback_data == "check_balance":
-                response_text = """💰 **Account Balance**
-
-**Current Balance:** ₱0.00
-**Total Deposited:** ₱0.00
-**Total Spent:** ₱0.00
-
-**Account Status:** Active ✅"""
+                response_text = messages.get("balance_message", "💰 **Account Balance**\n\n**Current Balance:** ₱{balance:.2f}\n**Total Deposited:** ₱{total_deposited:.2f}\n**Total Spent:** ₱{total_spent:.2f}\n\n**Account Status:** Active ✅").format(balance=0.0, total_deposited=0.0, total_spent=0.0)
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "💳 Deposit Funds", "callback_data": "deposit_funds"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
             
             elif callback_data == "deposit_funds":
-                response_text = """💳 **Deposit Funds**
-
-**💰 Payment Methods:**
-
-🟢 **GCash:** 09911127180
-🔵 **PayMaya:** 09911127180
-
-**📋 Steps to Deposit:**
-1. Choose amount (Min: ₱50)
-2. Send payment to number above
-3. Screenshot your receipt
-4. Send receipt to: 09911127180 mb
-5. Wait for balance credit (Usually 1-5 mins)
-
-⚠️ **Important:** No receipt = No processing
-📞 **Contact:** 09911127180 mb"""
+                response_text = messages.get("deposit_message", "💳 **Deposit Funds**\n\n**💰 Payment Methods:**\n\n🟢 **GCash:** 09911127180\n🔵 **PayMaya:** 09911127180\n\n**📋 Steps to Deposit:**\n1. Choose amount (Min: ₱50)\n2. Send payment to number above\n3. Screenshot your receipt\n4. Send receipt to: 09911127180 mb\n5. Wait for balance credit (Usually 1-5 mins)\n\n⚠️ **Important:** No receipt = No processing\n📞 **Contact:** 09911127180 mb")
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "💰 Check Balance", "callback_data": "check_balance"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
             
             elif callback_data == "view_cart":
-                response_text = """🛒 **Shopping Cart**
-
-Your cart is empty.
-
-**To add items:**
-1. Browse Products
-2. Select items 
-3. Add to cart
-4. Checkout when ready"""
+                response_text = messages.get("cart_empty", "🛒 **Shopping Cart**\n\nYour cart is empty.\n\n**To add items:**\n1. Browse Products\n2. Select items \n3. Add to cart\n4. Checkout when ready")
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "🏪 Browse Products", "callback_data": "browse_products"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
             
             elif callback_data == "my_orders":
-                response_text = """📦 **Order History**
-
-No orders found.
-
-**When you make purchases:**
-• Orders will appear here
-• Track delivery status
-• View order details
-• Reorder items"""
+                response_text = messages.get("orders_empty", "📦 **Order History**\n\nNo orders found.\n\n**When you make purchases:**\n• Orders will appear here\n• Track delivery status\n• View order details\n• Reorder items")
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "🏪 Browse Products", "callback_data": "browse_products"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
