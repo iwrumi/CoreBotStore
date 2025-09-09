@@ -1078,18 +1078,31 @@ pass: yourpassword
                                 try:
                                     with open('data/product_files.json', 'r') as f:
                                         product_files = json_lib.load(f)
-                                except:
+                                    logger.info(f"Loaded product files: {list(product_files.keys())}")
+                                except Exception as e:
+                                    logger.error(f"Error loading product files: {e}")
                                     product_files = {}
                                 
                                 # Map products to IDs
                                 product_map = {'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4"}
                                 product_id = product_map.get(product_name, "1")
+                                logger.info(f"Adding to product {product_name} (ID: {product_id})")
                                 
                                 if product_id not in product_files:
                                     product_files[product_id] = []
                                 
-                                # Add each account
+                                # Remove duplicates while preserving order
+                                unique_emails = []
+                                seen = set()
                                 for email in emails:
+                                    if email.lower() not in seen:
+                                        unique_emails.append(email)
+                                        seen.add(email.lower())
+                                
+                                logger.info(f"Processing {len(unique_emails)} unique emails")
+                                
+                                # Add each account
+                                for email in unique_emails:
                                     if '@' in email:
                                         account = {
                                             "id": len(product_files[product_id]) + 1,
@@ -1105,10 +1118,15 @@ pass: yourpassword
                                         }
                                         product_files[product_id].append(account)
                                         added_count += 1
+                                        logger.info(f"Added account: {email}")
                                 
                                 # Save product files
-                                with open('data/product_files.json', 'w') as f:
-                                    json_lib.dump(product_files, f, indent=2)
+                                try:
+                                    with open('data/product_files.json', 'w') as f:
+                                        json_lib.dump(product_files, f, indent=2)
+                                    logger.info(f"Saved {added_count} accounts to product_files.json")
+                                except Exception as e:
+                                    logger.error(f"Error saving product files: {e}")
                                 
                                 # Update stock count in products.json
                                 available_count = len([acc for acc in product_files[product_id] if acc['status'] == 'available'])
@@ -1120,17 +1138,18 @@ pass: yourpassword
                                     for product in products:
                                         if product['id'] == int(product_id):
                                             product['stock'] = available_count
+                                            logger.info(f"Updated {product['name']} stock to {available_count}")
                                             break
                                     
                                     with open('data/products.json', 'w') as f:
                                         json_lib.dump(products, f, indent=2)
-                                except:
-                                    pass
+                                except Exception as e:
+                                    logger.error(f"Error updating product stock: {e}")
                                 
                                 response_text = f"""✅ **SUCCESS!** Added {added_count} {product_name} accounts!
 
 📦 **Product:** {product_name.title()}
-📧 **Emails:** {len(emails)} processed
+📧 **Emails:** {len(unique_emails)} processed ({len(emails)} total, {len(emails) - len(unique_emails)} duplicates removed)
 🔑 **Password:** {password}
 📊 **New Stock:** {available_count} available
 
