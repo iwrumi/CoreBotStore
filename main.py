@@ -603,17 +603,17 @@ DM him with the vouch!
             
             elif callback_data == "add_balance":
                 # Show balance deposit instructions
-                response_text = """💳 **Deposit Funds**
+                response_text = """💳 Deposit Funds
 
-**📋 Steps to Deposit:**
+📋 Steps to Deposit:
 1. Send to GCash: 09911127180
 2. Screenshot your receipt  
 3. Send receipt photo here
 4. Wait for admin approval
 5. Get balance credit instantly after approval
 
-⚠️ **Important:** Send receipt as photo to this bot
-📞 **Contact:** 09911127180 mb"""
+⚠️ Important: Send receipt as photo to this bot
+📞 Contact: 09911127180 mb"""
                 
                 inline_keyboard = {"inline_keyboard": [[
                     {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
