@@ -1998,11 +1998,20 @@ Ready to shop! 🛍️"""
                     "text": response_text
                 }).encode('utf-8')
             else:
-                data = json_lib.dumps({
-                    "chat_id": chat_id, 
-                    "text": response_text,
-                    "parse_mode": "Markdown"
-                }).encode('utf-8')
+                # Check if we have inline keyboard to send (for custom button responses)
+                if 'inline_keyboard' in locals() and inline_keyboard:
+                    data = json_lib.dumps({
+                        "chat_id": chat_id, 
+                        "text": response_text,
+                        "parse_mode": "Markdown",
+                        "reply_markup": inline_keyboard
+                    }).encode('utf-8')
+                else:
+                    data = json_lib.dumps({
+                        "chat_id": chat_id, 
+                        "text": response_text,
+                        "parse_mode": "Markdown"
+                    }).encode('utf-8')
             
             req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
             try:
