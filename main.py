@@ -443,8 +443,57 @@ Ready to help! Contact us now! 💪"""
                     ]]}
             
             elif callback_data.startswith("buy_"):
-                # Process purchase with quantity
+                # Show purchase confirmation
                 parts = callback_data.replace("buy_", "").split("_")
+                product_id = int(parts[0])
+                quantity = int(parts[1])
+                
+                try:
+                    # Load product and user data
+                    with open('data/products.json', 'r') as f:
+                        products = json_lib.load(f)
+                    with open('data/users.json', 'r') as f:
+                        users = json_lib.load(f)
+                    
+                    product = next((p for p in products if p['id'] == product_id), None)
+                    user_balance = users.get(user_id, {}).get('balance', 0)
+                    
+                    if not product:
+                        response_text = "❌ Product not found"
+                        inline_keyboard = {"inline_keyboard": [[
+                            {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
+                        ]]}
+                    elif product['stock'] < quantity:
+                        response_text = f"❌ **Insufficient Stock**\n\nOnly {product['stock']} items available.\nYou tried to buy {quantity} items."
+                        inline_keyboard = {"inline_keyboard": [[
+                            {"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}
+                        ]]}
+                    else:
+                        total_cost = product['price'] * quantity
+                        
+                        # Show confirmation instead of immediate purchase
+                        response_text = f"🛒 **Purchase Confirmation**\n\n📦 **Product:** {product['name'].title()}\n🔢 **Quantity:** {quantity}\n💰 **Price per item:** ₱{product['price']}\n💸 **Total Cost:** ₱{total_cost}\n\n💳 **Your Balance:** ₱{user_balance}\n💰 **After Purchase:** ₱{user_balance - total_cost}\n\n❓ **Are you sure you want to buy this?**"
+                        
+                        if user_balance < total_cost:
+                            response_text += f"\n\n❌ **Insufficient Balance!**\nYou need ₱{total_cost - user_balance} more to complete this purchase."
+                            inline_keyboard = {"inline_keyboard": [
+                                [{"text": "💰 Add Balance", "callback_data": "add_balance"}],
+                                [{"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}]
+                            ]}
+                        else:
+                            inline_keyboard = {"inline_keyboard": [
+                                [{"text": "✅ Yes, Buy Now!", "callback_data": f"confirm_buy_{product_id}_{quantity}"}],
+                                [{"text": "❌ Cancel", "callback_data": f"product_{product_id}"}]
+                            ]}
+                except:
+                    response_text = "❌ Error loading purchase details"
+                    inline_keyboard = {"inline_keyboard": [[
+                        {"text": "🔙 Back to Categories", "callback_data": "browse_products"}
+                    ]]}
+            
+            elif callback_data.startswith("confirm_buy_"):
+                # Process actual purchase after confirmation
+                parts = callback_data.replace("confirm_buy_", "").split("_")
                 product_id = int(parts[0])
                 quantity = int(parts[1])
                 
@@ -620,6 +669,24 @@ DM him with the vouch!
                         {"text": "🔙 Back to Product", "callback_data": f"product_{product_id}"}
                     ]]}
             
+            elif callback_data == "add_balance":
+                # Show balance deposit instructions
+                response_text = """💳 **Deposit Funds**
+
+**📋 Steps to Deposit:**
+1. Send to GCash: 09911127180
+2. Screenshot your receipt  
+3. Send receipt photo here
+4. Wait for admin approval
+5. Get balance credit instantly after approval
+
+⚠️ **Important:** Send receipt as photo to this bot
+📞 **Contact:** 09911127180 mb"""
+                
+                inline_keyboard = {"inline_keyboard": [[
+                    {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
+                ]]}
+
             elif callback_data.startswith("custom_qty_"):
                 # Handle custom quantity selection
                 product_id = int(callback_data.replace("custom_qty_", ""))

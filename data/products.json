@@ -55,7 +55,7 @@
     "description": "\ud83d\udcda StudoCu Premium - Study Documents\n\n\u2728 Features:\n\u2022 Access to millions of study documents\n\u2022 Unlimited downloads\n\u2022 Expert Q&A support\n\u2022 Ad-free experience\n\u2022 Premium study tools\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcbb Works on all devices",
     "price": 20.0,
     "category": "education",
-    "stock": 1,
+    "stock": 3,
     "image_url": "",
     "created_at": "2025-09-09T10:40:00.000000"
   },
@@ -65,7 +65,7 @@
     "description": "\ud83e\udd16 Perplexity AI Pro - AI Search Engine\n\n\u2728 Features:\n\u2022 Advanced AI-powered search\n\u2022 Academic and web sources\n\u2022 Unlimited Pro searches\n\u2022 File upload and analysis\n\u2022 No ads\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcbb Works on all devices",
     "price": 35.0,
     "category": "ai",
-    "stock": 0,
+    "stock": 2,
     "image_url": "",
     "created_at": "2025-09-09T10:40:00.000000"
   },
@@ -115,7 +115,7 @@
     "description": "\ud83d\udcfa YouTube Premium - 3 Months\n\n\u2728 Features:\n\u2022 Ad-free videos\n\u2022 Background play\n\u2022 YouTube Music included\n\u2022 Offline downloads\n\u2022 Picture-in-picture mode\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on all devices\n\ud83d\udcb0 Better value for longer subscription",
     "price": 85.0,
     "category": "streaming",
-    "stock": 0,
+    "stock": 2,
     "image_url": "",
     "created_at": "2025-09-09T12:04:00.000000"
   }
