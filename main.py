@@ -485,7 +485,7 @@ def webhook():
                                 json_lib.dump(products, f, indent=2)
                             
                             # Check if this is a plugging service
-                            is_plugging_service = product['category'] == 'plugging'
+                            is_plugging_service = product['category'] in ['lfb', 'combo']
                             
                             if is_plugging_service:
                                 # Special handling for plugging services
