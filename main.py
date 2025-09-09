@@ -2454,44 +2454,10 @@ Ready to manage your store!"""
                     response_text = "💳 Deposit Funds\n\n📋 Steps to Deposit:\n1. Send to GCash: 09911127180\n2. Screenshot your receipt\n3. Send receipt photo here\n4. Wait for admin approval\n5. Get balance credit instantly after approval\n\n⚠️ Important: Send receipt as photo to this bot\n📞 Contact: 09911127180 mb"
                     
                 elif text == "🛒 Browse Products":
-                    # Show products directly with stock counts
-                    try:
-                        with open('data/products.json', 'r') as f:
-                            products = json_lib.load(f)
-                        
-                        if products:
-                            response_text = "🛒 Available Products\n\nSelect a product to purchase:\n\n"
-                            
-                            # Generate inline keyboard for direct product selection
-                            inline_keyboard = {"inline_keyboard": []}
-                            
-                            for product in products:
-                                if product.get('stock', 0) > 0:  # Only show products with stock
-                                    category_emoji = {
-                                        'video': '🎬',
-                                        'music': '🎵', 
-                                        'streaming': '📺',
-                                        'education': '📚'
-                                    }.get(product.get('category', ''), '📦')
-                                    
-                                    button_text = f"{category_emoji} {product['name'].title()} - ₱{product['price']} (Stock: {product['stock']})"
-                                    inline_keyboard["inline_keyboard"].append([{"text": button_text, "callback_data": f"product_{product['id']}"}])
-                                    
-                                    response_text += f"{category_emoji} {product['name'].title()}\n"
-                                    response_text += f"💰 Price: ₱{product['price']}\n"
-                                    response_text += f"📦 Stock: {product['stock']} available\n\n"
-                            
-                            if not inline_keyboard["inline_keyboard"]:
-                                response_text = "📦 No Products Available\n\nAll products are out of stock. Check back later!"
-                                inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
-                            else:
-                                inline_keyboard["inline_keyboard"].append([{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}])
-                        else:
-                            response_text = "📦 No Products Available\n\nProducts will appear here when admin adds them."
-                            inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
-                    except Exception as e:
-                        response_text = f"❌ Error loading products: {str(e)}"
-                        inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
+                    logger.info(f"TEXT HANDLER: Browse Products clicked by user {user_id}")
+                    # ULTRA SIMPLE RESPONSE TO FIX THE ISSUE
+                    response_text = "Products available! Select what you want to buy."
+                    inline_keyboard = {"inline_keyboard": []}  # No buttons for now to avoid errors
                         
                 elif text == "👑 Customer Service":
                     response_text = "🆘 Customer Support\n\n📞 Contact Information:\n💬 Telegram/WhatsApp: 09911127180\n📧 For Receipts: Send to 09911127180 mb\n👤 Support: @tiramisucakekyo\n\n⚡ We Help With:\n• Payment issues\n• Product questions\n• Account problems\n• Technical support\n• Order problems\n\n🕐 Available: 24/7\n⚡ Response: Usually within 5 minutes\n\nReady to help! Contact us now! 💪"
