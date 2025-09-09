@@ -2455,9 +2455,31 @@ Ready to manage your store!"""
                     
                 elif text == "🛒 Browse Products":
                     logger.info(f"TEXT HANDLER: Browse Products clicked by user {user_id}")
-                    # ULTRA SIMPLE RESPONSE TO FIX THE ISSUE
-                    response_text = "Products available! Select what you want to buy."
-                    inline_keyboard = {"inline_keyboard": []}  # No buttons for now to avoid errors
+                    # SIMPLE PRODUCT LIST
+                    try:
+                        with open('data/products.json', 'r') as f:
+                            products = json_lib.load(f)
+                        
+                        response_text = "🛒 Available Products:\n\n"
+                        inline_keyboard = {"inline_keyboard": []}
+                        
+                        for product in products:
+                            if product.get('stock', 0) > 0:
+                                name = product['name']
+                                price = product['price']
+                                stock = product['stock']
+                                response_text += f"• {name} - ₱{price} ({stock} left)\n"
+                                inline_keyboard["inline_keyboard"].append([{
+                                    "text": f"{name} - ₱{price}", 
+                                    "callback_data": f"product_{product['id']}"
+                                }])
+                        
+                        if not inline_keyboard["inline_keyboard"]:
+                            response_text = "No products in stock right now."
+                        
+                    except:
+                        response_text = "Error loading products. Please try again."
+                        inline_keyboard = {"inline_keyboard": []}
                         
                 elif text == "👑 Customer Service":
                     response_text = "🆘 Customer Support\n\n📞 Contact Information:\n💬 Telegram/WhatsApp: 09911127180\n📧 For Receipts: Send to 09911127180 mb\n👤 Support: @tiramisucakekyo\n\n⚡ We Help With:\n• Payment issues\n• Product questions\n• Account problems\n• Technical support\n• Order problems\n\n🕐 Available: 24/7\n⚡ Response: Usually within 5 minutes\n\nReady to help! Contact us now! 💪"
