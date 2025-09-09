@@ -2026,6 +2026,10 @@ When customers send payment proof, they'll appear here for your manual approval.
                     else:
                         response_text = "❌ **Usage:** `/msg USER_ID your message here`\n\n**Example:** `/msg 123456789 Your receipt has been processed!`"
 
+                elif text.startswith('/send'):
+                    # Handle receipt submission command
+                    response_text = "📸 Send Your Receipt\n\nTo submit your GCash receipt:\n\n1. **Send a photo** of your GCash receipt\n2. **Include the amount** in the message (e.g. '₱100')\n3. **Wait for admin approval**\n\n**Example:**\nSend your receipt photo with message:\n'₱150 deposit - please approve'\n\n📱 Upload your receipt photo now!\n📞 Contact: 09911127180 for assistance"
+                
                 elif text.startswith('/adminhelp') or text.startswith('/help'):
                     response_text = f"""🔧 ADMIN COMMANDS REFERENCE
 
@@ -2795,6 +2799,10 @@ Contact: 09911127180 mb
                         response_text = "❌ Unable to check stock right now. Try again later!"
 
 
+                elif text.startswith('/send'):
+                    # Handle receipt submission for regular users
+                    response_text = "📸 Send Your Receipt\n\nTo submit your GCash receipt:\n\n1. **Send a photo** of your GCash receipt\n2. **Include the amount** in the message (e.g. '₱100')\n3. **Wait for admin approval**\n\n**Example:**\nSend your receipt photo with message:\n'₱150 deposit - please approve'\n\n📱 Upload your receipt photo now!\n📞 Contact: 09911127180 for assistance"
+                
                 elif text == '/leaderboard':
                     # Show top users by total spent
                     try:
