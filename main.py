@@ -2641,7 +2641,7 @@ Ready to order! 🛍️"""
                             response_text += f"... and {len(sorted_users) - 10} more users"
 
                 elif text.startswith('/stock'):
-                    # Show current stock levels (USER VERSION - no sensitive info)
+                    # Show current stock levels (USER VERSION - simplified)
                     try:
                         with open('data/products.json', 'r') as f:
                             products = json_lib.load(f)
@@ -2649,27 +2649,41 @@ Ready to order! 🛍️"""
                         products = []
                     
                     if not products:
-                        response_text = "📦 **Stock Status**\n\nNo products found!"
+                        response_text = "📦 Stock Status\n\nNo products found!"
                     else:
-                        response_text = "📦 **Available Products**\n\n"
+                        response_text = "📦 Available Products:\n\n"
+                        
+                        # Group products by status to keep message short
+                        in_stock = []
+                        low_stock = []
+                        out_of_stock = []
                         
                         for product in products:
                             name = product.get('name', 'Unknown')
                             stock = product.get('stock', 0)
                             price = product.get('price', 0)
                             
-                            # Stock status indicator
-                            if stock == 0:
-                                status = "❌ Out of Stock"
-                            elif stock <= 5:
-                                status = "⚠️ Low Stock"
-                            else:
-                                status = "✅ In Stock"
+                            item = f"{name} (₱{price}) - {stock} left"
                             
-                            response_text += f"**{name.title()}**\n"
-                            response_text += f"📊 Available: {stock} accounts\n"
-                            response_text += f"💰 Price: ₱{price}\n"
-                            response_text += f"Status: {status}\n\n"
+                            if stock == 0:
+                                out_of_stock.append(item)
+                            elif stock <= 5:
+                                low_stock.append(item)
+                            else:
+                                in_stock.append(item)
+                        
+                        # Build compact response
+                        if in_stock:
+                            response_text += "✅ IN STOCK:\n"
+                            response_text += "\n".join([f"• {item}" for item in in_stock[:8]]) + "\n\n"  # Limit to 8 items
+                        
+                        if low_stock:
+                            response_text += "⚠️ LOW STOCK:\n"
+                            response_text += "\n".join([f"• {item}" for item in low_stock[:5]]) + "\n\n"  # Limit to 5 items
+                        
+                        if out_of_stock:
+                            response_text += "❌ OUT OF STOCK:\n"
+                            response_text += "\n".join([f"• {item}" for item in out_of_stock[:5]]) + "\n\n"  # Limit to 5 items
 
                 # Handle /start command with inline keyboard ONLY if no photo was sent
                 elif (text == '/start' or text == '/menu' or (not text.startswith('/') and not message.get('photo'))):
