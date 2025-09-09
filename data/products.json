@@ -5,7 +5,7 @@
     "description": "\ud83c\udfac CapCut Pro - Premium Video Editor\n\n\u2728 Features:\n\u2022 Professional video editing tools\n\u2022 HD export without watermark\n\u2022 Advanced filters and effects\n\u2022 Audio mixing capabilities\n\u2022 Cloud storage included\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on iOS & Android",
     "price": 20,
     "category": "video",
-    "stock": 11,
+    "stock": 10,
     "image_url": "",
     "created_at": "2025-09-09T07:12:03.680395"
   },
@@ -35,7 +35,7 @@
     "description": "\ud83d\udcda Quizlet Plus - Study Tools\n\n\u2728 Features:\n\u2022 Create unlimited study sets\n\u2022 Advanced study modes\n\u2022 Progress tracking\n\u2022 Offline access\n\u2022 No ads\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcbb Works on all devices",
     "price": 12.0,
     "category": "education",
-    "stock": 0,
+    "stock": 1,
     "image_url": "",
     "created_at": "2025-09-09T08:15:00.000000"
   },
@@ -105,7 +105,7 @@
     "description": "\ud83d\udee1\ufe0f Surfshark VPN - Internet Security\n\n\u2728 Features:\n\u2022 Unlimited device connections\n\u2022 3200+ servers worldwide\n\u2022 No-logs policy\n\u2022 Ad and malware blocker\n\u2022 24/7 customer support\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcbb Works on all devices",
     "price": 35.0,
     "category": "vpn",
-    "stock": 0,
+    "stock": 1,
     "image_url": "",
     "created_at": "2025-09-09T10:40:00.000000"
   },
@@ -242,11 +242,21 @@
   {
     "id": 25,
     "name": "expressvpn",
-    "description": "🛡️ ExpressVPN - Premium VPN Service\n\n⚡ Features:\n• Lightning-fast servers worldwide\n• Military-grade encryption\n• No-logs policy verified\n• 24/7 customer support\n• Works in restricted countries\n• Unlimited bandwidth\n\n🕐 Instant delivery after payment\n💻 Works on all devices",
+    "description": "\ud83d\udee1\ufe0f ExpressVPN - Premium VPN Service\n\n\u26a1 Features:\n\u2022 Lightning-fast servers worldwide\n\u2022 Military-grade encryption\n\u2022 No-logs policy verified\n\u2022 24/7 customer support\n\u2022 Works in restricted countries\n\u2022 Unlimited bandwidth\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcbb Works on all devices",
     "price": 35.0,
     "category": "vpn",
     "stock": 0,
     "image_url": "",
     "created_at": "2025-09-09T18:30:00.000000"
+  },
+  {
+    "id": 26,
+    "name": "netflix_shared",
+    "description": "📺 Netflix Shared - Movies & TV Shows\n\n✨ Features:\n• Unlimited movies and TV episodes\n• High-definition streaming\n• Works on all devices\n• Shared family account (2-4 users)\n• Original Netflix content\n• Download for offline viewing\n\n🕐 Instant delivery after payment\n📱 Works on all devices",
+    "price": 45.0,
+    "category": "streaming",
+    "stock": 0,
+    "image_url": "",
+    "created_at": "2025-09-09T18:53:39.522500"
   }
 ]

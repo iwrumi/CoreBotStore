@@ -928,9 +928,65 @@ Max quantity: {product['stock']}"""
                         else:
                             raise ValueError("Need at least name, price, and stock")
                         
-                        # Auto-fill everything else
-                        category = 'digital'
-                        description = f"{name} - Premium Digital Service"
+                        # Auto-detect category based on product name
+                        def detect_category(product_name):
+                            name_lower = product_name.lower()
+                            
+                            # Streaming services
+                            if any(keyword in name_lower for keyword in ['netflix', 'disney', 'hulu', 'youtube', 'amazon prime', 'hbo', 'paramount', 'peacock', 'apple tv']):
+                                return 'streaming'
+                            
+                            # Music services
+                            elif any(keyword in name_lower for keyword in ['spotify', 'apple music', 'youtube music', 'deezer', 'tidal', 'soundcloud']):
+                                return 'music'
+                            
+                            # Video editing
+                            elif any(keyword in name_lower for keyword in ['capcut', 'adobe premiere', 'after effects', 'final cut', 'davinci']):
+                                return 'video'
+                            
+                            # Photo editing
+                            elif any(keyword in name_lower for keyword in ['picsart', 'photoshop', 'lightroom', 'canva pro']):
+                                return 'photo'
+                            
+                            # Design tools
+                            elif any(keyword in name_lower for keyword in ['canva', 'figma', 'sketch', 'adobe creative']):
+                                return 'design'
+                            
+                            # AI tools
+                            elif any(keyword in name_lower for keyword in ['chatgpt', 'openai', 'claude', 'perplexity', 'quillbot', 'jasper', 'midjourney']):
+                                return 'ai'
+                            
+                            # Education
+                            elif any(keyword in name_lower for keyword in ['studocu', 'quizlet', 'coursera', 'udemy', 'khan academy', 'duolingo']):
+                                return 'education'
+                            
+                            # VPN services
+                            elif any(keyword in name_lower for keyword in ['vpn', 'surfshark', 'expressvpn', 'nordvpn', 'cyberghost', 'protonvpn']):
+                                return 'vpn'
+                            
+                            # Default category
+                            else:
+                                return 'digital'
+                        
+                        category = detect_category(name)
+                        
+                        # Generate better description based on category
+                        def generate_description(product_name, category):
+                            name_title = product_name.title()
+                            if category == 'streaming':
+                                return f"📺 {name_title} - Movies & TV Shows\n\n✨ Features:\n• Unlimited streaming\n• HD/4K quality\n• Multiple devices\n• Original content\n• Download offline\n\n🕐 Instant delivery after payment\n📱 Works on all devices"
+                            elif category == 'music':
+                                return f"🎵 {name_title} - Music Streaming\n\n✨ Features:\n• Ad-free music\n• Offline downloads\n• High quality audio\n• Unlimited skips\n• Exclusive content\n\n🕐 Instant delivery after payment\n🎧 Works on all devices"
+                            elif category == 'video':
+                                return f"🎬 {name_title} - Video Editor\n\n✨ Features:\n• Professional editing tools\n• HD export quality\n• Advanced effects\n• Audio mixing\n• No watermarks\n\n🕐 Instant delivery after payment\n💻 Works on all devices"
+                            elif category == 'ai':
+                                return f"🤖 {name_title} - AI Assistant\n\n✨ Features:\n• Advanced AI capabilities\n• Unlimited usage\n• Fast responses\n• Premium features\n• Latest AI models\n\n🕐 Instant delivery after payment\n💻 Works on all devices"
+                            elif category == 'vpn':
+                                return f"🛡️ {name_title} - VPN Service\n\n✨ Features:\n• Global servers\n• Military encryption\n• No-logs policy\n• Fast speeds\n• Multiple devices\n\n🕐 Instant delivery after payment\n🌐 Works worldwide"
+                            else:
+                                return f"✨ {name_title} - Premium Service\n\n🎯 Features:\n• Premium access\n• Full features unlocked\n• High quality service\n• Instant activation\n• 24/7 support\n\n🕐 Instant delivery after payment\n📱 Works on all devices"
+                        
+                        description = generate_description(name, category)
                         emoji = '⭐'
                         
                         # Load existing products

@@ -135,8 +135,9 @@
         "subscription": "CapCut Pro - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T10:09:28.997859"
+      "status": "removed_by_admin",
+      "added_at": "2025-09-09T10:09:28.997859",
+      "removed_at": "2025-09-09T18:46:04.953499"
     },
     {
       "id": 11,
@@ -147,8 +148,9 @@
         "subscription": "CapCut Pro - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T10:09:28.997861"
+      "status": "removed_by_admin",
+      "added_at": "2025-09-09T10:09:28.997861",
+      "removed_at": "2025-09-09T18:46:04.953507"
     },
     {
       "id": 12,
@@ -257,6 +259,18 @@
       },
       "status": "available",
       "added_at": "2025-09-09T10:09:28.997876"
+    },
+    {
+      "id": 21,
+      "type": "account",
+      "details": {
+        "email": "qecnbtg@motionisme.com\nERVCVBCIQMIY8XZ7BC8AJDF\nqjyfijz@motionisme.com\nEUZMTTD4GYXA4JYRZZSZ4G7\n\npass",
+        "password": "Premium@123",
+        "subscription": "CapCut Pro - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T18:45:15.709504"
     }
   ],
   "2": [
@@ -629,7 +643,20 @@
       "added_at": "2025-09-09T12:47:23.099723"
     }
   ],
-  "4": [],
+  "4": [
+    {
+      "id": 1,
+      "type": "account",
+      "details": {
+        "email": "user@kyoverse.me",
+        "password": "tysmforbuying01-A",
+        "subscription": "Quizlet Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T18:50:33.746256"
+    }
+  ],
   "6": [
     {
       "id": 1,
@@ -876,6 +903,18 @@
       "added_at": "2025-09-09T17:39:26.643158",
       "sold_to": "5714160857",
       "sold_at": "{\"timestamp\": \"now\"}"
+    },
+    {
+      "id": 2,
+      "type": "account",
+      "details": {
+        "email": "qjyfijz@motionisme.com",
+        "password": "Premium@123",
+        "subscription": "Surfshark Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T18:46:16.410192"
     }
   ],
   "11": [
@@ -1081,6 +1120,7 @@
       "added_at": "2025-09-09T17:11:52.656540"
     }
   ],
+  "26": [],
   "24": [
     {
       "id": 1,
