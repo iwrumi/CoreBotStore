@@ -55,7 +55,7 @@
     "description": "\ud83e\udd16 ChatGPT Plus Shared - AI Assistant\n\n\u2728 Features:\n\u2022 GPT-4 access (faster & smarter)\n\u2022 Priority access during peak times\n\u2022 Shared family account (2-4 users)\n\u2022 Unlimited usage\n\u2022 Advanced AI capabilities\n\u2022 Budget-friendly option\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcbb Works on all devices",
     "price": 40.0,
     "category": "ai",
-    "stock": 1,
+    "stock": 2,
     "image_url": "",
     "created_at": "2025-09-09T14:47:00.000000"
   },
@@ -152,7 +152,7 @@
   {
     "id": 16,
     "name": "lfb_1day",
-    "description": "📢 LFB Plugging Service - 1 Day\n\n🎯 Features:\n• Automatic message plugging in LFB groups\n• 1 day duration\n• High engagement reach\n• Professional service\n• Fast delivery\n\n📝 After payment: Forward your message to plug\n🕐 Instant setup after payment",
+    "description": "\ud83d\udce2 LFB Plugging Service - 1 Day\n\n\ud83c\udfaf Features:\n\u2022 Automatic message plugging in LFB groups\n\u2022 1 day duration\n\u2022 High engagement reach\n\u2022 Professional service\n\u2022 Fast delivery\n\n\ud83d\udcdd After payment: Forward your message to plug\n\ud83d\udd50 Instant setup after payment",
     "price": 50.0,
     "category": "plugging",
     "stock": 999,
@@ -162,7 +162,7 @@
   {
     "id": 17,
     "name": "lfb_3day",
-    "description": "📢 LFB Plugging Service - 3 Days\n\n🎯 Features:\n• Automatic message plugging in LFB groups\n• 3 days duration\n• High engagement reach\n• Professional service\n• Fast delivery\n\n📝 After payment: Forward your message to plug\n🕐 Instant setup after payment",
+    "description": "\ud83d\udce2 LFB Plugging Service - 3 Days\n\n\ud83c\udfaf Features:\n\u2022 Automatic message plugging in LFB groups\n\u2022 3 days duration\n\u2022 High engagement reach\n\u2022 Professional service\n\u2022 Fast delivery\n\n\ud83d\udcdd After payment: Forward your message to plug\n\ud83d\udd50 Instant setup after payment",
     "price": 100.0,
     "category": "plugging",
     "stock": 999,
@@ -172,7 +172,7 @@
   {
     "id": 18,
     "name": "premium_3day",
-    "description": "📢 Premium Plugging Service - 3 Days\n\n🎯 Features:\n• Premium group plugging service\n• 3 days duration\n• Maximum reach and engagement\n• Professional service\n• Fast delivery\n\n📝 After payment: Forward your message to plug\n🕐 Instant setup after payment",
+    "description": "\ud83d\udce2 Premium Plugging Service - 3 Days\n\n\ud83c\udfaf Features:\n\u2022 Premium group plugging service\n\u2022 3 days duration\n\u2022 Maximum reach and engagement\n\u2022 Professional service\n\u2022 Fast delivery\n\n\ud83d\udcdd After payment: Forward your message to plug\n\ud83d\udd50 Instant setup after payment",
     "price": 270.0,
     "category": "plugging",
     "stock": 999,
@@ -182,7 +182,7 @@
   {
     "id": 19,
     "name": "lfb_30day",
-    "description": "📢 LFB Plugging Service - 30 Days\n\n🎯 Features:\n• Automatic message plugging in LFB groups\n• Full month duration (30 days)\n• Maximum exposure\n• Professional service\n• Best value package\n\n📝 After payment: Forward your message to plug\n🕐 Instant setup after payment",
+    "description": "\ud83d\udce2 LFB Plugging Service - 30 Days\n\n\ud83c\udfaf Features:\n\u2022 Automatic message plugging in LFB groups\n\u2022 Full month duration (30 days)\n\u2022 Maximum exposure\n\u2022 Professional service\n\u2022 Best value package\n\n\ud83d\udcdd After payment: Forward your message to plug\n\ud83d\udd50 Instant setup after payment",
     "price": 400.0,
     "category": "plugging",
     "stock": 999,
@@ -192,7 +192,7 @@
   {
     "id": 20,
     "name": "lfb_combo_1day",
-    "description": "📢 LFB + Big Markets Combo - 1 Day\n\n🎯 Features:\n• LFB groups + Big Markets plugging\n• 1 day duration\n• Double reach and exposure\n• Professional combo service\n• Premium package\n\n📝 After payment: Forward your message to plug\n🕐 Instant setup after payment",
+    "description": "\ud83d\udce2 LFB + Big Markets Combo - 1 Day\n\n\ud83c\udfaf Features:\n\u2022 LFB groups + Big Markets plugging\n\u2022 1 day duration\n\u2022 Double reach and exposure\n\u2022 Professional combo service\n\u2022 Premium package\n\n\ud83d\udcdd After payment: Forward your message to plug\n\ud83d\udd50 Instant setup after payment",
     "price": 70.0,
     "category": "plugging",
     "stock": 999,
@@ -202,7 +202,7 @@
   {
     "id": 21,
     "name": "lfb_combo_3day",
-    "description": "📢 LFB + Big Markets Combo - 3 Days\n\n🎯 Features:\n• LFB groups + Big Markets plugging\n• 3 days duration\n• Double reach and exposure\n• Professional combo service\n• Premium package\n\n📝 After payment: Forward your message to plug\n🕐 Instant setup after payment",
+    "description": "\ud83d\udce2 LFB + Big Markets Combo - 3 Days\n\n\ud83c\udfaf Features:\n\u2022 LFB groups + Big Markets plugging\n\u2022 3 days duration\n\u2022 Double reach and exposure\n\u2022 Professional combo service\n\u2022 Premium package\n\n\ud83d\udcdd After payment: Forward your message to plug\n\ud83d\udd50 Instant setup after payment",
     "price": 120.0,
     "category": "plugging",
     "stock": 999,
@@ -212,7 +212,7 @@
   {
     "id": 22,
     "name": "premium_combo_3day",
-    "description": "📢 Premium + Big Markets Combo - 3 Days\n\n🎯 Features:\n• Premium groups + Big Markets plugging\n• 3 days duration\n• Maximum reach and exposure\n• Professional combo service\n• Ultimate package\n\n📝 After payment: Forward your message to plug\n🕐 Instant setup after payment",
+    "description": "\ud83d\udce2 Premium + Big Markets Combo - 3 Days\n\n\ud83c\udfaf Features:\n\u2022 Premium groups + Big Markets plugging\n\u2022 3 days duration\n\u2022 Maximum reach and exposure\n\u2022 Professional combo service\n\u2022 Ultimate package\n\n\ud83d\udcdd After payment: Forward your message to plug\n\ud83d\udd50 Instant setup after payment",
     "price": 290.0,
     "category": "plugging",
     "stock": 999,
@@ -222,7 +222,7 @@
   {
     "id": 23,
     "name": "lfb_combo_30day",
-    "description": "📢 LFB + Big Markets Combo - 30 Days\n\n🎯 Features:\n• LFB groups + Big Markets plugging\n• Full month duration (30 days)\n• Double reach and exposure\n• Professional combo service\n• Best value combo package\n\n📝 After payment: Forward your message to plug\n🕐 Instant setup after payment",
+    "description": "\ud83d\udce2 LFB + Big Markets Combo - 30 Days\n\n\ud83c\udfaf Features:\n\u2022 LFB groups + Big Markets plugging\n\u2022 Full month duration (30 days)\n\u2022 Double reach and exposure\n\u2022 Professional combo service\n\u2022 Best value combo package\n\n\ud83d\udcdd After payment: Forward your message to plug\n\ud83d\udd50 Instant setup after payment",
     "price": 420.0,
     "category": "plugging",
     "stock": 999,

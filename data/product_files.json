@@ -983,6 +983,18 @@
       },
       "status": "available",
       "added_at": "2025-09-09T15:50:00.000000"
+    },
+    {
+      "id": 4,
+      "type": "account",
+      "details": {
+        "email": "vazdol@motionisme.co",
+        "password": "freepalestine",
+        "subscription": "Chatgpt_Shared Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T17:11:40.608749"
     }
   ]
 }
