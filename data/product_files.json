@@ -403,7 +403,20 @@
   ],
   "3": [],
   "4": [],
-  "6": [],
+  "6": [
+    {
+      "id": 1,
+      "type": "account",
+      "details": {
+        "email": "jezo@kyoverse.me",
+        "password": "tysmforbuying01-A",
+        "subscription": "Studocu Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T11:21:21.337829"
+    }
+  ],
   "7": [],
   "8": [],
   "9": [],
