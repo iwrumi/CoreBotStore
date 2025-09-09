@@ -1115,6 +1115,49 @@ Error: {str(e)}"""
                             response_text += f"📊 Stock: {stock} | 💰 Price: ₱{price}\n"
                             response_text += f"Status: {status}\n\n"
 
+                elif text.startswith('/broadcast '):
+                    # Broadcast message to all users: /broadcast Your message here
+                    try:
+                        broadcast_message = text.replace('/broadcast ', '', 1)
+                        
+                        if not broadcast_message.strip():
+                            response_text = "❌ Format: /broadcast Your message here\n\nExample: /broadcast 🎉 New products added to store!"
+                        else:
+                            # Load all users
+                            try:
+                                with open('data/users.json', 'r') as f:
+                                    users_data = json_lib.load(f)
+                            except:
+                                users_data = {}
+                            
+                            if not users_data:
+                                response_text = "❌ No users found to broadcast to!"
+                            else:
+                                success_count = 0
+                                failed_count = 0
+                                total_users = len(users_data)
+                                
+                                # Send message to each user
+                                for user_id_key in users_data.keys():
+                                    try:
+                                        broadcast_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                        broadcast_data = json_lib.dumps({
+                                            "chat_id": user_id_key,
+                                            "text": f"📢 **ANNOUNCEMENT**\n\n{broadcast_message}\n\n━━━━━━━━━━━━━━━━\n🤖 From: @kyostorebot Admin"
+                                        }).encode('utf-8')
+                                        
+                                        broadcast_req = urllib.request.Request(broadcast_url, data=broadcast_data, headers={'Content-Type': 'application/json'})
+                                        urllib.request.urlopen(broadcast_req, timeout=10)
+                                        success_count += 1
+                                    except Exception as e:
+                                        failed_count += 1
+                                        continue
+                                
+                                # Results summary
+                                response_text = f"📢 **Broadcast Complete!**\n\n✅ Successfully sent to: {success_count} users\n❌ Failed to send to: {failed_count} users\n👥 Total users: {total_users}\n\n📝 **Message sent:**\n{broadcast_message}"
+                    except Exception as e:
+                        response_text = f"❌ Error broadcasting message: {str(e)}\n\nFormat: /broadcast Your message here"
+                
                 elif text.startswith('/clearstock '):
                     # Clear all stock for a product: /clearstock product
                     try:
