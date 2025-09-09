@@ -1051,18 +1051,28 @@ Send accounts now!"""
                                 if product_id not in product_files:
                                     product_files[product_id] = []
                                 
-                                # Check for "pass: password" format
+                                # SMART PASSWORD DETECTION
                                 common_password = None
                                 emails_only = []
                                 
                                 for line in accounts:
                                     line = line.strip()
+                                    if not line:
+                                        continue
+                                        
+                                    # Method 1: Explicit password line
                                     if line.lower().startswith('pass:') or line.lower().startswith('password:'):
-                                        # Extract common password
                                         common_password = line.split(':', 1)[1].strip()
+                                    
+                                    # Method 2: Email detection
                                     elif '@' in line and ':' not in line and '|' not in line and not line.lower().startswith('pass'):
-                                        # Just email
                                         emails_only.append(line.strip())
+                                    
+                                    # Method 3: Smart password detection - standalone line that looks like password
+                                    elif '@' not in line and ':' not in line and '|' not in line and len(line) >= 5:
+                                        # This might be a standalone password
+                                        if not common_password:  # Only if we haven't found one yet
+                                            common_password = line.strip()
                                 
                                 # If we found emails and a common password, use them
                                 if emails_only and common_password:
