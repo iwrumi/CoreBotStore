@@ -484,7 +484,50 @@ def webhook():
                             with open('data/products.json', 'w') as f:
                                 json_lib.dump(products, f, indent=2)
                             
-                            response_text = f"""✅ Purchase Successful!
+                            # Check if this is a plugging service
+                            is_plugging_service = product['category'] == 'plugging'
+                            
+                            if is_plugging_service:
+                                # Special handling for plugging services
+                                response_text = f"""✅ Payment Received!
+
+🛍️ Service: {product['name']}
+💰 Total Paid: ₱{total_cost}
+💳 Remaining Balance: ₱{users[user_id]['balance']}
+
+📝 Next Step: Forward the message that you want to be plugged
+
+Please forward or send the message you want us to promote in our groups. Our team will start plugging your message within 24 hours.
+
+📞 Contact: @tiramisucakekyo for any questions"""
+                                
+                                # Notify admin about plugging service purchase
+                                try:
+                                    admin_notification = f"""🎉 NEW PLUGGING SERVICE SALE!
+
+👤 Customer: {user_id}
+📢 Service: {product['name']}
+💰 Price: ₱{product['price']}
+💸 Total: ₱{total_cost}
+
+⚠️ WAITING FOR MESSAGE TO PLUG
+Customer will forward/send their message soon.
+
+Set up the plugging campaign once they send their message!"""
+                                    
+                                    admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                    admin_req = urllib.request.Request(admin_url, 
+                                        data=json_lib.dumps({
+                                            'chat_id': '7240133914',
+                                            'text': admin_notification
+                                        }).encode('utf-8'),
+                                        headers={'Content-Type': 'application/json'})
+                                    urllib.request.urlopen(admin_req)
+                                except Exception as e:
+                                    logger.error(f"Failed to notify admin of plugging service sale: {e}")
+                            
+                            else:
+                                response_text = f"""✅ Purchase Successful!
 
 🛍️ Product: {product['name']}
 📦 Quantity: {quantity}x
@@ -501,21 +544,22 @@ Thank you for shopping with us! 🎉"""
                                 [{"text": "🏠 Main Menu", "callback_data": "main_menu"}]
                             ]}
                             
-                            # Send product files/accounts to user
-                            try:
-                                with open('data/product_files.json', 'r') as f:
-                                    product_files = json_lib.load(f)
-                                
-                                if str(product_id) in product_files:
-                                    available_files = [f for f in product_files[str(product_id)] if f['status'] == 'available']
+                            # Send product files/accounts to user (skip for plugging services)
+                            if not is_plugging_service:
+                                try:
+                                    with open('data/product_files.json', 'r') as f:
+                                        product_files = json_lib.load(f)
                                     
-                                    if available_files and len(available_files) >= quantity:
-                                        # Send account details to customer
-                                        for i in range(quantity):
-                                            file_data = available_files[i]
-                                            file_data['status'] = 'sold'
-                                            file_data['sold_to'] = user_id
-                                            file_data['sold_at'] = json_lib.dumps({"timestamp": "now"})
+                                    if str(product_id) in product_files:
+                                        available_files = [f for f in product_files[str(product_id)] if f['status'] == 'available']
+                                        
+                                        if available_files and len(available_files) >= quantity:
+                                            # Send account details to customer
+                                            for i in range(quantity):
+                                                file_data = available_files[i]
+                                                file_data['status'] = 'sold'
+                                                file_data['sold_to'] = user_id
+                                                file_data['sold_at'] = json_lib.dumps({"timestamp": "now"})
                                             
                                             # NOTIFY ADMIN OF SALE
                                             try:
@@ -571,39 +615,39 @@ DM him with the vouch!
                                                 account_req = urllib.request.Request(account_url, data=account_data, headers={'Content-Type': 'application/json'})
                                                 urllib.request.urlopen(account_req)
                                         
-                                        # Save updated product files
-                                        with open('data/product_files.json', 'w') as f:
-                                            json_lib.dump(product_files, f, indent=2)
-                                    else:
-                                        # Not enough files - alert admin
-                                        admin_alert = f"⚠️ ALERT: {product['name']} sold but only {len(available_files)} accounts available for {quantity} requested!"
-                                        admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-                                        admin_data = json_lib.dumps({
-                                            "chat_id": "7240133914",
-                                            "text": admin_alert
-                                        }).encode('utf-8')
-                                        admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
-                                        urllib.request.urlopen(admin_req)
-                            except Exception as e:
-                                # Send error to admin AND customer
-                                error_msg = f"❌ File delivery error for {product['name']}: {str(e)}"
-                                admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-                                admin_data = json_lib.dumps({
-                                    "chat_id": "7240133914",
-                                    "text": error_msg
-                                }).encode('utf-8')
-                                admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
-                                urllib.request.urlopen(admin_req)
-                                
-                                # Notify customer about delivery issue
-                                customer_msg = f"⚠️ Delivery Issue\n\nYour purchase of {product['name']} was successful, but there was an issue delivering your account details.\n\nOur admin has been notified and will send your details manually within 24 hours.\n\nContact: @tiramisucakekyo for immediate assistance."
-                                customer_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-                                customer_data = json_lib.dumps({
-                                    "chat_id": user_id,
-                                    "text": customer_msg
-                                }).encode('utf-8')
-                                customer_req = urllib.request.Request(customer_url, data=customer_data, headers={'Content-Type': 'application/json'})
-                                urllib.request.urlopen(customer_req)
+                                            # Save updated product files
+                                            with open('data/product_files.json', 'w') as f:
+                                                json_lib.dump(product_files, f, indent=2)
+                                        else:
+                                            # Not enough files - alert admin
+                                            admin_alert = f"⚠️ ALERT: {product['name']} sold but only {len(available_files)} accounts available for {quantity} requested!"
+                                            admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                            admin_data = json_lib.dumps({
+                                                "chat_id": "7240133914",
+                                                "text": admin_alert
+                                            }).encode('utf-8')
+                                            admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
+                                            urllib.request.urlopen(admin_req)
+                                except Exception as e:
+                                    # Send error to admin AND customer
+                                    error_msg = f"❌ File delivery error for {product['name']}: {str(e)}"
+                                    admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                    admin_data = json_lib.dumps({
+                                        "chat_id": "7240133914",
+                                        "text": error_msg
+                                    }).encode('utf-8')
+                                    admin_req = urllib.request.Request(admin_url, data=admin_data, headers={'Content-Type': 'application/json'})
+                                    urllib.request.urlopen(admin_req)
+                                    
+                                    # Notify customer about delivery issue
+                                    customer_msg = f"⚠️ Delivery Issue\n\nYour purchase of {product['name']} was successful, but there was an issue delivering your account details.\n\nOur admin has been notified and will send your details manually within 24 hours.\n\nContact: @tiramisucakekyo for immediate assistance."
+                                    customer_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                    customer_data = json_lib.dumps({
+                                        "chat_id": user_id,
+                                        "text": customer_msg
+                                    }).encode('utf-8')
+                                    customer_req = urllib.request.Request(customer_url, data=customer_data, headers={'Content-Type': 'application/json'})
+                                    urllib.request.urlopen(customer_req)
                             
                 except Exception as e:
                     response_text = f"❌ Purchase failed: {str(e)}"
