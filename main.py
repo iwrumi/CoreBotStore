@@ -914,6 +914,138 @@ Error: {str(e)}"""
                     except Exception as e:
                         response_text = f"❌ Error adding balance: {str(e)}\n\nFormat: /addbalance UserID Amount"
                 
+                elif text.startswith('/removestock '):
+                    # Remove specific amount of stock: /removestock product amount
+                    try:
+                        parts = text.replace('/removestock ', '').split()
+                        if len(parts) >= 2:
+                            product_name = parts[0].lower()
+                            amount = int(parts[1])
+                            
+                            # Product mapping
+                            product_map = {
+                                'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
+                                'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
+                                'picsart': "9", 'surfshark': "10",
+                                'disney+': "3", 'disneyplus': "3", 'gpt': "5", 'chat-gpt': "5",
+                                'syudocu': "6", 'studycu': "6", 'studecu': "6",
+                                'perplexity-ai': "7", 'canva-pro': "8", 'picsart-gold': "9",
+                                'surf-shark': "10", 'surfshark-vpn': "10"
+                            }
+                            product_id = product_map.get(product_name, None)
+                            
+                            if not product_id:
+                                response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, spotify, disney, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark"
+                            else:
+                                # Load product files
+                                try:
+                                    with open('data/product_files.json', 'r') as f:
+                                        product_files = json_lib.load(f)
+                                except:
+                                    product_files = {}
+                                
+                                if product_id in product_files:
+                                    available = [acc for acc in product_files[product_id] if acc['status'] == 'available']
+                                    if len(available) >= amount:
+                                        # Remove the requested amount
+                                        removed = 0
+                                        for acc in available[:amount]:
+                                            acc['status'] = 'removed_by_admin'
+                                            acc['removed_at'] = datetime.now().isoformat()
+                                            removed += 1
+                                        
+                                        # Save updated files
+                                        with open('data/product_files.json', 'w') as f:
+                                            json_lib.dump(product_files, f, indent=2)
+                                        
+                                        # Update product stock
+                                        try:
+                                            with open('data/products.json', 'r') as f:
+                                                products = json_lib.load(f)
+                                            
+                                            for product in products:
+                                                if product['id'] == int(product_id):
+                                                    new_stock = len([acc for acc in product_files[product_id] if acc['status'] == 'available'])
+                                                    product['stock'] = new_stock
+                                                    break
+                                            
+                                            with open('data/products.json', 'w') as f:
+                                                json_lib.dump(products, f, indent=2)
+                                        except:
+                                            pass
+                                        
+                                        remaining = len([acc for acc in product_files[product_id] if acc['status'] == 'available'])
+                                        response_text = f"✅ **Stock Removed!**\n\n📦 **Product:** {product_name.title()}\n❌ **Removed:** {removed} accounts\n📊 **Remaining:** {remaining} accounts"
+                                    else:
+                                        response_text = f"❌ Not enough stock!\n\n📦 Available: {len(available)}\n🔢 Requested: {amount}"
+                                else:
+                                    response_text = f"❌ No accounts found for {product_name}"
+                        else:
+                            response_text = "❌ Format: /removestock ProductName Amount\n\nExample: /removestock canva 5"
+                    except Exception as e:
+                        response_text = f"❌ Error removing stock: {str(e)}"
+
+                elif text.startswith('/clearstock '):
+                    # Clear all stock for a product: /clearstock product
+                    try:
+                        product_name = text.replace('/clearstock ', '').strip().lower()
+                        
+                        # Product mapping
+                        product_map = {
+                            'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
+                            'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
+                            'picsart': "9", 'surfshark': "10",
+                            'disney+': "3", 'disneyplus': "3", 'gpt': "5", 'chat-gpt': "5",
+                            'syudocu': "6", 'studycu': "6", 'studecu': "6",
+                            'perplexity-ai': "7", 'canva-pro': "8", 'picsart-gold': "9",
+                            'surf-shark': "10", 'surfshark-vpn': "10"
+                        }
+                        product_id = product_map.get(product_name, None)
+                        
+                        if not product_id:
+                            response_text = f"❌ Unknown product: {product_name}\n\nAvailable: capcut, spotify, disney, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark"
+                        else:
+                            # Load product files
+                            try:
+                                with open('data/product_files.json', 'r') as f:
+                                    product_files = json_lib.load(f)
+                            except:
+                                product_files = {}
+                            
+                            if product_id in product_files:
+                                available = [acc for acc in product_files[product_id] if acc['status'] == 'available']
+                                cleared_count = len(available)
+                                
+                                # Mark all as cleared
+                                for acc in available:
+                                    acc['status'] = 'cleared_by_admin'
+                                    acc['cleared_at'] = datetime.now().isoformat()
+                                
+                                # Save updated files
+                                with open('data/product_files.json', 'w') as f:
+                                    json_lib.dump(product_files, f, indent=2)
+                                
+                                # Update product stock to 0
+                                try:
+                                    with open('data/products.json', 'r') as f:
+                                        products = json_lib.load(f)
+                                    
+                                    for product in products:
+                                        if product['id'] == int(product_id):
+                                            product['stock'] = 0
+                                            break
+                                    
+                                    with open('data/products.json', 'w') as f:
+                                        json_lib.dump(products, f, indent=2)
+                                except:
+                                    pass
+                                
+                                response_text = f"✅ **Stock Cleared!**\n\n📦 **Product:** {product_name.title()}\n❌ **Cleared:** {cleared_count} accounts\n📊 **Stock:** 0"
+                            else:
+                                response_text = f"✅ **Already Clear!**\n\n📦 **Product:** {product_name.title()}\n📊 **Stock:** 0"
+                    except Exception as e:
+                        response_text = f"❌ Error clearing stock: {str(e)}"
+
                 elif text.startswith('/addacc'):
                     # DIRECT /addacc HANDLER - MOVED TO PREVENT /add CONFLICT
                     logger.info("🚀 PROCESSING /addacc COMMAND DIRECTLY!")
