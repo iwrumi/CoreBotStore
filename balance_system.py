@@ -103,6 +103,13 @@ class BalanceSystem:
 • Pay the EXACT amount shown
 • Take a clear screenshot
 • Upload within 30 minutes
+
+📞 **Contact:** 09911127180 mb
+📧 **Send receipt 🧾**
+⚠️ **No receipt no process**
+
+**Other payment methods are available. Just ask.**
+**Join main channel here**
             """,
             'paymaya': f"""
 **PayMaya Payment Instructions:**
@@ -114,6 +121,13 @@ class BalanceSystem:
 5. Upload proof using the button below
 
 **Note:** Processing takes 1-5 minutes
+
+📞 **Contact:** 09911127180 mb
+📧 **Send receipt 🧾**
+⚠️ **No receipt no process**
+
+**Other payment methods are available. Just ask.**
+**Join main channel here**
             """,
             'instapay': f"""
 **InstaPay Instructions:**
@@ -126,6 +140,13 @@ class BalanceSystem:
 
 **Supported Apps:**
 • GCash • PayMaya • UnionBank • BPI • etc.
+
+📞 **Contact:** 09911127180 mb
+📧 **Send receipt 🧾**
+⚠️ **No receipt no process**
+
+**Other payment methods are available. Just ask.**
+**Join main channel here**
             """
         }
         
