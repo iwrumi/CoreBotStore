@@ -1727,42 +1727,43 @@ Ready to manage your store!"""
 📞 **Contact:** 09911127180 mb"""
                     
                 elif text == "🛒 Browse Products":
-                    # Show product categories
+                    # Show products directly with stock counts
                     try:
                         with open('data/products.json', 'r') as f:
                             products = json_lib.load(f)
                         
                         if products:
-                            response_text = "🏪 **Product Categories**\n\nSelect a category to browse:"
+                            response_text = "🛒 **Available Products**\n\nSelect a product to purchase:\n\n"
                             
-                            # Create category buttons
-                            categories = {}
-                            for product in products:
-                                cat = product.get('category', 'General')
-                                if cat not in categories:
-                                    categories[cat] = 0
-                                categories[cat] += 1
-                            
-                            # Generate inline keyboard for categories
+                            # Generate inline keyboard for direct product selection
                             inline_keyboard = {"inline_keyboard": []}
-                            for category, count in categories.items():
-                                if category == 'video':
-                                    inline_keyboard["inline_keyboard"].append([{"text": f"🎬 Video Editing ({count})", "callback_data": f"category_{category}"}])
-                                elif category == 'music':
-                                    inline_keyboard["inline_keyboard"].append([{"text": f"🎵 Music & Audio ({count})", "callback_data": f"category_{category}"}])
-                                elif category == 'streaming':
-                                    inline_keyboard["inline_keyboard"].append([{"text": f"📺 Streaming ({count})", "callback_data": f"category_{category}"}])
-                                elif category == 'education':
-                                    inline_keyboard["inline_keyboard"].append([{"text": f"📚 Education ({count})", "callback_data": f"category_{category}"}])
-                                else:
-                                    inline_keyboard["inline_keyboard"].append([{"text": f"📦 {category.title()} ({count})", "callback_data": f"category_{category}"}])
                             
-                            inline_keyboard["inline_keyboard"].append([{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}])
+                            for product in products:
+                                if product.get('stock', 0) > 0:  # Only show products with stock
+                                    category_emoji = {
+                                        'video': '🎬',
+                                        'music': '🎵', 
+                                        'streaming': '📺',
+                                        'education': '📚'
+                                    }.get(product.get('category', ''), '📦')
+                                    
+                                    button_text = f"{category_emoji} {product['name'].title()} - ₱{product['price']} (Stock: {product['stock']})"
+                                    inline_keyboard["inline_keyboard"].append([{"text": button_text, "callback_data": f"product_{product['id']}"}])
+                                    
+                                    response_text += f"{category_emoji} **{product['name'].title()}**\n"
+                                    response_text += f"💰 Price: ₱{product['price']}\n"
+                                    response_text += f"📦 Stock: {product['stock']} available\n\n"
+                            
+                            if not inline_keyboard["inline_keyboard"]:
+                                response_text = "📦 **No Products Available**\n\nAll products are out of stock. Check back later!"
+                                inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
+                            else:
+                                inline_keyboard["inline_keyboard"].append([{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}])
                         else:
                             response_text = "📦 **No Products Available**\n\nProducts will appear here when admin adds them."
                             inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
-                    except:
-                        response_text = "❌ Error loading products"
+                    except Exception as e:
+                        response_text = f"❌ Error loading products: {str(e)}"
                         inline_keyboard = {"inline_keyboard": [[{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]]}
                         
                 elif text == "💳 Check Balance":
