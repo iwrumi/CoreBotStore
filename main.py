@@ -1563,33 +1563,15 @@ pass: mypass123
                                 
                                 # Create response message based on results
                                 if added > 0 and not duplicates:
-                                    response_text = f"""✅ **SUCCESS!** Added {added} {product_name} accounts!
-
-🔑 **Password:** {password}
-📦 **Product:** {product_name.title()}
-📊 **Total Stock:** {len(product_files[product_id])} accounts
-
-Ready for customers! 🛍️"""
+                                    response_text = f"✅ SUCCESS! Added {added} {product_name} accounts!\n\n🔑 Password: {password}\n📦 Product: {product_name.title()}\n📊 Stock: {len(product_files[product_id])} accounts"
                                 elif added > 0 and duplicates:
-                                    response_text = f"""⚠️ **PARTIAL SUCCESS!** Added {added} {product_name} accounts!
-
-🔑 **Password:** {password}
-📦 **Product:** {product_name.title()}
-📊 **Total Stock:** {len(product_files[product_id])} accounts
-
-❌ **Duplicates Skipped:**
-{chr(10).join([f"• {dup}" for dup in duplicates])}
-
-✅ {added} new accounts added successfully! 🛍️"""
+                                    dup_list = '\n'.join([f"• {dup}" for dup in duplicates[:3]])  # Limit to 3 to keep message short
+                                    response_text = f"⚠️ PARTIAL SUCCESS! Added {added} {product_name} accounts!\n\n🔑 Password: {password}\n📦 Product: {product_name.title()}\n📊 Stock: {len(product_files[product_id])}\n\n❌ Duplicates skipped:\n{dup_list}"
                                 elif duplicates and added == 0:
-                                    response_text = f"""❌ **NO ACCOUNTS ADDED!** All emails are duplicates.
-
-🚫 **Duplicate Emails Found:**
-{chr(10).join([f"• {dup}" for dup in duplicates])}
-
-💡 **Tip:** Use unique email addresses that haven't been added before."""
+                                    dup_list = '\n'.join([f"• {dup}" for dup in duplicates[:3]])  # Limit to 3 
+                                    response_text = f"❌ NO ACCOUNTS ADDED! All emails are duplicates.\n\n🚫 Duplicates found:\n{dup_list}\n\n💡 Use unique email addresses."
                                 else:
-                                    response_text = "❌ **No valid emails found!** Make sure to include email addresses."
+                                    response_text = "❌ No valid emails found! Make sure to include email addresses."
                             else:
                                 response_text = "❌ No valid emails found! Make sure to include email addresses."
                         except Exception as e:
