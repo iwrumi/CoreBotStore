@@ -2929,8 +2929,7 @@ Ready to shop! 🛍️"""
                 else:
                     data = json_lib.dumps({
                         "chat_id": chat_id, 
-                        "text": response_text,
-                        "parse_mode": "Markdown"
+                        "text": response_text
                     }).encode('utf-8')
             
             req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
