@@ -179,6 +179,7 @@ def webhook():
                     [{"text": "📸 Photo Editing", "callback_data": "category_photo"}],
                     [{"text": "🤖 AI Tools", "callback_data": "category_ai"}],
                     [{"text": "🛡️ VPN & Security", "callback_data": "category_vpn"}],
+                    [{"text": "🔥 Method", "callback_data": "category_method"}],
                     [{"text": "🤖 Automated Plugging", "callback_data": "category_plugging"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
@@ -964,6 +965,10 @@ Max quantity: {product['stock']}"""
                             elif any(keyword in name_lower for keyword in ['vpn', 'surfshark', 'expressvpn', 'nordvpn', 'cyberghost', 'protonvpn']):
                                 return 'vpn'
                             
+                            # Method products
+                            elif any(keyword in name_lower for keyword in ['method', 'bin', 'lifetime access', 'tutorial', 'guide']):
+                                return 'method'
+                            
                             # Default category
                             else:
                                 return 'digital'
@@ -983,6 +988,8 @@ Max quantity: {product['stock']}"""
                                 return f"🤖 {name_title} - AI Assistant\n\n✨ Features:\n• Advanced AI capabilities\n• Unlimited usage\n• Fast responses\n• Premium features\n• Latest AI models\n\n🕐 Instant delivery after payment\n💻 Works on all devices"
                             elif category == 'vpn':
                                 return f"🛡️ {name_title} - VPN Service\n\n✨ Features:\n• Global servers\n• Military encryption\n• No-logs policy\n• Fast speeds\n• Multiple devices\n\n🕐 Instant delivery after payment\n🌐 Works worldwide"
+                            elif category == 'method':
+                                return f"🔥 {name_title} - Method Tutorial\n\n✨ Features:\n• Step-by-step guide\n• Professional method\n• Lifetime validity\n• Channel delivery\n• Expert support\n• Regular updates\n\n📱 Delivered via private channel\n🕐 Instant access after payment"
                             else:
                                 return f"✨ {name_title} - Premium Service\n\n🎯 Features:\n• Premium access\n• Full features unlocked\n• High quality service\n• Instant activation\n• 24/7 support\n\n🕐 Instant delivery after payment\n📱 Works on all devices"
                         
@@ -2593,6 +2600,7 @@ Ready to manage your store!"""
                         [{"text": "📸 Photo Editing", "callback_data": "category_photo"}],
                         [{"text": "🤖 AI Tools", "callback_data": "category_ai"}],
                         [{"text": "🛡️ VPN & Security", "callback_data": "category_vpn"}],
+                        [{"text": "🔥 Method", "callback_data": "category_method"}],
                         [{"text": "🤖 Automated Plugging", "callback_data": "category_plugging"}],
                         [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                     ]}
