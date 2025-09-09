@@ -207,7 +207,24 @@ def webhook():
                     ]]}
             
             elif callback_data == "check_balance":
-                response_text = messages.get("balance_message", "💰 **Account Balance**\n\n**Current Balance:** ₱{balance:.2f}\n**Total Deposited:** ₱{total_deposited:.2f}\n**Total Spent:** ₱{total_spent:.2f}\n\n**Account Status:** Active ✅").format(balance=0.0, total_deposited=0.0, total_spent=0.0)
+                # Load actual user data
+                try:
+                    with open('data/users.json', 'r') as f:
+                        users = json_lib.load(f)
+                    user_data = users.get(str(user_id), {})
+                    balance = user_data.get('balance', 0)
+                    total_deposited = user_data.get('total_deposited', 0)
+                    total_spent = user_data.get('total_spent', 0)
+                except:
+                    balance = total_deposited = total_spent = 0
+                
+                response_text = f"""💰 **Account Balance**
+
+**Current Balance:** ₱{balance:.2f}
+**Total Deposited:** ₱{total_deposited:.2f}
+**Total Spent:** ₱{total_spent:.2f}
+
+**Account Status:** Active ✅"""
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "💳 Deposit Funds", "callback_data": "deposit_funds"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
@@ -1863,6 +1880,15 @@ Ready to order! 🛍️"""
                     except:
                         products_sold = 0
                     
+                    # Load actual user spending data
+                    try:
+                        with open('data/users.json', 'r') as f:
+                            users = json_lib.load(f)
+                        user_data = users.get(str(user_id), {})
+                        total_spent = user_data.get('total_spent', 0)
+                    except:
+                        total_spent = 0
+                    
                     response_text = f"""👋 — Hello @{username}
 {current_time}
 
@@ -1870,7 +1896,7 @@ User Details :
 └ ID : {user_id}
 └ Name : {username}
 └ Balance : ₱{user_balance}
-└ Total Spent : ₱0
+└ Total Spent : ₱{total_spent:.2f}
 
 BOT Statistics :
 └ Products Sold : {products_sold} Accounts
