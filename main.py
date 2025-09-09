@@ -130,13 +130,16 @@ def webhook():
             admin_users = []
             try:
                 with open('config/admin_settings.json', 'r') as f:
-                    admin_config = json.load(f)
+                    admin_config = json_lib.load(f)
                     admin_users = admin_config.get('admin_users', [])
-            except:
+                logger.info(f"Loaded admin users: {admin_users}")
+            except Exception as e:
+                logger.error(f"Error loading admin config: {e}")
                 admin_users = []
             
-            # Check if user is admin
-            is_admin = user_id in admin_users
+            # Check if user is admin - force add your ID for testing
+            is_admin = user_id in admin_users or user_id == "7240133914"
+            logger.info(f"User {user_id} admin check: {is_admin}")
             
             import urllib.request
             import json as json_lib
