@@ -2047,33 +2047,55 @@ When customers send payment proof, they'll appear here for your manual approval.
                     else:
                         response_text = "❌ **Usage:** `/msg USER_ID your message here`\n\n**Example:** `/msg 123456789 Your receipt has been processed!`"
 
-                elif text.startswith('/help'):
-                    response_text = f"""🔧 Admin Help
+                elif text.startswith('/adminhelp') or text.startswith('/help'):
+                    response_text = f"""🔧 ADMIN COMMANDS REFERENCE
 
 👤 Admin ID: {user_id}
 
-📦 Product Commands:
-/add ProductName Price Stock - Add products
-/products - View all products  
-/addacc capcut - Add accounts to products
+👥 USER MANAGEMENT:
+/addbalance [user_id] [amount] - Add balance to user
+/removebalance [user_id] [amount] - Remove balance from user
+/history [user_id] - View user balance history
+/msg [user_id] [message] - Send private message to user
 
-📸 Receipt Commands:
-/receipts - View pending receipts
-/approve ID - Approve deposit
-/reject ID - Reject deposit  
+📦 PRODUCT MANAGEMENT:
+/add [name] [price] [stock] - Quick add product
+/addproduct [name] | [price] | [category] | [description] | [stock] - Detailed product
+/addstock [product_id] [amount] - Add stock to product
+/removestock [product_id] [amount] - Remove stock from product
+/clearstock [product_id] - Clear ALL stock for product
+/products - View all products list
 
-💰 User Commands:
-/addbalance UserID Amount - Add balance
-/msg UserID message - Message user
+🔐 ACCOUNT MANAGEMENT:
+/addacc [product_id] - Add account to product (interactive)
+[email] | [password] | [product_id] - Add account (direct format)
 
-📊 System Commands:
-/admin - Admin panel
-/stats - Statistics
+💰 FINANCIAL MANAGEMENT:
+/deposits - View pending deposits/receipts
+/receipts - View all receipts
+/approve [receipt_id] - Approve pending receipt
+/reject [receipt_id] - Reject pending receipt
 
-💡 Quick Tips:
-- Send email:password to add accounts
-- Receipt photos come with ✅/❌ buttons
-- System is silent like primostorebot"""
+📊 ANALYTICS & REPORTS:
+/stats - View bot statistics
+/stock - Check current stock levels
+/leaderboard - View top spenders
+
+📢 COMMUNICATION:
+/broadcast [message] - Send message to all users
+
+🎯 USAGE EXAMPLES:
+/addbalance 123456789 50
+/msg 987654321 Hello customer!
+/add Spotify 25 10
+/addstock 2 5
+/approve receipt_001
+
+💡 QUICK TIPS:
+- All commands are instant with confirmation
+- Use /stock before adding products
+- /broadcast reaches ALL users - use carefully!
+- Receipt photos auto-generate approve/reject buttons"""
 
                 elif text.startswith('/users'):
                     try:
