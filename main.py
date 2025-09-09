@@ -1059,19 +1059,49 @@ Send accounts now!"""
                                     line = line.strip()
                                     if not line:
                                         continue
-                                        
-                                    # Method 1: Explicit password line
-                                    if line.lower().startswith('pass:') or line.lower().startswith('password:'):
-                                        common_password = line.split(':', 1)[1].strip()
                                     
-                                    # Method 2: Email detection
-                                    elif '@' in line and ':' not in line and '|' not in line and not line.lower().startswith('pass'):
+                                    # SUPER SMART AUTO-DETECT
+                                    # Handle concatenated lines like "email@domain.comPass : password"
+                                    if '@' in line and ('pass' in line.lower() or 'password' in line.lower()):
+                                        # Split by "pass" or "Pass"
+                                        parts = []
+                                        if 'Pass' in line:
+                                            parts = line.split('Pass', 1)
+                                        elif 'pass' in line:
+                                            parts = line.split('pass', 1)
+                                            
+                                        if len(parts) == 2:
+                                            email_part = parts[0].strip()
+                                            password_part = parts[1].strip()
+                                            
+                                            # Clean password part (remove : and spaces)
+                                            if password_part.startswith(':'):
+                                                password_part = password_part[1:].strip()
+                                            if password_part.startswith(' :'):
+                                                password_part = password_part[2:].strip()
+                                                
+                                            if '@' in email_part and password_part:
+                                                emails_only.append(email_part)
+                                                if not common_password:
+                                                    common_password = password_part
+                                            continue
+                                    
+                                    # Method 1: Explicit password line - handle various formats
+                                    line_lower = line.lower().strip()
+                                    if (line_lower.startswith('pass:') or line_lower.startswith('password:') or 
+                                        line_lower.startswith('pass :') or line_lower.startswith('password :')):
+                                        # Extract password after colon
+                                        if ':' in line:
+                                            common_password = line.split(':', 1)[1].strip()
+                                    
+                                    # Method 2: Email detection - clean emails only
+                                    elif '@' in line and ':' not in line and '|' not in line and 'pass' not in line.lower():
                                         emails_only.append(line.strip())
                                     
                                     # Method 3: Smart password detection - standalone line that looks like password
                                     elif '@' not in line and ':' not in line and '|' not in line and len(line) >= 5:
                                         # This might be a standalone password
-                                        if not common_password:  # Only if we haven't found one yet
+                                        if not common_password and 'pass' not in line.lower():
                                             common_password = line.strip()
                                 
                                 # If we found emails and a common password, use them
