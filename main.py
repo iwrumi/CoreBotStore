@@ -1043,7 +1043,7 @@ email2@domain.com
 pass: password123
 ```
 
-**Products:** capcut, spotify, disney, quizlet, chatgpt"""
+**Products:** capcut, spotify, disney, quizlet, chatgpt, studocu, perplexity, canva, picsart, surfshark"""
                         else:
                             # Extract product name
                             try:
@@ -1078,7 +1078,7 @@ pass: password123
                                     product_files = {}
                                 
                                 # Product mapping
-                                product_map = {'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 'chatgpt': "5"}
+                                product_map = {'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 'picsart': "9", 'surfshark': "10"}
                                 product_id = product_map.get(product_name, "1")
                                 
                                 if product_id not in product_files:

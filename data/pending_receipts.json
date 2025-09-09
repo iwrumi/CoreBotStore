@@ -53,5 +53,27 @@
     "username": "uhshton",
     "first_name": "Ashton",
     "receipt_id": 5
+  },
+  {
+    "user_id": "8167497757",
+    "chat_id": "8167497757",
+    "photo_file_id": "AgACAgUAAxkBAAPraMADcYMlY_Auq3J8t6DzO-VVJIIAAjjHMRvTngFWNWZbRDnkxZoBAAMCAAN5AAM2BA",
+    "caption": "",
+    "timestamp": "2025-09-09T10:37:38.129463",
+    "status": "approved",
+    "username": "party4yun",
+    "first_name": "\u30d1\u30f3 \ud835\uddfb\ud835\uddf6\ud835\ude00\ud835\ude00\ud835\uddf6",
+    "receipt_id": 6
+  },
+  {
+    "user_id": "8167497757",
+    "chat_id": "8167497757",
+    "photo_file_id": "AgACAgUAAxkBAAP_aMAEQng3X9iNrMnAH80CDHGOv3gAAjnHMRvTngFWTdeq-jISIB0BAAMCAAN5AAM2BA",
+    "caption": "",
+    "timestamp": "2025-09-09T10:41:07.157725",
+    "status": "approved",
+    "username": "party4yun",
+    "first_name": "\u30d1\u30f3 \ud835\uddfb\ud835\uddf6\ud835\ude00\ud835\ude00\ud835\uddf6",
+    "receipt_id": 7
   }
 ]

@@ -261,9 +261,9 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
+      "status": "sold",
       "added_at": "2025-09-09T09:55:43.229719",
-      "sold_to": "8034378887",
+      "sold_to": "8167497757",
       "sold_at": "{\"timestamp\": \"now\"}"
     },
     {
@@ -275,8 +275,10 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T09:55:43.229729"
+      "status": "sold",
+      "added_at": "2025-09-09T09:55:43.229729",
+      "sold_to": "8167497757",
+      "sold_at": "{\"timestamp\": \"now\"}"
     },
     {
       "id": 3,
@@ -287,8 +289,10 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T09:55:43.229732"
+      "status": "sold",
+      "added_at": "2025-09-09T09:55:43.229732",
+      "sold_to": "8167497757",
+      "sold_at": "{\"timestamp\": \"now\"}"
     },
     {
       "id": 4,
@@ -299,8 +303,10 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T09:55:43.229735"
+      "status": "sold",
+      "added_at": "2025-09-09T09:55:43.229735",
+      "sold_to": "8167497757",
+      "sold_at": "{\"timestamp\": \"now\"}"
     },
     {
       "id": 5,
@@ -311,8 +317,10 @@
         "subscription": "Spotify Premium - 1 Month",
         "instructions": "Login with these credentials. Do not change password for 24 hours."
       },
-      "status": "available",
-      "added_at": "2025-09-09T09:55:43.229738"
+      "status": "sold",
+      "added_at": "2025-09-09T09:55:43.229738",
+      "sold_to": "8167497757",
+      "sold_at": "{\"timestamp\": \"now\"}"
     },
     {
       "id": 6,
@@ -388,5 +396,10 @@
     }
   ],
   "3": [],
-  "4": []
+  "4": [],
+  "6": [],
+  "7": [],
+  "8": [],
+  "9": [],
+  "10": []
 }
