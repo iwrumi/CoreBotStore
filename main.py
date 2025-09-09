@@ -1061,6 +1061,9 @@ pass: password123
                                     emails.append(line.strip())
                                 elif 'pass:' in line.lower():
                                     password = line.split(':', 1)[1].strip()
+                                elif not '@' in line and line and not line.startswith('/'):
+                                    # If it's not an email and not empty, treat as password
+                                    password = line.strip()
                             
                             # Remove duplicates
                             emails = list(dict.fromkeys(emails))
