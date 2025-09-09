@@ -2455,37 +2455,33 @@ Ready to manage your store!"""
                     
                 elif text == "🛒 Browse Products":
                     logger.info(f"TEXT HANDLER: Browse Products clicked by user {user_id}")
-                    # SUPER SIMPLE VERSION WITHOUT PROBLEMATIC CHARACTERS
+                    # TEXT ONLY VERSION TO TEST
                     try:
                         with open('data/products.json', 'r') as f:
                             products = json_lib.load(f)
                         
-                        response_text = "Available Products:\n\n"
-                        inline_keyboard = {"inline_keyboard": []}
+                        response_text = "AVAILABLE PRODUCTS:\n\n"
+                        available_count = 0
                         
                         for product in products:
                             if product.get('stock', 0) > 0:
                                 name = product['name']
                                 price = product['price']
                                 stock = product['stock']
+                                available_count += 1
                                 
-                                # Simple text display
-                                response_text += f"{name.title()}\n"
-                                response_text += f"Price: P{price}\n"
-                                response_text += f"Stock: {stock}\n\n"
-                                
-                                # Simple button
-                                button_text = f"{name.title()} - P{price}"
-                                inline_keyboard["inline_keyboard"].append([{
-                                    "text": button_text, 
-                                    "callback_data": f"product_{product['id']}"
-                                }])
+                                response_text += f"{available_count}. {name.upper()}\n"
+                                response_text += f"   Price: {price} pesos\n"
+                                response_text += f"   Stock: {stock} items\n\n"
                         
-                        if not inline_keyboard["inline_keyboard"]:
-                            response_text = "No products available right now."
+                        if available_count == 0:
+                            response_text = "NO PRODUCTS IN STOCK"
+                        
+                        # NO INLINE KEYBOARD FOR NOW - JUST TEXT
+                        inline_keyboard = {"inline_keyboard": []}
                         
                     except Exception as e:
-                        response_text = "Please try again."
+                        response_text = "ERROR LOADING PRODUCTS"
                         inline_keyboard = {"inline_keyboard": []}
                         
                 elif text == "👑 Customer Service":
