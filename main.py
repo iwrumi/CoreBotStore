@@ -1583,104 +1583,118 @@ DM him with the vouch!
                     except Exception as e:
                         response_text = f"❌ Error processing order: {str(e)}"
 
-                elif text.startswith('/addacc') and len(text.split('\n')) >= 3:
-                    # DIRECT /addacc HANDLER TO AVOID FALLBACK
+                elif text.startswith('/addacc'):
+                    # DIRECT /addacc HANDLER - FIXED CONDITION
                     logger.info("🚀 PROCESSING /addacc COMMAND DIRECTLY!")
+                    logger.info(f"Line count check: {len(text.split(chr(10)))}")
                     
-                    try:
-                        # Split by lines and clean
-                        lines = [line.strip() for line in text.strip().split('\n') if line.strip()]
-                        logger.info(f"Direct handler - parsed {len(lines)} lines")
-                        
-                        # Extract product name
-                        product_name = lines[0].split()[1].lower()
-                        logger.info(f"Direct handler - product: {product_name}")
-                        
-                        # Extract emails and password
-                        emails = []
-                        password = "defaultpass123"
-                        
-                        for line in lines[1:]:
-                            if '@' in line and 'pass' not in line.lower():
-                                emails.append(line.strip())
-                            elif 'pass:' in line.lower():
-                                password = line.split(':', 1)[1].strip()
-                            elif not '@' in line and line and not line.startswith('/'):
-                                password = line.strip()
-                        
-                        logger.info(f"Direct handler - found {len(emails)} emails, password: {password}")
-                        
-                        if emails:
-                            # Load product files
-                            try:
-                                with open('data/product_files.json', 'r') as f:
-                                    product_files = json_lib.load(f)
-                            except:
-                                product_files = {}
+                    if len(text.split('\n')) < 3:
+                        response_text = """📦 **Add StudoCu Accounts:**
+
+**Format:**
+```
+/addacc syudocu
+email1@domain.com
+email2@domain.com  
+pass: password123
+```
+
+**Alternative spellings:** studocu, syudocu, studycu, studecu"""
+                    else:
+                        try:
+                            # Split by lines and clean
+                            lines = [line.strip() for line in text.strip().split('\n') if line.strip()]
+                            logger.info(f"Direct handler - parsed {len(lines)} lines")
                             
-                            # Product mapping - FIXED STUDOCU
-                            product_map = {
-                                'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
-                                'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
-                                'picsart': "9", 'surfshark': "10",
-                                # Alternative spellings
-                                'syudocu': "6", 'studycu': "6", 'studecu': "6"
-                            }
-                            product_id = product_map.get(product_name, "1")
+                            # Extract product name
+                            product_name = lines[0].split()[1].lower()
+                            logger.info(f"Direct handler - product: {product_name}")
                             
-                            if product_id not in product_files:
-                                product_files[product_id] = []
+                            # Extract emails and password
+                            emails = []
+                            password = "defaultpass123"
                             
-                            # Add accounts
-                            added = 0
-                            for email in emails:
-                                account = {
-                                    "id": len(product_files[product_id]) + 1,
-                                    "type": "account",
-                                    "details": {
-                                        "email": email,
-                                        "password": password,
-                                        "subscription": f"{product_name.title()} Premium - 1 Month",
-                                        "instructions": "Login with these credentials. Do not change password for 24 hours."
-                                    },
-                                    "status": "available",
-                                    "added_at": datetime.now().isoformat()
+                            for line in lines[1:]:
+                                if '@' in line and 'pass' not in line.lower():
+                                    emails.append(line.strip())
+                                elif 'pass:' in line.lower():
+                                    password = line.split(':', 1)[1].strip()
+                                elif not '@' in line and line and not line.startswith('/'):
+                                    password = line.strip()
+                            
+                            logger.info(f"Direct handler - found {len(emails)} emails, password: {password}")
+                            
+                            if emails:
+                                # Load product files
+                                try:
+                                    with open('data/product_files.json', 'r') as f:
+                                        product_files = json_lib.load(f)
+                                except:
+                                    product_files = {}
+                                
+                                # Product mapping - FIXED STUDOCU
+                                product_map = {
+                                    'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 
+                                    'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 
+                                    'picsart': "9", 'surfshark': "10",
+                                    # Alternative spellings
+                                    'syudocu': "6", 'studycu': "6", 'studecu': "6"
                                 }
-                                product_files[product_id].append(account)
-                                added += 1
-                            
-                            # Save product files
-                            with open('data/product_files.json', 'w') as f:
-                                json_lib.dump(product_files, f, indent=2)
-                            
-                            # Update stock count
-                            try:
-                                with open('data/products.json', 'r') as f:
-                                    products = json_lib.load(f)
+                                product_id = product_map.get(product_name, "1")
                                 
-                                for product in products:
-                                    if product['id'] == int(product_id):
-                                        new_stock = len([acc for acc in product_files[product_id] if acc['status'] == 'available'])
-                                        product['stock'] = new_stock
-                                        break
+                                if product_id not in product_files:
+                                    product_files[product_id] = []
                                 
-                                with open('data/products.json', 'w') as f:
-                                    json_lib.dump(products, f, indent=2)
-                            except Exception as e:
-                                logger.error(f"Error updating stock: {e}")
-                            
-                            response_text = f"""✅ **SUCCESS!** Added {added} {product_name} accounts!
+                                # Add accounts
+                                added = 0
+                                for email in emails:
+                                    account = {
+                                        "id": len(product_files[product_id]) + 1,
+                                        "type": "account",
+                                        "details": {
+                                            "email": email,
+                                            "password": password,
+                                            "subscription": f"{product_name.title()} Premium - 1 Month",
+                                            "instructions": "Login with these credentials. Do not change password for 24 hours."
+                                        },
+                                        "status": "available",
+                                        "added_at": datetime.now().isoformat()
+                                    }
+                                    product_files[product_id].append(account)
+                                    added += 1
+                                
+                                # Save product files
+                                with open('data/product_files.json', 'w') as f:
+                                    json_lib.dump(product_files, f, indent=2)
+                                
+                                # Update stock count
+                                try:
+                                    with open('data/products.json', 'r') as f:
+                                        products = json_lib.load(f)
+                                    
+                                    for product in products:
+                                        if product['id'] == int(product_id):
+                                            new_stock = len([acc for acc in product_files[product_id] if acc['status'] == 'available'])
+                                            product['stock'] = new_stock
+                                            break
+                                    
+                                    with open('data/products.json', 'w') as f:
+                                        json_lib.dump(products, f, indent=2)
+                                except Exception as e:
+                                    logger.error(f"Error updating stock: {e}")
+                                
+                                response_text = f"""✅ **SUCCESS!** Added {added} {product_name} accounts!
 
 🔑 **Password:** {password}
 📦 **Product:** {product_name.title()}
 📊 **Total Stock:** {len(product_files[product_id])} accounts
 
 Ready for customers! 🛍️"""
-                        else:
-                            response_text = "❌ No valid emails found! Make sure to include email addresses."
-                    except Exception as e:
-                        logger.error(f"Error in direct /addacc handler: {e}")
-                        response_text = f"❌ Error processing accounts: {str(e)}"
+                            else:
+                                response_text = "❌ No valid emails found! Make sure to include email addresses."
+                        except Exception as e:
+                            logger.error(f"Error in direct /addacc handler: {e}")
+                            response_text = f"❌ Error processing accounts: {str(e)}"
 
                 elif ((':' in text or '|' in text) and '@' in text and not text.startswith('/')):
                     # Handle account additions in email:password or email|password format
