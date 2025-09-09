@@ -1411,13 +1411,21 @@ When customers send payment proof, they'll appear here for your manual approval.
                     else:
                         response_text = f"👥 **All Users** ({len(users_data)} total)\n\n"
                         for user_id_key, user_info in users_data.items():
-                            username = user_info.get('username', 'Unknown')
                             balance = user_info.get('balance', 0)
-                            joined = user_info.get('joined_at', 'Unknown')[:10] if user_info.get('joined_at') else 'Unknown'
+                            total_deposited = user_info.get('total_deposited', 0)
+                            total_spent = user_info.get('total_spent', 0)
+                            
+                            # Get user info from Telegram if possible
+                            try:
+                                user_chat = application.bot.get_chat(user_id_key)
+                                username = f"@{user_chat.username}" if user_chat.username else user_chat.first_name or "User"
+                            except:
+                                username = "Unknown User"
                             
                             response_text += f"👤 **{username}** (ID: {user_id_key})\n"
                             response_text += f"💰 Balance: ₱{balance}\n"
-                            response_text += f"📅 Joined: {joined}\n\n"
+                            response_text += f"📊 Deposited: ₱{total_deposited}\n"
+                            response_text += f"🛒 Spent: ₱{total_spent}\n\n"
 
                 elif text.startswith('/admin'):
                     response_text = f"Admin Panel\n\nAdmin ID: {user_id}\nStatus: Active\n\nCommands:\n/add ProductName Price Stock\n/products - View products\n/addacc capcut - Add accounts to products\n/receipts - View receipts\n/users - View all users\n/stats - Statistics\n\nSystem ready!"
