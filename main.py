@@ -1504,28 +1504,32 @@ pass: mypass123
                                 added = 0
                                 duplicates = []
                                 
+                                # Check if this is a shared product (allows duplicates)
+                                is_shared_product = "shared" in product_name.lower()
+                                
                                 for email in emails:
-                                    # Check if email already exists in any product
-                                    email_exists = False
+                                    should_skip = False
                                     existing_product = ""
                                     
-                                    for pid, accounts in product_files.items():
-                                        for account in accounts:
-                                            if account.get('details', {}).get('email', '').lower() == email.lower():
-                                                email_exists = True
-                                                # Get product name
-                                                for pname, p_id in product_map.items():
-                                                    if p_id == pid:
-                                                        existing_product = pname.title()
-                                                        break
+                                    # Only check for duplicates if NOT a shared product
+                                    if not is_shared_product:
+                                        for pid, accounts in product_files.items():
+                                            for account in accounts:
+                                                if account.get('details', {}).get('email', '').lower() == email.lower():
+                                                    should_skip = True
+                                                    # Get product name
+                                                    for pname, p_id in product_map.items():
+                                                        if p_id == pid:
+                                                            existing_product = pname.title()
+                                                            break
+                                                    break
+                                            if should_skip:
                                                 break
-                                        if email_exists:
-                                            break
                                     
-                                    if email_exists:
+                                    if should_skip:
                                         duplicates.append(f"{email} (already in {existing_product})")
                                     else:
-                                        # Add the account if not duplicate
+                                        # Add the account (duplicates allowed for shared products)
                                         account = {
                                             "id": len(product_files[product_id]) + 1,
                                             "type": "account",
