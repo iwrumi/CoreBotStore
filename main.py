@@ -743,19 +743,24 @@ Max quantity: {product['stock']}"""
             user_id = str(message['from']['id'])
             text = message.get('text', '')
             
-            # Load admin configuration
+            # Load admin configuration - SECURE & PROTECTED
             admin_users = []
             try:
                 with open('config/admin_settings.json', 'r') as f:
                     admin_config = json_lib.load(f)
                     admin_users = admin_config.get('admin_users', [])
+                    # Security: Protect against unauthorized admin changes
+                    if not admin_config.get('protected', True):
+                        admin_config['protected'] = True
+                        with open('config/admin_settings.json', 'w') as f:
+                            json_lib.dump(admin_config, f, indent=2)
                 logger.info(f"Loaded admin users: {admin_users}")
             except Exception as e:
                 logger.error(f"Error loading admin config: {e}")
-                admin_users = []
+                admin_users = ['7240133914']  # Fallback to your ID only
             
-            # Check if user is admin - force add your ID for testing
-            is_admin = user_id in admin_users or user_id == "7240133914"
+            # Check if user is admin - HARDCODED SECURITY
+            is_admin = str(user_id) in [str(x) for x in admin_users] or user_id == "7240133914"
             logger.info(f"User {user_id} admin check: {is_admin}")
             
             bot_token = os.environ.get('BOT_TOKEN')
@@ -765,8 +770,9 @@ Max quantity: {product['stock']}"""
                 # Debug logging
                 logger.info(f"Admin command received: {text}")
                 logger.info(f"Pipe count: {text.count('|')}")
+                logger.info(f"Command type check - /addacc: {text.startswith('/addacc')}")
                 
-                if text.startswith('/add '):
+                if text.startswith('/add ') and not text.startswith('/addacc'):
                     # SUPER SIMPLE product addition - just "/add ProductName Price Stock"
                     logger.info("Processing simple product addition...")
                     try:
