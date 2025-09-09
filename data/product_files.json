@@ -403,6 +403,354 @@
       },
       "status": "available",
       "added_at": "2025-09-09T09:55:43.229757"
+    },
+    {
+      "id": 12,
+      "type": "account",
+      "details": {
+        "email": "fejbaw@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388210"
+    },
+    {
+      "id": 13,
+      "type": "account",
+      "details": {
+        "email": "loasul@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388261"
+    },
+    {
+      "id": 14,
+      "type": "account",
+      "details": {
+        "email": "namzer@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388283"
+    },
+    {
+      "id": 15,
+      "type": "account",
+      "details": {
+        "email": "peijed@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388303"
+    },
+    {
+      "id": 16,
+      "type": "account",
+      "details": {
+        "email": "latles@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388323"
+    },
+    {
+      "id": 17,
+      "type": "account",
+      "details": {
+        "email": "mafmob@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388343"
+    },
+    {
+      "id": 18,
+      "type": "account",
+      "details": {
+        "email": "siwtop@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388364"
+    },
+    {
+      "id": 19,
+      "type": "account",
+      "details": {
+        "email": "rejwis@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388390"
+    },
+    {
+      "id": 20,
+      "type": "account",
+      "details": {
+        "email": "nuflef@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388411"
+    },
+    {
+      "id": 21,
+      "type": "account",
+      "details": {
+        "email": "kiakod@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388433"
+    },
+    {
+      "id": 22,
+      "type": "account",
+      "details": {
+        "email": "lafvaz@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388454"
+    },
+    {
+      "id": 23,
+      "type": "account",
+      "details": {
+        "email": "numreu@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388479"
+    },
+    {
+      "id": 24,
+      "type": "account",
+      "details": {
+        "email": "teokim@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388515"
+    },
+    {
+      "id": 25,
+      "type": "account",
+      "details": {
+        "email": "visdag@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388538"
+    },
+    {
+      "id": 26,
+      "type": "account",
+      "details": {
+        "email": "darfaw@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388560"
+    },
+    {
+      "id": 27,
+      "type": "account",
+      "details": {
+        "email": "lewzus@cakkyo.store",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388583"
+    },
+    {
+      "id": 28,
+      "type": "account",
+      "details": {
+        "email": "torros@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388606"
+    },
+    {
+      "id": 29,
+      "type": "account",
+      "details": {
+        "email": "rosnie@cakkyo.store",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388628"
+    },
+    {
+      "id": 30,
+      "type": "account",
+      "details": {
+        "email": "sawmet@cakkyo.store",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388649"
+    },
+    {
+      "id": 31,
+      "type": "account",
+      "details": {
+        "email": "vakziz@cakkyo.store",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388671"
+    },
+    {
+      "id": 32,
+      "type": "account",
+      "details": {
+        "email": "suevea@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388696"
+    },
+    {
+      "id": 33,
+      "type": "account",
+      "details": {
+        "email": "veplei@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388719"
+    },
+    {
+      "id": 34,
+      "type": "account",
+      "details": {
+        "email": "siihao@cakkyo.store",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388744"
+    },
+    {
+      "id": 35,
+      "type": "account",
+      "details": {
+        "email": "wubher@cakkyo.store",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388768"
+    },
+    {
+      "id": 36,
+      "type": "account",
+      "details": {
+        "email": "fiksib@cakkyo.store",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388793"
+    },
+    {
+      "id": 37,
+      "type": "account",
+      "details": {
+        "email": "kakveo@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388819"
+    },
+    {
+      "id": 38,
+      "type": "account",
+      "details": {
+        "email": "rewdal@cakkyo.store",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388844"
+    },
+    {
+      "id": 39,
+      "type": "account",
+      "details": {
+        "email": "nelzii@cakkyo.store",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388934"
+    },
+    {
+      "id": 40,
+      "type": "account",
+      "details": {
+        "email": "zechiu@kyoverse.me",
+        "password": "masuk12345",
+        "subscription": "Spotify Premium - 1 Month",
+        "instructions": "Login with these credentials. Do not change password for 24 hours."
+      },
+      "status": "available",
+      "added_at": "2025-09-09T14:15:05.388965"
     }
   ],
   "3": [
