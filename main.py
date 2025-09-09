@@ -536,6 +536,29 @@ Thank you for shopping with us! 🎉"""
                                             file_data['sold_to'] = user_id
                                             file_data['sold_at'] = json_lib.dumps({"timestamp": "now"})
                                             
+                                            # NOTIFY ADMIN OF SALE
+                                            try:
+                                                admin_notification = f"""🎉 NEW SALE!
+
+👤 Customer: {user_id}
+📦 Product: {product['name']}
+💰 Price: ₱{product['price']}
+🔢 Quantity: {quantity}
+💸 Total: ₱{product['price'] * quantity}
+
+💳 Account delivered automatically!"""
+                                                
+                                                admin_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+                                                admin_req = urllib.request.Request(admin_url, 
+                                                    data=json_lib.dumps({
+                                                        'chat_id': '7240133914',
+                                                        'text': admin_notification
+                                                    }).encode('utf-8'),
+                                                    headers={'Content-Type': 'application/json'})
+                                                urllib.request.urlopen(admin_req)
+                                            except Exception as e:
+                                                logger.error(f"Failed to notify admin of sale: {e}")
+                                            
                                             # Send account details
                                             if file_data['type'] == 'account':
                                                 account_message = f"""📦 Your {product['name']} Account #{i+1}
@@ -1030,8 +1053,10 @@ Try the simple format!"""
 💸 View Deposits: /deposits"""
 
                 elif text.startswith('/addacc'):
+                    logger.info("✅ ENTERING /addacc HANDLER NOW!")
                     # BULLETPROOF WORKING VERSION  
-                    logger.info(f"Admin {user_id} used /addacc command")
+                    logger.info(f"PROCESSING /addacc command for admin {user_id}")
+                    logger.info(f"Raw text received: {repr(text)}")
                     
                     try:
                         # Split by lines and clean
@@ -1551,6 +1576,99 @@ DM him with the vouch!
                                 
                     except Exception as e:
                         response_text = f"❌ Error processing order: {str(e)}"
+
+                elif text.startswith('/addacc') and len(text.split('\n')) >= 3:
+                    # DIRECT /addacc HANDLER TO AVOID FALLBACK
+                    logger.info("🚀 PROCESSING /addacc COMMAND DIRECTLY!")
+                    
+                    try:
+                        # Split by lines and clean
+                        lines = [line.strip() for line in text.strip().split('\n') if line.strip()]
+                        logger.info(f"Direct handler - parsed {len(lines)} lines")
+                        
+                        # Extract product name
+                        product_name = lines[0].split()[1].lower()
+                        logger.info(f"Direct handler - product: {product_name}")
+                        
+                        # Extract emails and password
+                        emails = []
+                        password = "defaultpass123"
+                        
+                        for line in lines[1:]:
+                            if '@' in line and 'pass' not in line.lower():
+                                emails.append(line.strip())
+                            elif 'pass:' in line.lower():
+                                password = line.split(':', 1)[1].strip()
+                            elif not '@' in line and line and not line.startswith('/'):
+                                password = line.strip()
+                        
+                        logger.info(f"Direct handler - found {len(emails)} emails, password: {password}")
+                        
+                        if emails:
+                            # Load product files
+                            try:
+                                with open('data/product_files.json', 'r') as f:
+                                    product_files = json_lib.load(f)
+                            except:
+                                product_files = {}
+                            
+                            # Product mapping
+                            product_map = {'capcut': "1", 'spotify': "2", 'disney': "3", 'quizlet': "4", 'chatgpt': "5", 'studocu': "6", 'perplexity': "7", 'canva': "8", 'picsart': "9", 'surfshark': "10"}
+                            product_id = product_map.get(product_name, "1")
+                            
+                            if product_id not in product_files:
+                                product_files[product_id] = []
+                            
+                            # Add accounts
+                            added = 0
+                            for email in emails:
+                                account = {
+                                    "id": len(product_files[product_id]) + 1,
+                                    "type": "account",
+                                    "details": {
+                                        "email": email,
+                                        "password": password,
+                                        "subscription": f"{product_name.title()} Premium - 1 Month",
+                                        "instructions": "Login with these credentials. Do not change password for 24 hours."
+                                    },
+                                    "status": "available",
+                                    "added_at": datetime.now().isoformat()
+                                }
+                                product_files[product_id].append(account)
+                                added += 1
+                            
+                            # Save product files
+                            with open('data/product_files.json', 'w') as f:
+                                json_lib.dump(product_files, f, indent=2)
+                            
+                            # Update stock count
+                            try:
+                                with open('data/products.json', 'r') as f:
+                                    products = json_lib.load(f)
+                                
+                                for product in products:
+                                    if product['id'] == int(product_id):
+                                        new_stock = len([acc for acc in product_files[product_id] if acc['status'] == 'available'])
+                                        product['stock'] = new_stock
+                                        break
+                                
+                                with open('data/products.json', 'w') as f:
+                                    json_lib.dump(products, f, indent=2)
+                            except Exception as e:
+                                logger.error(f"Error updating stock: {e}")
+                            
+                            response_text = f"""✅ **SUCCESS!** Added {added} {product_name} accounts!
+
+🔑 **Password:** {password}
+📦 **Product:** {product_name.title()}
+📊 **Total Stock:** {len(product_files[product_id])} accounts
+
+Ready for customers! 🛍️"""
+                        else:
+                            response_text = "❌ No valid emails found! Make sure to include email addresses."
+                    except Exception as e:
+                        logger.error(f"Error in direct /addacc handler: {e}")
+                        response_text = f"❌ Error processing accounts: {str(e)}"
 
                 elif ((':' in text or '|' in text) and '@' in text and not text.startswith('/')):
                     # Handle account additions in email:password or email|password format
