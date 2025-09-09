@@ -170,7 +170,7 @@ def webhook():
                 ]}
                 
             # Handle different callback actions
-            elif callback_data == "browse_products":
+            elif callback_data == "browse_products" or text == "browse_products":
                 # Get products and create categories
                 try:
                     with open('data/products.json', 'r') as f:
@@ -206,14 +206,14 @@ def webhook():
                         {"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}
                     ]]}
             
-            elif callback_data == "check_balance":
+            elif callback_data == "check_balance" or text == "check_balance":
                 response_text = messages.get("balance_message", "💰 **Account Balance**\n\n**Current Balance:** ₱{balance:.2f}\n**Total Deposited:** ₱{total_deposited:.2f}\n**Total Spent:** ₱{total_spent:.2f}\n\n**Account Status:** Active ✅").format(balance=0.0, total_deposited=0.0, total_spent=0.0)
                 inline_keyboard = {"inline_keyboard": [
                     [{"text": "💳 Deposit Funds", "callback_data": "deposit_funds"}],
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
             
-            elif callback_data == "deposit_funds":
+            elif callback_data == "deposit_funds" or text == "deposit_funds":
                 # Send GCash QR code exactly like primostorebot
                 gcash_qr_message = """📋 Steps to Deposit:
 3. Screenshot your receipt  
@@ -271,7 +271,7 @@ def webhook():
                     [{"text": "🔙 Back to Main Menu", "callback_data": "main_menu"}]
                 ]}
             
-            elif callback_data == "support":
+            elif callback_data == "support" or text == "support":
                 response_text = """🆘 **Customer Support**
 
 **📞 Contact Information:**
@@ -1705,8 +1705,40 @@ Ready to manage your store!"""
                 except:
                     product_count = 0
 
+                # Handle custom keyboard button presses (from primostorebot-style interface)
+                if text == "💰 Deposit Balance":
+                    # Redirect to deposit functionality
+                    text = "deposit_funds"  # Set to callback data to use existing handler
+                elif text == "🛒 Browse Products":
+                    # Redirect to browse products
+                    text = "browse_products"  # Set to callback data to use existing handler  
+                elif text == "💳 Check Balance":
+                    # Redirect to check balance
+                    text = "check_balance"  # Set to callback data to use existing handler
+                elif text == "👑 Customer Service":
+                    # Redirect to support
+                    text = "support"  # Set to callback data to use existing handler
+                elif text == "❓ How to order":
+                    # Show help message
+                    response_text = """❓ **How to Order**
+
+**📋 Simple Steps:**
+1️⃣ Browse Products (🛒 button)
+2️⃣ Select what you want
+3️⃣ Add to cart
+4️⃣ Make sure you have balance
+5️⃣ Complete purchase
+6️⃣ Get your account instantly!
+
+**💰 Need Balance?**
+• Use 💰 Deposit Balance button
+• Send GCash receipt to 09911127180
+• Get approved and start shopping!
+
+Ready to order! 🛍️"""
+
                 # Handle /start command with inline keyboard ONLY if no photo was sent
-                if (text == '/start' or text == '/menu' or (not text.startswith('/') and not message.get('photo'))):
+                elif (text == '/start' or text == '/menu' or (not text.startswith('/') and not message.get('photo'))):
                     # Don't send welcome if photo was already processed
                     if 'photo' in message:
                         return jsonify({'status': 'ok'})
