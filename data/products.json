@@ -238,5 +238,15 @@
     "stock": 15,
     "image_url": "",
     "created_at": "2025-09-09T17:25:00.000000"
+  },
+  {
+    "id": 25,
+    "name": "expressvpn",
+    "description": "🛡️ ExpressVPN - Premium VPN Service\n\n⚡ Features:\n• Lightning-fast servers worldwide\n• Military-grade encryption\n• No-logs policy verified\n• 24/7 customer support\n• Works in restricted countries\n• Unlimited bandwidth\n\n🕐 Instant delivery after payment\n💻 Works on all devices",
+    "price": 35.0,
+    "category": "vpn",
+    "stock": 0,
+    "image_url": "",
+    "created_at": "2025-09-09T18:30:00.000000"
   }
 ]

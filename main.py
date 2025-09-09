@@ -1590,13 +1590,13 @@ pass: mypass123
                                 
                                 # Create response message based on results
                                 if added > 0 and not duplicates:
-                                    response_text = f"✅ SUCCESS! Added {added} {product_name} accounts!\n\n🔑 Password: {password}\n📦 Product: {product_name.title()}\n📊 Stock: {len(product_files[product_id])} accounts"
+                                    response_text = f"✅ SUCCESS! Added {added} {product_name} accounts!\n\n🔑 Password: {password}\n📦 Product: {product_name.title()}\n📊 Stock: {len(product_files[product_id])} accounts\n\nReady for customers! 🛍️"
                                 elif added > 0 and duplicates:
                                     dup_list = '\n'.join([f"• {dup}" for dup in duplicates[:3]])  # Limit to 3 to keep message short
-                                    response_text = f"⚠️ PARTIAL SUCCESS! Added {added} {product_name} accounts!\n\n🔑 Password: {password}\n📦 Product: {product_name.title()}\n📊 Stock: {len(product_files[product_id])}\n\n❌ Duplicates skipped:\n{dup_list}"
+                                    response_text = f"⚠️ PARTIAL SUCCESS! Added {added} {product_name} accounts!\n\n🔑 Password: {password}\n📦 Product: {product_name.title()}\n📊 Stock: {len(product_files[product_id])}\n\nDuplicates skipped:\n{dup_list}"
                                 elif duplicates and added == 0:
                                     dup_list = '\n'.join([f"• {dup}" for dup in duplicates[:3]])  # Limit to 3 
-                                    response_text = f"❌ NO ACCOUNTS ADDED! All emails are duplicates.\n\n🚫 Duplicates found:\n{dup_list}\n\n💡 Use unique email addresses."
+                                    response_text = f"❌ NO ACCOUNTS ADDED! All emails are duplicates.\n\nDuplicates found:\n{dup_list}\n\n💡 Use unique email addresses."
                                 else:
                                     response_text = "❌ No valid emails found! Make sure to include email addresses."
                             else:
@@ -2903,8 +2903,8 @@ Ready to shop! 🛍️"""
             # Send message using urllib
             url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
             
-            # For admin commands and browse products, don't use markdown to avoid 400 errors
-            if (is_admin and text.startswith('/admin')) or text == "🛒 Browse Products":
+            # For admin commands, account adding, and browse products, don't use markdown to avoid 400 errors
+            if (is_admin and (text.startswith('/admin') or text.startswith('/addacc') or '|' in text or text.startswith('/add'))) or text == "🛒 Browse Products":
                 # Check if we have inline keyboard to send (for simple messages)
                 if 'inline_keyboard' in locals() and inline_keyboard:
                     data = json_lib.dumps({
