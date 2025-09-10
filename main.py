@@ -3126,4 +3126,18 @@ if premium_bot:
 #     app.run(host="0.0.0.0", port=port)
 
 # Railway will run this app using gunicorn (see Procfile)
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    try:
+        update = request.get_json(force=True)
+        logger.info(f"📩 Incoming update: {update}")  # <-- log incoming updates
+
+        if update:
+            tg_update = Update.de_json(update, bot)
+            dp.process_update(tg_update)  # <-- make dispatcher process it
+
+        return "ok", 200
+    except Exception as e:
+        logger.error(f"❌ Webhook error: {e}", exc_info=True)
+        return "error", 500
 
