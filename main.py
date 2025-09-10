@@ -3114,9 +3114,10 @@ if premium_bot:
             logger.info(f"Webhook URL would be: {{webhook_url}}")
     except Exception as e:
         logger.error(f"Webhook setup error: {{e}}")
+import os
 
-if __name__ == '__main__':
-    logger.info("🚀 Starting Premium Store Bot Flask App")
-  import os
-port = int(os.environ.get("PORT", 5000))
-app.run(host="0.0.0.0", port=port)
+import os
+import flask
+import requests
+from telegram import Update
+# ... your other imports ...
