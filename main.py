@@ -1,6 +1,10 @@
 """
 Main Flask Application Entry Point
 Premium Store Bot - Complete System
+from flask import Flask
+
+app = Flask(__name__)
+
 """
 import os
 import logging
@@ -3114,10 +3118,12 @@ if premium_bot:
             logger.info(f"Webhook URL would be: {{webhook_url}}")
     except Exception as e:
         logger.error(f"Webhook setup error: {{e}}")
-import os
+# --- Keep all your existing code above ---
 
-import os
-import flask
-import requests
-from telegram import Update
-# ... your other imports ...
+# Remove or comment out app.run()
+# if __name__ == "__main__":
+#     port = int(os.environ.get("PORT", 5000))
+#     app.run(host="0.0.0.0", port=port)
+
+# Railway will run this app using gunicorn (see Procfile)
+
