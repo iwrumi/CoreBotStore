@@ -252,7 +252,7 @@
   {
     "id": 26,
     "name": "netflix_shared",
-    "description": "📺 Netflix Shared - Movies & TV Shows\n\n✨ Features:\n• Unlimited movies and TV episodes\n• High-definition streaming\n• Works on all devices\n• Shared family account (2-4 users)\n• Original Netflix content\n• Download for offline viewing\n\n🕐 Instant delivery after payment\n📱 Works on all devices",
+    "description": "\ud83d\udcfa Netflix Shared - Movies & TV Shows\n\n\u2728 Features:\n\u2022 Unlimited movies and TV episodes\n\u2022 High-definition streaming\n\u2022 Works on all devices\n\u2022 Shared family account (2-4 users)\n\u2022 Original Netflix content\n\u2022 Download for offline viewing\n\n\ud83d\udd50 Instant delivery after payment\n\ud83d\udcf1 Works on all devices",
     "price": 45.0,
     "category": "streaming",
     "stock": 0,
@@ -262,7 +262,7 @@
   {
     "id": 27,
     "name": "capcut_method",
-    "description": "🎬 CapCut Method - Professional Access\n\n🔥 Features:\n• Advanced method tutorial\n• Step-by-step guide\n• Premium access technique\n• Lifetime validity\n• Channel delivery system\n• Professional support\n\n📱 Delivered via private channel\n🕐 Instant access after payment",
+    "description": "\ud83c\udfac CapCut Method - Professional Access\n\n\ud83d\udd25 Features:\n\u2022 Advanced method tutorial\n\u2022 Step-by-step guide\n\u2022 Premium access technique\n\u2022 Lifetime validity\n\u2022 Channel delivery system\n\u2022 Professional support\n\n\ud83d\udcf1 Delivered via private channel\n\ud83d\udd50 Instant access after payment",
     "price": 550.0,
     "category": "method",
     "stock": 999,
@@ -272,7 +272,7 @@
   {
     "id": 28,
     "name": "spotify_method",
-    "description": "🎵 Spotify Method - Premium Access\n\n🔥 Features:\n• Advanced method tutorial\n• Step-by-step guide\n• Premium access technique\n• Lifetime validity\n• Channel delivery system\n• Professional support\n\n📱 Delivered via private channel\n🕐 Instant access after payment",
+    "description": "\ud83c\udfb5 Spotify Method - Premium Access\n\n\ud83d\udd25 Features:\n\u2022 Advanced method tutorial\n\u2022 Step-by-step guide\n\u2022 Premium access technique\n\u2022 Lifetime validity\n\u2022 Channel delivery system\n\u2022 Professional support\n\n\ud83d\udcf1 Delivered via private channel\n\ud83d\udd50 Instant access after payment",
     "price": 250.0,
     "category": "method",
     "stock": 999,
@@ -282,10 +282,10 @@
   {
     "id": 29,
     "name": "lifetime_access_bin",
-    "description": "🔑 Lifetime Access Bin - Ultimate Collection\n\n🔥 Features:\n• Lifetime access methods\n• Multiple service techniques\n• Premium bin collection\n• Regular updates\n• Channel delivery system\n• Professional support\n\n📱 Delivered via private channel\n🕐 Instant access after payment",
+    "description": "\ud83d\udd11 Lifetime Access Bin - Ultimate Collection\n\n\ud83d\udd25 Features:\n\u2022 Lifetime access methods\n\u2022 Multiple service techniques\n\u2022 Premium bin collection\n\u2022 Regular updates\n\u2022 Channel delivery system\n\u2022 Professional support\n\n\ud83d\udcf1 Delivered via private channel\n\ud83d\udd50 Instant access after payment",
     "price": 150.0,
     "category": "method",
-    "stock": 999,
+    "stock": 1,
     "image_url": "",
     "created_at": "2025-09-09T21:05:00.000000"
   }
