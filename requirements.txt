@@ -1,3 +1,8 @@
+Flask==3.1.2
+gunicorn
+requests
+python-telegram-bot==13.15
+SQLAlchemy==2.0.43
 requests
 gunicorn
 Flask==3.1.2
