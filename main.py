@@ -3140,3 +3140,11 @@ def webhook():
     except Exception as e:
         logger.error(f"❌ Webhook error: {e}", exc_info=True)
         return "error", 500
+# --- Register webhook with Telegram on startup ---
+railway_url = os.getenv("RAILWAY_STATIC_URL")
+if railway_url:
+    webhook_url = railway_url + "/webhook"
+    bot.set_webhook(url=webhook_url)
+    logger.info(f"✅ Webhook set to {webhook_url}")
+else:
+    logger.warning("⚠️ RAILWAY_STATIC_URL not found, running locally?")
