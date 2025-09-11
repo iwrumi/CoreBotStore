@@ -1,0 +1,88 @@
+[33m0997b52[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m First upload
+[33m365f392[m Add specific purchase instructions for method products like Spotify and CapCut
+[33md360adf[m Add new method products and categorize them
+[33m63c619e[m Automatically categorize and describe new products added to the store
+[33m14bc58b[m Add ExpressVPN product and improve account addition messages
+[33mcbcb341[m Update product availability and user account details
+[33m059ff47[m Update user balance and approve pending receipts
+[33mc494395[m Prevent duplicate product purchases when not from the same service
+[33m2bae0f0[m Add Surfshark VPN product with account details and update stock
+[33mc629930[m Add VPN and Photo Editing categories to the bot's product menu
+[33m1b87bf7[m Add QuillBot product and update user balances for purchases
+[33m0f8f128[m Update product descriptions and add a new account type for a seamless shopping experience
+[33m417db90[m Rename plugging services category and update bot interface
+[33m22a59ad[m Display product categories when users browse products
+[33m01dd13a[m Add new categories to the Telegram bot's product browsing menu
+[33ma52f2eb[m Categorize products for LFB and combo services
+[33md45207b[m Add new services for message plugging and customize user responses
+[33m9f5e031[m Update transaction records and enable user messaging functionality
+[33ma73806c[m Remove receipt submission functionality from the bot
+[33me93c45e[m Add new pending receipt to the system for processing
+[33maf1af40[m Add instructions for users to submit payment receipts
+[33m6db7b6f[m Improve product management by dynamically mapping products
+[33m2710278[m Improve product name recognition for better user experience
+[33m78e7e5a[m Add a dedicated help command for administrators with detailed instructions
+[33mb5dd055[m Improve purchase flow by notifying customers of delivery issues
+[33m66852ce[m Add new user balance and transaction history entries
+[33m55d8e64[m Update user balance and product purchase records
+[33m5eecae7[m Improve deposit instructions for clarity and user experience
+[33m076c3d6[m Update product status and user balance for successful purchases
+[33m710bc7c[m Approve a user's fund deposit and update their balance
+[33m85da090[m Add payment instructions for users to deposit funds
+[33mfc0eba9[m Add functionality to process pending payment receipts for users
+[33m3e4f31d[m Update product catalog and payment instructions for bot
+[33m3de8256[m Add functionality to manage product inventory levels
+[33ma8624d3[m Add stock and bonus commands for the Telegram bot
+[33m7ab15d1[m Improve product image handling and command functionality
+[33m14b7694[m Improve user experience when navigating between products and categories
+[33m4dea30f[m Display product categories and a back to menu option
+[33m2afef51[m Update product status and user balances after a sale
+[33md5e59ed[m Add new Spotify accounts and update product stock
+[33m46f9623[m Update product status and availability for administrative review
+[33mdabeffd[m Update product browsing to display available items with buttons
+[33ma33322f[m Add new account products and update Spotify stock availability
+[33mc24d474[m Simplify product browsing and message formatting
+[33mdb803f6[m Display actual products with details and purchase options
+[33m27cc32d[m Add a simple test endpoint for product browsing functionality
+[33m26b8eb3[m Created a checkpoint
+[33me11f2cc[m Simplify product browsing display and button text
+[33m28f46c4[m Improve product display to match previous formatting and add emojis
+[33mbe4804e[m Display available products with their details and stock levels
+[33m739e315[m Simplify product browsing by showing a basic message
+[33m7199073[m Simplify bot initialization and log webhook calls
+[33m6d2b6bc[m Improve logging for product browsing actions
+[33mc2bd2b2[m Improve bot's callback handling and product display
+[33m261d4ae[m Fix issue with browsing products in the Telegram bot
+[33m0d4d828[m Improve error handling and add fallback for message updates
+[33m2a44ce0[m Update product browsing to show a simplified message
+[33m72c2445[m Fix issue with message formatting in the Telegram bot
+[33mcc17907[m Improve the way the bot handles user interactions and commands
+[33mc71c408[m Improve product browsing interface and messages for clarity
+[33m02e4be9[m Update bot messages to improve clarity and user guidance
+[33md088a96[m Improve message formatting to remove bolding and extra line breaks
+[33m369bfe6[m Improve stock display for users with better categorization
+[33m379ac34[m Add new shared streaming account to the product catalog
+[33mda54987[m Allow duplicate accounts for shared product categories
+[33m1d1661a[m Improve success and error messages for product account additions
+[33mf9e9dc3[m Update product status and user balance after purchase
+[33m6cef7f8[m Add new product types for subscription services and update user data
+[33me46bf1b[m Add CapCut 7-day trial product and update existing entries
+[33m91ec5d4[m Update product management to improve stock and naming conventions
+[33m2a2d5d9[m Update the price for a Disney product and add a new account type
+[33m9ba438f[m Add solo Disney+ accounts and update shared Disney+ stock and details
+[33m6c48e0f[m Update product stock and add account details for new products
+[33m5cc39bf[m Update prices and stock for YouTube subscriptions
+[33mb705fca[m Update YouTube subscription prices and product details
+[33m0c96482[m Add a new account type for YouTube Premium and update product descriptions
+[33m9327157[m Add YouTube Premium subscriptions and update product and user data
+[33m735327b[m Add user balance history tracking for financial transactions
+[33m210ab66[m Add transaction history and improve balance updates for users
+[33mea27a22[m Make announcement messages bold and include admin's username
+[33m35b91dc[m Allow admins to view user balances in the store
+[33m3dadd88[m Add separate leaderboards for admins and regular users
+[33m8ce96b1[m Add broadcast functionality to send messages to all users
+[33m0b37501[m Add ability to broadcast messages to all users of the Telegram bot
+[33m38a0a5c[m Add new user and pending receipt data for store operations
+[33mca9218b[m Restock product and provide account details to customers
+[33m38a7171[m Update user balance and track product sales history
+[33m79c1b4c[m Add ability to deduct balances from user accounts

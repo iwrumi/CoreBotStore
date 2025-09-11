@@ -1,0 +1,225 @@
+[33m0997b52[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m First upload
+[33m365f392[m Add specific purchase instructions for method products like Spotify and CapCut
+[33md360adf[m Add new method products and categorize them
+[33m63c619e[m Automatically categorize and describe new products added to the store
+[33m14bc58b[m Add ExpressVPN product and improve account addition messages
+[33mcbcb341[m Update product availability and user account details
+[33m059ff47[m Update user balance and approve pending receipts
+[33mc494395[m Prevent duplicate product purchases when not from the same service
+[33m2bae0f0[m Add Surfshark VPN product with account details and update stock
+[33mc629930[m Add VPN and Photo Editing categories to the bot's product menu
+[33m1b87bf7[m Add QuillBot product and update user balances for purchases
+[33m0f8f128[m Update product descriptions and add a new account type for a seamless shopping experience
+[33m417db90[m Rename plugging services category and update bot interface
+[33m22a59ad[m Display product categories when users browse products
+[33m01dd13a[m Add new categories to the Telegram bot's product browsing menu
+[33ma52f2eb[m Categorize products for LFB and combo services
+[33md45207b[m Add new services for message plugging and customize user responses
+[33m9f5e031[m Update transaction records and enable user messaging functionality
+[33ma73806c[m Remove receipt submission functionality from the bot
+[33me93c45e[m Add new pending receipt to the system for processing
+[33maf1af40[m Add instructions for users to submit payment receipts
+[33m6db7b6f[m Improve product management by dynamically mapping products
+[33m2710278[m Improve product name recognition for better user experience
+[33m78e7e5a[m Add a dedicated help command for administrators with detailed instructions
+[33mb5dd055[m Improve purchase flow by notifying customers of delivery issues
+[33m66852ce[m Add new user balance and transaction history entries
+[33m55d8e64[m Update user balance and product purchase records
+[33m5eecae7[m Improve deposit instructions for clarity and user experience
+[33m076c3d6[m Update product status and user balance for successful purchases
+[33m710bc7c[m Approve a user's fund deposit and update their balance
+[33m85da090[m Add payment instructions for users to deposit funds
+[33mfc0eba9[m Add functionality to process pending payment receipts for users
+[33m3e4f31d[m Update product catalog and payment instructions for bot
+[33m3de8256[m Add functionality to manage product inventory levels
+[33ma8624d3[m Add stock and bonus commands for the Telegram bot
+[33m7ab15d1[m Improve product image handling and command functionality
+[33m14b7694[m Improve user experience when navigating between products and categories
+[33m4dea30f[m Display product categories and a back to menu option
+[33m2afef51[m Update product status and user balances after a sale
+[33md5e59ed[m Add new Spotify accounts and update product stock
+[33m46f9623[m Update product status and availability for administrative review
+[33mdabeffd[m Update product browsing to display available items with buttons
+[33ma33322f[m Add new account products and update Spotify stock availability
+[33mc24d474[m Simplify product browsing and message formatting
+[33mdb803f6[m Display actual products with details and purchase options
+[33m27cc32d[m Add a simple test endpoint for product browsing functionality
+[33m26b8eb3[m Created a checkpoint
+[33me11f2cc[m Simplify product browsing display and button text
+[33m28f46c4[m Improve product display to match previous formatting and add emojis
+[33mbe4804e[m Display available products with their details and stock levels
+[33m739e315[m Simplify product browsing by showing a basic message
+[33m7199073[m Simplify bot initialization and log webhook calls
+[33m6d2b6bc[m Improve logging for product browsing actions
+[33mc2bd2b2[m Improve bot's callback handling and product display
+[33m261d4ae[m Fix issue with browsing products in the Telegram bot
+[33m0d4d828[m Improve error handling and add fallback for message updates
+[33m2a44ce0[m Update product browsing to show a simplified message
+[33m72c2445[m Fix issue with message formatting in the Telegram bot
+[33mcc17907[m Improve the way the bot handles user interactions and commands
+[33mc71c408[m Improve product browsing interface and messages for clarity
+[33m02e4be9[m Update bot messages to improve clarity and user guidance
+[33md088a96[m Improve message formatting to remove bolding and extra line breaks
+[33m369bfe6[m Improve stock display for users with better categorization
+[33m379ac34[m Add new shared streaming account to the product catalog
+[33mda54987[m Allow duplicate accounts for shared product categories
+[33m1d1661a[m Improve success and error messages for product account additions
+[33mf9e9dc3[m Update product status and user balance after purchase
+[33m6cef7f8[m Add new product types for subscription services and update user data
+[33me46bf1b[m Add CapCut 7-day trial product and update existing entries
+[33m91ec5d4[m Update product management to improve stock and naming conventions
+[33m2a2d5d9[m Update the price for a Disney product and add a new account type
+[33m9ba438f[m Add solo Disney+ accounts and update shared Disney+ stock and details
+[33m6c48e0f[m Update product stock and add account details for new products
+[33m5cc39bf[m Update prices and stock for YouTube subscriptions
+[33mb705fca[m Update YouTube subscription prices and product details
+[33m0c96482[m Add a new account type for YouTube Premium and update product descriptions
+[33m9327157[m Add YouTube Premium subscriptions and update product and user data
+[33m735327b[m Add user balance history tracking for financial transactions
+[33m210ab66[m Add transaction history and improve balance updates for users
+[33mea27a22[m Make announcement messages bold and include admin's username
+[33m35b91dc[m Allow admins to view user balances in the store
+[33m3dadd88[m Add separate leaderboards for admins and regular users
+[33m8ce96b1[m Add broadcast functionality to send messages to all users
+[33m0b37501[m Add ability to broadcast messages to all users of the Telegram bot
+[33m38a0a5c[m Add new user and pending receipt data for store operations
+[33mca9218b[m Restock product and provide account details to customers
+[33m38a7171[m Update user balance and track product sales history
+[33m79c1b4c[m Add ability to deduct balances from user accounts
+[33md920a79[m Update product status to indicate admin clearance and add new pending receipts
+[33mdc33b53[m Add ability for administrators to remove product stock
+[33mea0cc84[m Add new accounts and update product stock for the online store
+[33m55f328a[m Improve product search by adding alternative names and spellings
+[33m1fe3c11[m Add all available products and update product mapping for better usability
+[33m192e719[m Add functionality to add new accounts for various products
+[33mabf7fd2[m Fix error when fetching product details from the store
+[33mfe7483b[m Improve handling of adding accounts to the store
+[33mfed0d70[m Fix studocu product mapping for the online store bot
+[33m5f6a3bf[m Notify admins when an account is successfully sold
+[33ma3a1d41[m Notify admin when an account is sold automatically
+[33mb20a7df[m Enhance security by preventing buyer access to admin configurations
+[33mb6c0e0d[m Update product status to sold and record purchase details
+[33m5837d26[m Update product stock and user balances after a sale
+[33m8fa44ad[m Update account creation to handle new user data and improve product parsing
+[33mca2e70d[m Update user display to show deposited and spent amounts
+[33md6956c9[m Add new products to the online store inventory
+[33m752809d[m Improve password handling for user authentication
+[33m6f71227[m Update product status and user balances to reflect purchases
+[33m704366d[m Improve the add accounts command for better usability and error handling
+[33m2ee6c5b[m Add CapCut Pro subscriptions to the product catalog
+[33md7a10e0[m Update product status to include sold information
+[33m10a48a0[m Update user data loading to include current balance
+[33mf1ec885[m Fix issue where user balance is not updated after purchase
+[33m5fcb7c7[m Add Spotify Premium accounts to the product catalog and update the bot's add account functionality
+[33m5ac8171[m Improve handling of duplicate entries and errors in product account management
+[33mfe0d26c[m Clear all existing product stock and reset availability
+[33m085f5b9[m Add new account products and reset user balances to zero
+[33md07fbca[m Reset product stock levels to zero for all items
+[33m12e0781[m Remove the balance checking functionality from the store bot
+[33mb14d311[m Update user balance and spending information accurately
+[33m89837fe[m Update user balances and total deposits for financial tracking
+[33mc34353e[m Improve how accounts are added to the store with a clearer format
+[33m9f2c4a8[m Add Spotify Premium accounts and update product stock
+[33m956c831[m Improve bot command handling by removing redundant text checks
+[33mccfe6a4[m Update bot to send messages with custom inline keyboards
+[33m0d1355c[m Show all available products with stock details directly to users
+[33mce9c4b9[m Add product browsing and deposit instructions to the bot
+[33md32316a[m Fix issues with browsing products and depositing balances
+[33mc299f8d[m Allow users to browse products and manage their balance
+[33mc893508[m Add user data loading from JSON file to manage store
+[33me69ee64[m Improve how the bot greets new users by name
+[33m3cc4c6d[m Add functionality to manage product availability and stock levels
+[33mf7d22bb[m Update bot interface and statistics display for user interaction
+[33m5150f4f[m Add a placeholder for product images to the store
+[33m7b03d0f[m Update product status and user transaction history
+[33m3969faa[m Update customer support information and add user viewing functionality
+[33m8ee2718[m Update product availability and user financial information
+[33m3ee28cd[m Simplify adding product accounts and improve error messaging
+[33m013de70[m Update product descriptions with emojis and add new digital products
+[33m15e12e4[m Improve error reporting when adding accounts to the store
+[33mbe91da9[m Improve account processing messages with debugging details
+[33mdb4b9db[m Update product stock and user data for the online store
+[33mffd334c[m Improve password and email detection logic for account data
+[33m907fc2e[m Update product catalog and user data, and improve transaction messaging
+[33mdc10ffe[m Inform users about receipt processing status and update user balances
+[33m504625d[m Improve password detection for account credentials
+[33m66ee803[m Add new product accounts and update stock for existing music product
+[33m749236f[m Add support for common password format for account entries
+[33mff71433[m Update product stock level for video editing software
+[33mc9dd562[m Update product prices and categories to match user requests
+[33m44b69b2[m Add Spotify, Disney+, and Quizlet to the product catalog
+[33m3962c9f[m Update account addition to process multiple accounts in one message
+[33m7402665[m Improve account adding to support multiple formats
+[33mf494f2a[m Add functionality to add product accounts via the bot
+[33mfc7780d[m Update product stock count automatically to reflect available accounts
+[33m2df36a2[m Allow users to specify custom product quantities
+[33mc80a109[m Update product information and add warranty instructions to account purchase messages
+[33m689dfc3[m Add initial user balance and spending data for customer accounts
+[33m64663a2[m Add distinct help commands for customers and administrators
+[33m114aa96[m Update receipt handling to notify admin and improve user experience
+[33m07ee803[m Improve how users add files to products
+[33m0a0adcc[m Update product handling to include file attachments and quantity validation
+[33m4d2b041[m Improve product file delivery and error handling
+[33md75f945[m Fix issues with the admin panel that prevent it from working correctly
+[33m6713e65[m Update admin panel command list and improve message formatting
+[33m017510d[m Update admin panel commands and descriptions for clarity
+[33mab3374c[m Add product detail pages to display item specifications
+[33maa7f426[m Add product details and account delivery for purchased items
+[33mb79d240[m Add ability to add product quantity to the shopping cart
+[33m58530fa[m Add ability to view products by category and select quantity for purchase
+[33m9bd71aa[m Update website appearance with a new theme and styling
+[33ma4a0362[m Remove all pending receipts and product information
+[33m2284acd[m Improve handling of user messages and add new product data
+[33m9c7dac7[m Simplify product addition and fix receipt data formatting
+[33m6e478fe[m Add ability for admins to approve or reject customer receipts
+[33m9e7aed3[m Update deposit instructions and admin notifications for clarity
+[33m1a9b16d[m Add new pending receipts to the order processing system
+[33m4f7817e[m Update how admin receives receipt notifications
+[33m551827c[m Add a new pending receipt to the data store
+[33ma5e4ed4[m Add new pending receipt to the system for order processing
+[33m0ab571a[m Remove confirmation messages after submitting deposit proof
+[33m84ff231[m Update payment instructions with GCash QR code for easier transactions
+[33mf99b5ed[m Add QR code scanning functionality for product lookup
+[33ma47fd4e[m Add GCash QR code for fund deposit and update related messages
+[33m03d7a5d[m Add a way to manage pending receipts sent by users
+[33m11c69de[m Add button to send messages for receipt confirmation
+[33m01332dd[m Add a way for users to send receipts for deposit approval
+[33mbd778c5[m Fix issue where buttons do not function as expected
+[33md8aedc7[m Improve bot messaging by loading text from a JSON file
+[33m25a9989[m Add support for processing inline keyboard button presses and new bot messages
+[33m719fab6[m Add initial project structure and configuration for the Telegram bot
+[33m0cd1c7d[m Add functionality to handle user interactions and display product categories
+[33m642564f[m Add product catalog and balance viewing functionality
+[33m5d4bbed[m Simplify product and user data file paths
+[33mcd7ae9a[m Improve how product and user data is managed
+[33m0706836[m Improve bot's welcome message and product display for users
+[33m5ad254f[m Update payment instructions to include contact and receipt details
+[33m016b9bc[m Update product data handling to improve stock visibility
+[33m328b97a[m Fix error that prevents users from accessing the product catalog
+[33m3582051[m Add ability to add new products to the online store
+[33m98af122[m Improve product addition handling for admin commands
+[33mdb090cd[m Make category and description optional when adding stock
+[33m0b4b334[m Add functionality to manage product stock and manually approve deposits
+[33m4a123fb[m Improve admin access by adding a temporary override for testing
+[33mfbd6b47[m Add ability for admins to add products via Telegram commands
+[33m75f07a7[m Add configuration files for store setup and product catalog
+[33me7e87ea[m Provide a comprehensive guide for configuring the Telegram bot
+[33m158a4c6[m Update bot to reply to messages from users
+[33m24bc507[m Ensure user data is always stored as a dictionary
+[33me7b0c57[m Update data management system to improve efficiency and stability
+[33m7a7e6a4[m Replace advanced data manager with a simpler JSON-based system
+[33mb6f50c5[m Add systems for product management and balance handling
+[33m38263c8[m Introduce a comprehensive admin panel for store management
+[33m412bb45[m Add financial dashboard for store administrators to view key metrics
+[33maaa71ba[m Created a checkpoint
+[33m7a9fb94[m Add advanced customization options for welcome messages
+[33m77f54ff[m Add payment processing for online store orders
+[33m876fd29[m Add voucher management commands for administrators
+[33mf0731a5[m Add broadcast functionality for sending messages to customers
+[33m81b74d3[m Add advanced data management capabilities using SQLAlchemy
+[33m52ea83b[m Add polling mode for Telegram store bot testing
+[33md1ef74c[m Add a script to test the Telegram store bot
+[33md45aa58[m Improve bot status reporting and initialization logic
+[33m6150c28[m Add product listing feature to the online store
+[33m114cd3e[m Implement a comprehensive online store with product management and order tracking
+[33m55abe74[m Initial commit
